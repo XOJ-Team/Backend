@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 命名空间，对sql进行分类化管理（sql隔离） -->
+<mapper namespace="com.xoj.backend.mapper.UserBaseMapper">
+    <resultMap id="UserMap" type="com.xoj.backend.model.UserModel">
+
+    </resultMap>
+
+    <select id="selectUser" resultMap="UserMap">
+
+    </select>
+
+    <select id="selectUserDeleted" resultMap="UserMap">
+
+    </select>
+</mapper>
