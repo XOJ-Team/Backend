@@ -18,3 +18,18 @@ If you want to learn more about creating good readme files then refer the follow
 - [ASP.NET Core](https://github.com/aspnet/Home)
 - [Visual Studio Code](https://github.com/Microsoft/vscode)
 - [Chakra Core](https://github.com/Microsoft/ChakraCore)
+
+
+# method of using mybatis-generator plugin
+step 1: modify the file(generatorConfig.xml)
+1. jdbcConnection: use your local database to connect
+2. targetProject: use your local path of project
+3. table: modify the table name and domainObjectName
+
+step 2: double-click the maven plugin -- mybatis generator
+
+step 3: find the file in entity, then delete all the construction method, then use Lombok annotation
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
