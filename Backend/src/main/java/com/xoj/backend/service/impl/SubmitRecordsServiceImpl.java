@@ -1,6 +1,7 @@
 package com.xoj.backend.service.impl;
 
 import com.xoj.backend.dto.SubmitRecordsCreateDto;
+import com.xoj.backend.dto.SubmitRecordsModifyDto;
 import com.xoj.backend.entity.SubmitRecords;
 import com.xoj.backend.entity.User;
 import com.xoj.backend.mapper.SubmitRecordsMapper;
@@ -61,5 +62,17 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
         example.createCriteria()
                 .andEqualTo("userId", user.getId());
         return mapper.selectByExample(example).subList(0, 10);
+    }
+
+    /**
+     * update comment of a record
+     * @param dto
+     */
+    @Override
+    public void modifyRecord(SubmitRecordsModifyDto dto) {
+        SubmitRecords record = SubmitRecords.builder().comments(dto.getComments()).build();
+        Example example = new Example(SubmitRecords.class);
+        example.createCriteria().andEqualTo("id", dto.getId());
+        mapper.updateByExampleSelective(record, example);
     }
 }

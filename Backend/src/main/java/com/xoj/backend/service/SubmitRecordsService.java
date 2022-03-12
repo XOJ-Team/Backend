@@ -1,6 +1,7 @@
 package com.xoj.backend.service;
 
 import com.xoj.backend.dto.SubmitRecordsCreateDto;
+import com.xoj.backend.dto.SubmitRecordsModifyDto;
 import com.xoj.backend.entity.SubmitRecords;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface SubmitRecordsService {
     List<SubmitRecords> selectQuestionRecords(Long questionId);
 
     List<SubmitRecords> selectUserRecords();
+
+    void modifyRecord(SubmitRecordsModifyDto dto);
 }
