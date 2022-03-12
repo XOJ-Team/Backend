@@ -102,7 +102,7 @@ DROP TABLE IF EXISTS `user_competition`;
 CREATE TABLE `user_competition`  (
   `user_id` bigint(11) NULL DEFAULT NULL COMMENT '用户ID',
   `competition_id` bigint(11) NULL DEFAULT NULL COMMENT '比赛ID',
-  `is_delete` tinyint(4) NULL DEFAULT NULL COMMENT '是否删除',
+  `is_delete` tinyint(1) NULL DEFAULT NULL COMMENT '是否删除',
   INDEX `user_competition_index`(`user_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户-比赛映射' ROW_FORMAT = Dynamic;
 
