@@ -1,38 +1,36 @@
-package com.xoj.backend.entity;
+package com.xoj.backend.param;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+/***
+ * @Author yezhen
+ * @Date 22:48 2022/3/12
+ ***/
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class User {
-    private Long id;
+@NoArgsConstructor
+public class MailLoginParam {
+    @NotNull
+    private String verificationNumber;
 
-    private Boolean isDelete;
-
+    @NotNull
     private String name;
 
     private Date createTime;
 
-    private Date deleteTime;
-
+    @NotNull
     private String mail;
 
     private String phoneNumber;
 
-    private Integer score;
-
-    private Integer rank;
-
-    private Byte authority;
-
+    @NotNull
     private String password;
-
 }
