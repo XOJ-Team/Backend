@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 11/03/2022 20:58:36
+ Date: 12/03/2022 10:10:14
 */
 
 SET NAMES utf8mb4;
@@ -22,13 +22,13 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `competition`;
 CREATE TABLE `competition`  (
-  `id` int(11) NOT NULL COMMENT 'ID',
-  `is_delete` tinyint(4) NULL DEFAULT NULL COMMENT '是否删除',
+  `id` bigint(11) NOT NULL COMMENT 'ID',
+  `is_delete` tinyint(1) NULL DEFAULT NULL COMMENT '是否删除',
   `NAME` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '名字',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `delete_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '删除时间',
   `brief_introduction` tinytext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '简介',
-  `creator` int(11) NOT NULL COMMENT '创建者',
+  `creator` bigint(11) NOT NULL COMMENT '创建者',
   `creator_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '创建者姓名',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `competition_id_index`(`id`) USING BTREE
@@ -39,13 +39,13 @@ CREATE TABLE `competition`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question`  (
-  `id` int(11) NOT NULL COMMENT 'ID',
-  `is_delete` tinyint(4) NULL DEFAULT NULL COMMENT '是否删除',
+  `id` bigint(11) NOT NULL COMMENT 'ID',
+  `is_delete` tinyint(1) NULL DEFAULT NULL COMMENT '是否删除',
   `NAME` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '名字',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `delete_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '删除时间',
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '题目内容',
-  `creator` int(11) NOT NULL COMMENT '创建者',
+  `creator` bigint(11) NOT NULL COMMENT '创建者',
   `creator_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '创建者姓名',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `question_id_index`(`id`) USING BTREE
@@ -56,9 +56,9 @@ CREATE TABLE `question`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `question_competition`;
 CREATE TABLE `question_competition`  (
-  `question_id` int(11) NULL DEFAULT NULL COMMENT '题目ID',
-  `competition_id` int(11) NULL DEFAULT NULL COMMENT '比赛ID',
-  `is_delete` tinyint(4) NULL DEFAULT NULL COMMENT '是否删除',
+  `question_id` bigint(11) NULL DEFAULT NULL COMMENT '题目ID',
+  `competition_id` bigint(11) NULL DEFAULT NULL COMMENT '比赛ID',
+  `is_delete` tinyint(1) NULL DEFAULT NULL COMMENT '是否删除',
   `score` tinyint(4) NULL DEFAULT NULL COMMENT '分数',
   INDEX `question_competition_index`(`competition_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '题目-比赛映射' ROW_FORMAT = Dynamic;
@@ -68,20 +68,20 @@ CREATE TABLE `question_competition`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `testcase_question`;
 CREATE TABLE `testcase_question`  (
-  `question_id` int(11) NULL DEFAULT NULL COMMENT '题目ID',
+  `question_id` bigint(11) NULL DEFAULT NULL COMMENT '题目ID',
   `case` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '测试用例',
   `result` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '测试用例结果',
-  `is_delete` tinyint(4) NULL DEFAULT NULL COMMENT '是否删除',
+  `is_delete` tinyint(1) NULL DEFAULT NULL COMMENT '是否删除',
   INDEX `testcase_question_index`(`question_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '题目用例' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for user
+-- Table structure for user_base
 -- ----------------------------
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user`  (
-  `id` int(11) NOT NULL COMMENT 'ID',
-  `is_delete` tinyint(4) NULL DEFAULT NULL COMMENT '是否删除',
+DROP TABLE IF EXISTS `user_base`;
+CREATE TABLE `user_base`  (
+  `id` bigint(11) NOT NULL COMMENT 'ID',
+  `is_delete` tinyint(1) NULL DEFAULT NULL COMMENT '是否删除',
   `NAME` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '名字',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `delete_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '删除时间',
@@ -100,8 +100,8 @@ CREATE TABLE `user`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `user_competition`;
 CREATE TABLE `user_competition`  (
-  `user_id` int(11) NULL DEFAULT NULL COMMENT '用户ID',
-  `competition_id` int(11) NULL DEFAULT NULL COMMENT '比赛ID',
+  `user_id` bigint(11) NULL DEFAULT NULL COMMENT '用户ID',
+  `competition_id` bigint(11) NULL DEFAULT NULL COMMENT '比赛ID',
   `is_delete` tinyint(4) NULL DEFAULT NULL COMMENT '是否删除',
   INDEX `user_competition_index`(`user_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户-比赛映射' ROW_FORMAT = Dynamic;
