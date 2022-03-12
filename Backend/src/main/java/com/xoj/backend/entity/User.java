@@ -5,15 +5,32 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import java.io.Serializable;
+import java.util.Date;
+
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class User implements Serializable {
+@AllArgsConstructor
+public class User {
+    private Long id;
 
-    @Column(name = "user_id")
-    private String userId;
+    private Boolean isDelete;
+
+    private String name;
+
+    private Date createTime;
+
+    private Date deleteTime;
+
+    private String mail;
+
+    private String phoneNumber;
+
+    private Integer score;
+
+    private Integer rank;
+
+    private Byte authority;
+
 }
