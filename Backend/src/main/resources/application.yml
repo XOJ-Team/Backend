@@ -5,5 +5,13 @@ spring:
     password:
     url: jdbc:mysql://localhost:3306/xoj?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
 
+  mail:
+    host: ***REMOVED***
+    username: ***REMOVED***
+
+    password: ***REMOVED***
+    port: 587
+    default-encoding: UTF-8
+
 server:
   port: 8081

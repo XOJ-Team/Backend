@@ -6,29 +6,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 /***
  * @Author yezhen
- * @Date 22:48 2022/3/12
+ * @Date 17:49 2022/3/13
  ***/
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MailLoginParam {
-    @NotNull
-    private String verificationNumber;
-
-    @NotNull
-    private String name;
+public class VerificationParam {
 
     @NotNull
     private String mail;
-
-    private String phoneNumber;
-
-    @NotNull
-    private String password;
 }
