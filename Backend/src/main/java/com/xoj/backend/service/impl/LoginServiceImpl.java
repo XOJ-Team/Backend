@@ -1,6 +1,7 @@
 package com.xoj.backend.service.impl;
 
 import com.xoj.backend.base.RestResponse;
+import com.xoj.backend.base.Session;
 import com.xoj.backend.entity.User;
 import com.xoj.backend.mapper.UserBaseMapper;
 import com.xoj.backend.param.NormalLoginParam;
@@ -43,13 +44,19 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
+    @SuppressWarnings("all")
     public RestResponse<User> mailLogin(MailLoginParam param) {
+        Integer verificationNumber = (Integer)Session.getSession().getAttribute(param.getMail());
+
+        if(verificationNumber == null || !param.getVerificationNumber().equals(verificationNumber)){
+            return RestResponse.error("Verification code error");
+        }
+
         User user  = User.builder().mail(param.getMail())
                 .name(param.getName())
                 .phoneNumber(param.getPhoneNumber())
-                .password(param.getPassword())
-                .createTime(param.getCreateTime()).build();
-        int insert = mapper.insert(user);
+                .password(param.getPassword()).build();
+        int insert = mapper.insertSelective(user);
 
         if(insert == 1){
             return RestResponse.ok(user);

@@ -28,13 +28,11 @@ public class RestResponse<T> {
         return new RestResponse<T> (null,null,1);
     }
 
-    public static <T> RestResponse<T>  error(T obj){
-        return new RestResponse<T> (obj,null,-1);
-    }
+    public static <T> RestResponse<T>  error(T obj){ return new RestResponse<T> (obj,null,-1); }
 
-    public static <T> RestResponse<T>  error(T obj, String comment){
-        return new RestResponse<T> (obj,null,-1);
-    }
+    public static <T> RestResponse<T>  error(T obj, String comment){return new RestResponse<T> (obj,null,-1); }
+
+    public static <T> RestResponse<T>  error(String comment){ return new RestResponse<T> (null,comment,-1); }
 
     public static <T> RestResponse<T>  error(){
         return new RestResponse<T> (null,null,-1);
