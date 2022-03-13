@@ -31,7 +31,7 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
                 .lang(dto.getLang())
                 .memoryCost(dto.getMemoryCost())
                 .timeCost(dto.getTimeCost()).build();
-        mapper.insert(record);
+        mapper.insertSelective(record);
     }
 
     /**

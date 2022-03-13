@@ -10,31 +10,49 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class RedisUtils {
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
+    /**
+     * set key
+     * @param key
+     * @param value
+     */
+    public void set(String key, Object value) {
+        redisTemplate.opsForValue().set(key,value);
+    }
+
+    /**
+     * delete the key
+     * @param key
+     */
     public void delete(String key) {
         redisTemplate.delete(key);
     }
 
-    //    判断key是否存在
+    /**
+     * determine the key is or not exist
+     * @param key
+     * @return
+     */
     public boolean hasKey(String key) {
         return Boolean.TRUE.equals(redisTemplate.hasKey(key));
     }
 
-    //    根据key获取过期时间
     public long getExpire(String key) {
         return redisTemplate.getExpire(key);
     }
 
-    //    删除多个key
     public void deleteKey(String... keys) {
         redisTemplate.delete(Arrays.asList(keys));
     }
 
-    public String getString(String key) {
+    /**
+     * get the according value
+     * @param key
+     * @return
+     */
+    public String getValue(String key) {
         if (Boolean.TRUE.equals(redisTemplate.hasKey(key))) {
-            redisTemplate.opsForValue().set("jsonStr", "{'userName':'xxf','age':20}");
-            System.out.println(redisTemplate.opsForValue().get(key));
             return (String) redisTemplate.opsForValue().get(key);
         } else {
             return null;
@@ -50,9 +68,4 @@ public class RedisUtils {
             return false;
         }
     }
-
-    public void set(String key, Object value) {
-        redisTemplate.opsForValue().set(key,value);
-    }
-
 }
