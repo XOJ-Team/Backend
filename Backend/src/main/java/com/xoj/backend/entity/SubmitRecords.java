@@ -40,4 +40,6 @@ public class SubmitRecords {
     private Double memoryCost;
 
     private String comments;
+
+    private String codes;
 }

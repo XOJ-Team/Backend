@@ -12,6 +12,7 @@
     <result column="time_cost" jdbcType="INTEGER" property="timeCost" />
     <result column="memory_cost" jdbcType="DOUBLE" property="memoryCost" />
     <result column="comments" jdbcType="VARCHAR" property="comments" />
+    <result column="codes" javaType="VARCHAR" property="codes"
   </resultMap>
 
 </mapper>

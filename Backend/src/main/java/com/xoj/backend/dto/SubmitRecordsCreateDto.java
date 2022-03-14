@@ -23,4 +23,6 @@ public class SubmitRecordsCreateDto {
     private Integer timeCost;
 
     private Double memoryCost;
+
+    private String codes;
 }

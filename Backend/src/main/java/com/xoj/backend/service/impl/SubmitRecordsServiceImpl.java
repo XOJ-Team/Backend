@@ -6,6 +6,7 @@ import com.xoj.backend.entity.SubmitRecords;
 import com.xoj.backend.entity.User;
 import com.xoj.backend.mapper.SubmitRecordsMapper;
 import com.xoj.backend.service.SubmitRecordsService;
+import com.xoj.backend.service.UserBaseService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -18,19 +19,22 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
 
     private final SubmitRecordsMapper mapper;
 
+    private final UserBaseService userBaseService;
+
     /**
      * create submit records
      * @param dto
      */
     @Override
     public void createRecord(SubmitRecordsCreateDto dto) {
-        // TODO get user
+        User user = userBaseService.getCurrentUser();
         // TODO judge
         SubmitRecords record = SubmitRecords.builder()
                 .questionId(dto.getQuestionId())
                 .lang(dto.getLang())
                 .memoryCost(dto.getMemoryCost())
-                .timeCost(dto.getTimeCost()).build();
+                .timeCost(dto.getTimeCost())
+                .codes(dto.getCodes()).build();
         mapper.insertSelective(record);
     }
 
@@ -41,8 +45,7 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
      */
     @Override
     public List<SubmitRecords> selectQuestionRecords(Long questionId) {
-        // TODO get user
-        User user = new User();
+        User user = userBaseService.getCurrentUser();
         Example example = new Example(SubmitRecords.class);
         example.createCriteria()
                 .andEqualTo("questionId", questionId)
@@ -56,8 +59,7 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
      */
     @Override
     public List<SubmitRecords> selectUserRecords() {
-        // TODO get user
-        User user = new User();
+        User user = userBaseService.getCurrentUser();
         Example example = new Example(SubmitRecords.class);
         example.createCriteria()
                 .andEqualTo("userId", user.getId());
