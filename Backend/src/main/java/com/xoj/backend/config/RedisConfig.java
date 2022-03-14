@@ -1,4 +1,4 @@
-package com.xoj.backend.common;
+package com.xoj.backend.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

@@ -1,6 +1,6 @@
 package com.xoj.backend.unitTest;
 
-import com.xoj.backend.common.RedisUtils;
+import com.xoj.backend.util.RedisUtils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

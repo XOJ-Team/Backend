@@ -1,6 +1,6 @@
 package com.xoj.backend.service.impl;
 
-import com.xoj.backend.common.UserThreadLocal;
+import com.xoj.backend.util.UserThreadLocal;
 import com.xoj.backend.entity.User;
 import com.xoj.backend.service.UserBaseService;
 import org.springframework.stereotype.Service;

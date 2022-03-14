@@ -1,4 +1,4 @@
-package com.xoj.backend.common;
+package com.xoj.backend.util;
 
 import com.xoj.backend.entity.User;
 
