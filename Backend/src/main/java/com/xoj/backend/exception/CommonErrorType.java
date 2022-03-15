@@ -17,12 +17,12 @@ public enum CommonErrorType {
     SERVER_BUSY("503", "服务器正忙，请稍后再试!");
 
     /**
-     * 错误码
+     * Error Code
      */
     private String resultCode;
 
     /**
-     * 错误描述
+     * Error Message
      */
     private String resultMsg;
 }
