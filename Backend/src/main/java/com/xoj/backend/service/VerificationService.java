@@ -8,5 +8,8 @@ import com.xoj.backend.base.RestResponse;
  ***/
 public interface VerificationService{
     RestResponse<Object> sendVerificationNumber(String mail);
+
+    RestResponse<Object> sendVerificationNumberResetPassword(String mail);
+
     String getRandomNumber();
 }

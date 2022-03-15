@@ -19,16 +19,21 @@ import javax.validation.Valid;
  ***/
 
 @RestController
-@RequestMapping("/verify")
 @Api(value = "send verification code")
 public class VerificationController{
 
     @Autowired
     VerificationService verificationService;
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/verify", method = RequestMethod.POST)
     @ApiOperation(value = "send verification code")
     public RestResponse<Object> send(@Valid @RequestBody VerificationParam param) {
+        return verificationService.sendVerificationNumber(param.getMail());
+    }
+
+    @RequestMapping(value = "/send/password", method = RequestMethod.POST)
+    @ApiOperation(value = "send verification code")
+    public RestResponse<Object> sendPassword(@Valid @RequestBody VerificationParam param) {
         return verificationService.sendVerificationNumber(param.getMail());
     }
 }

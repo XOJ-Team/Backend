@@ -1,6 +1,7 @@
 package com.xoj.backend.controller;
 
 import com.xoj.backend.base.RestResponse;
+import com.xoj.backend.base.Session;
 import com.xoj.backend.entity.User;
 import com.xoj.backend.param.MailLoginParam;
 import com.xoj.backend.param.NormalLoginParam;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 /***
@@ -33,7 +35,7 @@ public class LoginController {
 
     @RequestMapping(value = NORMAL_LOGIN_URL, method = RequestMethod.POST)
     @ApiOperation(value = "login without use verification number")
-    public RestResponse<User> normalLogin(@Valid @RequestBody NormalLoginParam loginParam) {
+    public RestResponse<User> normalLogin(@Valid @RequestBody NormalLoginParam loginParam, HttpSession session) {
         return loginService.normalLogin(loginParam);
     }
 
