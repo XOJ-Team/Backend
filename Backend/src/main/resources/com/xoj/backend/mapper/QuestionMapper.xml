@@ -13,6 +13,17 @@
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.xoj.backend.entity.Question">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
+  <select id="selectQuestions" resultType="com.xoj.backend.entity.Question"
+          parameterType="java.util.List">
+      SELECT *
+      FROM oj.question
+      <if test="ids.size() > 0 and ids != null">
+        WHERE question.id IN
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+  </select>
 
 
 </mapper>
