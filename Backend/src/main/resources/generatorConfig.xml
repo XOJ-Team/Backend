@@ -25,7 +25,7 @@
             <property name="trimStrings" value="true"/>
             <property name="immutable" value="false"/>
         </javaModelGenerator>
-        <sqlMapGenerator targetPackage="mapper"
+        <sqlMapGenerator targetPackage="com.xoj.backend.mapper"
                          targetProject="src/main/resources">
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
