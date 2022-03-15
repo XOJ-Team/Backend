@@ -17,6 +17,7 @@ public class LogoutServiceImpl implements LogoutService {
     @Override
     public RestResponse<Object> logout() {
         AuthenticateUtils.unAuthenticate();
+        // TODO redirect
         return RestResponse.ok();
     }
 }

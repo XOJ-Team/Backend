@@ -48,7 +48,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     @SuppressWarnings("all")
     public RestResponse<User> mailLogin(MailLoginParam param) {
-        Integer verificationNumber = (Integer)Session.getSession().getAttribute("verificationNumber");
+        String verificationNumber = (String)Session.getSession().getAttribute("verificationNumber");
 
         if(verificationNumber == null || !param.getVerificationNumber().equals(verificationNumber)){
             return RestResponse.error("Verification code error");
