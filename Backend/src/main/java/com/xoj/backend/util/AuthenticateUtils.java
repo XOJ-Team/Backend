@@ -20,9 +20,19 @@ public class AuthenticateUtils {
         }
     }
 
-    public static void authenticate(Integer ranka){
+    public static boolean isNotAuthenticated(){
         HttpSession session = Session.getSession();
-        session.setAttribute("authenticated",1);
+        Integer authenticated = (Integer)session.getAttribute("authenticated");
+        if(authenticated != null && authenticated.equals(1)){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    public static void authenticate(Integer authority){
+        HttpSession session = Session.getSession();
+        session.setAttribute("authenticated",authority);
     }
 
     public static void unAuthenticate(){

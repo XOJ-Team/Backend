@@ -1,6 +1,7 @@
 package com.xoj.backend.controller;
 
 import com.xoj.backend.base.RestResponse;
+import com.xoj.backend.notation.RequirePermission;
 import com.xoj.backend.param.VerificationParam;
 import com.xoj.backend.service.VerificationService;
 import io.swagger.annotations.Api;
@@ -27,6 +28,7 @@ public class VerificationController{
 
     @RequestMapping(value = "/verify", method = RequestMethod.POST)
     @ApiOperation(value = "send verification code")
+    @RequirePermission
     public RestResponse<Object> send(@Valid @RequestBody VerificationParam param) {
         return verificationService.sendVerificationNumber(param.getMail());
     }
