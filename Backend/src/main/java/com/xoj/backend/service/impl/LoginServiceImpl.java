@@ -2,7 +2,7 @@ package com.xoj.backend.service.impl;
 
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.base.Session;
-import com.xoj.backend.common.UserThreadLocal;
+import com.xoj.backend.util.UserThreadLocal;
 import com.xoj.backend.entity.User;
 import com.xoj.backend.mapper.UserBaseMapper;
 import com.xoj.backend.param.NormalLoginParam;

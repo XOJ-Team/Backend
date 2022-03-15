@@ -23,7 +23,7 @@ public class RedisTest {
 
     @Test
     public void testGetKey() {
-        redisUtils.getValue("123");
+        System.out.println(redisUtils.getValue("123"));
     }
 
     @Test
