@@ -127,7 +127,10 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public PageInfo<Question> selectAllQuestions(QuestionPageDto dto) {
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-        List<Question> questions = mapper.selectAll();
+        Example example = new Example(Question.class);
+        example.createCriteria()
+                .andEqualTo("isDelete", CommonConstants.NOT_DELETED);
+        List<Question> questions = mapper.selectByExample(example);
         return PageInfo.of(questions);
     }
 
