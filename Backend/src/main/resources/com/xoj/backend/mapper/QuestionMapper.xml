@@ -9,6 +9,7 @@
     <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
     <result column="creator" jdbcType="BIGINT" property="creator" />
     <result column="creator_name" jdbcType="VARCHAR" property="creatorName" />
+    <result column="is_hide" jdbcType="BIT" property="isHide" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.xoj.backend.entity.Question">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />

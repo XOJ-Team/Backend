@@ -28,14 +28,14 @@ public class QuestionController {
     @ApiOperation(value = "create a question")
     public RestResponse<?> createQuestion(@Valid @RequestBody QuestionCreateDto dto) {
         service.create(dto);
-        return RestResponse.ok(dto, "success");
+        return RestResponse.ok(dto, CommonErrorType.SUCCESS.getResultMsg());
     }
 
     @PutMapping("/")
     @ApiOperation(value = "update a question")
     public RestResponse<?> updateQuestion(@Valid @RequestBody QuestionModifyDto dto) {
         service.modify(dto);
-        return RestResponse.ok(dto, "success");
+        return RestResponse.ok(dto, CommonErrorType.SUCCESS.getResultMsg());
     }
 
     @GetMapping("/{questionId}")
@@ -70,4 +70,31 @@ public class QuestionController {
         service.delete(id);
         return RestResponse.ok(id, CommonErrorType.SUCCESS.getResultMsg());
     }
+
+    @GetMapping("all_show_questions")
+    @ApiOperation(value = "get all show questions")
+    public RestResponse<PageInfo<Question>> getAllShowQuestions(@RequestParam Integer pageNum,
+                                                            @RequestParam Integer pageSize) {
+        QuestionPageDto dto = QuestionPageDto.builder()
+                .pageNum(pageNum)
+                .pageSize(pageSize)
+                .build();
+        PageInfo<Question> pageInfo = service.selectAllShowQuestions(dto);
+        return RestResponse.ok(pageInfo, CommonErrorType.SUCCESS.getResultMsg());
+    }
+
+    @PutMapping("/hide")
+    @ApiOperation(value = "hide a question")
+    public RestResponse<?> hideQuestion(@RequestParam Long id) {
+        service.hide(id);
+        return RestResponse.ok(id, CommonErrorType.SUCCESS.getResultMsg());
+    }
+
+    @PutMapping("/show")
+    @ApiOperation(value = "show a question")
+    public RestResponse<?> showQuestion(@RequestParam Long id) {
+        service.show(id);
+        return RestResponse.ok(id, CommonErrorType.SUCCESS.getResultMsg());
+    }
+
 }

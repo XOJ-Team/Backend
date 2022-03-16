@@ -23,6 +23,8 @@ public class QuestionModifyDto {
 
     private String modifierName;
 
+    private Boolean isHide;
+
     @NotEmpty
     private String content;
 }

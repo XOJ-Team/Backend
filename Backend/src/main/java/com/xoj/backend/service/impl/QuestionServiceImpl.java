@@ -40,12 +40,16 @@ public class QuestionServiceImpl implements QuestionService {
      */
     @Override
     public void create(QuestionCreateDto dto) {
+        if (null == dto.getIsHide()){
+            dto.setIsHide(CommonConstants.IS_SHOW);
+        }
         UserBase user = userBaseService.getCurrentUser();
         Question question = Question.builder()
                 .content(dto.getContent())
                 .creator(user.getId())
                 .creatorName(user.getName())
                 .name(dto.getName())
+                .isHide(dto.getIsHide())
                 .build();
         mapper.insertSelective(question);
     }
@@ -65,6 +69,7 @@ public class QuestionServiceImpl implements QuestionService {
         Question question = Question.builder()
                 .content(dto.getContent())
                 .name(dto.getName())
+                .isHide(dto.getIsHide())
                 .modifier(user.getId())
                 .modifierName(user.getName())
                 .build();
@@ -126,6 +131,17 @@ public class QuestionServiceImpl implements QuestionService {
         return PageInfo.of(questions);
     }
 
+    @Override
+    public PageInfo<Question> selectAllShowQuestions(QuestionPageDto dto) {
+        PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
+        Example example = new Example(Question.class);
+        example.createCriteria()
+                .andEqualTo("isDelete", CommonConstants.NOT_DELETED)
+                .andEqualTo("isHide", CommonConstants.IS_SHOW);
+        List<Question> questions = mapper.selectByExample(example);
+        return PageInfo.of(questions);
+    }
+
     /**
      * delete a question
      * @param id
@@ -144,4 +160,28 @@ public class QuestionServiceImpl implements QuestionService {
                 .build();
         mapper.updateByExampleSelective(question, example);
     }
+
+    @Override
+    public void hide(Long id) {
+        Example example = new Example(Question.class);
+        example.createCriteria().andEqualTo("id", id);
+        Question question = Question.builder()
+                .isHide(CommonConstants.IS_HIDE)
+                .deleteTime(new Date())
+                .build();
+        mapper.updateByExampleSelective(question, example);
+    }
+
+    @Override
+    public void show(Long id) {
+        Example example = new Example(Question.class);
+        example.createCriteria().andEqualTo("id", id);
+        Question question = Question.builder()
+                .isHide(CommonConstants.IS_SHOW)
+                .deleteTime(new Date())
+                .build();
+        mapper.updateByExampleSelective(question, example);
+    }
+
+
 }

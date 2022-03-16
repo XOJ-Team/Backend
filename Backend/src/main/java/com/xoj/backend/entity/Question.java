@@ -42,5 +42,8 @@ public class Question implements Serializable {
     @Column(name = "modify_time")
     private Date modifyTime;
 
+    @Column(name = "is_hide")
+    private Boolean isHide;
+
     private String content;
 }

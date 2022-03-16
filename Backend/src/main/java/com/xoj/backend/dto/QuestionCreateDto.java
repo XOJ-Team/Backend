@@ -19,6 +19,8 @@ public class QuestionCreateDto {
 
     private String creatorName;
 
+    private Boolean isHide;
+
     @NotEmpty
     private String content;
 }

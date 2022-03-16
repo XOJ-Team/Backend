@@ -8,6 +8,10 @@ public class CommonConstants {
 
     public static final Boolean IS_DELETED = Boolean.TRUE;
 
+    public static final Boolean IS_SHOW = Boolean.FALSE;
+
+    public static final Boolean IS_HIDE = Boolean.TRUE;
+
     public static final String FILM_RECOGNITION = "F";
 
     public static final String LIKE_RECOGNITION = "L";

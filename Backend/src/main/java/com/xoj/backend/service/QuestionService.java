@@ -17,5 +17,11 @@ public interface QuestionService {
 
     PageInfo<Question> selectAllQuestions(QuestionPageDto dto);
 
+    PageInfo<Question> selectAllShowQuestions(QuestionPageDto dto);
+
     void delete(Long id);
+
+    void hide(Long id);
+
+    void show(Long id);
 }
