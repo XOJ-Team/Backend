@@ -12,8 +12,11 @@ import com.xoj.backend.exception.BizException;
 import com.xoj.backend.mapper.QuestionMapper;
 import com.xoj.backend.service.QuestionService;
 import com.xoj.backend.service.UserBaseService;
+import com.xoj.backend.util.JacksonUtils;
+import com.xoj.backend.util.RedisUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
@@ -25,6 +28,10 @@ public class QuestionServiceImpl implements QuestionService {
     private final UserBaseService userBaseService;
 
     private final QuestionMapper mapper;
+
+    private RedisUtils redisUtils;
+
+    private final String prefix = "QUESTION";
 
     /**
      * create a question
@@ -50,6 +57,10 @@ public class QuestionServiceImpl implements QuestionService {
      */
     @Override
     public void modify(QuestionModifyDto dto) {
+        String key = prefix + dto.getId();
+        if (redisUtils.hasKey(key)){
+            redisUtils.delete(key);
+        }
         UserBase user = userBaseService.getCurrentUser();
         Question question = Question.builder()
                 .content(dto.getContent())
@@ -72,7 +83,19 @@ public class QuestionServiceImpl implements QuestionService {
         Example example = new Example(Question.class);
         example.createCriteria().andEqualTo("id", id);
         try {
-            return mapper.selectOneByExample(example);
+            String key = prefix + id;
+            String str = null;
+            if (redisUtils.hasKey(key)) {
+                str = redisUtils.getValue(key);
+            }
+            if (StringUtils.hasText(str)) {
+                return JacksonUtils.string2Obj(str, Question.class);
+            } else {
+                Question question = mapper.selectOneByExample(example);
+                String JSONString = JacksonUtils.obj2String(question);
+                redisUtils.set(key, JSONString);
+                return question;
+            }
         } catch (Exception e) {
             throw new BizException(e.getMessage());
         }
@@ -109,6 +132,10 @@ public class QuestionServiceImpl implements QuestionService {
      */
     @Override
     public void delete(Long id) {
+        String key = prefix + id;
+        if (redisUtils.hasKey(key)){
+            redisUtils.delete(key);
+        }
         Example example = new Example(Question.class);
         example.createCriteria().andEqualTo("id", id);
         Question question = Question.builder()
