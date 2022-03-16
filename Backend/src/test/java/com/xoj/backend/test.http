@@ -1,0 +1,29 @@
+POST http://localhost:8081/verify
+Content-Type: application/json
+
+{
+  "mail": "jianghan.chen19@student.xjtlu.edu.cn"
+}
+
+###
+POST http://localhost:8081/login/mail
+Content-Type: application/json
+
+{
+  "mail": "jianghan.chen19@student.xjtlu.edu.cn",
+  "name": "jianghan",
+  "verificationNumber": 418399,
+  "password": "123123",
+  "phoneNumber": "1551293326"
+}
+
+###
+POST http://localhost:8081/login/normal
+Content-Type: application/json
+
+{
+"mail": "jianghan.chen19@student.xjtlu.edu.cn",
+"password": "123123"
+}
+
+###

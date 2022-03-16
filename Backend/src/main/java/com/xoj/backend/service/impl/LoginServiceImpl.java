@@ -37,6 +37,7 @@ public class LoginServiceImpl implements LoginService {
         }
         if(user.getPassword().equals(password)){
             Session.setUserInfo(user);
+            Session.setUser(user);
             UserThreadLocal.set(user);
             return RestResponse.ok(user);
         }else {
@@ -62,6 +63,7 @@ public class LoginServiceImpl implements LoginService {
 
         if(insert == 1){
             Session.setUserInfo(user);
+            Session.setUser(user);
             UserThreadLocal.set(user);
             return RestResponse.ok(user);
         }else{
@@ -102,6 +104,7 @@ public class LoginServiceImpl implements LoginService {
         user = getUser(user.getMail());
         if(update == 1){
             Session.setUserInfo(user);
+            Session.setUser(user);
             UserThreadLocal.set(user);
             return RestResponse.ok(user);
         }else{
