@@ -54,7 +54,12 @@ public class QuestionController {
 
     @GetMapping("/all_questions")
     @ApiOperation(value = "get all questions")
-    public RestResponse<PageInfo<Question>> getAllQuestions(@RequestBody QuestionPageDto dto) {
+    public RestResponse<PageInfo<Question>> getAllQuestions(@RequestParam Integer pageNum,
+                                                            @RequestParam Integer pageSize) {
+        QuestionPageDto dto = QuestionPageDto.builder()
+                .pageNum(pageNum)
+                .pageSize(pageSize)
+                .build();
         PageInfo<Question> pageInfo = service.selectAllQuestions(dto);
         return RestResponse.ok(pageInfo, CommonErrorType.SUCCESS.getResultMsg());
     }

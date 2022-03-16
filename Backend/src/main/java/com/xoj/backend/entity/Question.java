@@ -30,7 +30,7 @@ public class Question {
 
     private Long creator;
 
-    @Column(name = "create_name")
+    @Column(name = "creator_name")
     private String creatorName;
 
     private Long modifier;
@@ -38,7 +38,7 @@ public class Question {
     @Column(name = "modifier_name")
     private String modifierName;
 
-    @Column(name = "modifier_time")
+    @Column(name = "modify_time")
     private Date modifyTime;
 
     private String content;
