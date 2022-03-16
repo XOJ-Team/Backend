@@ -6,6 +6,7 @@ import com.xoj.backend.base.Session;
 import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.service.LoginService;
 import com.xoj.backend.service.VerificationService;
+import com.xoj.backend.util.TransUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -36,6 +37,7 @@ public class VerificationServiceImpl implements VerificationService {
 
     @Override
     public RestResponse<Object> sendVerificationNumber(String mail) {
+        mail = TransUtils.toLowerCase(mail);
         HttpSession session = Session.getSession();
         String verificationNumber = getRandomNumber();
         session.setAttribute("verificationNumber",verificationNumber);
@@ -59,7 +61,7 @@ public class VerificationServiceImpl implements VerificationService {
 
     @Override
     public RestResponse<Object> sendVerificationNumberResetPassword(String mail) {
-
+        mail = TransUtils.toLowerCase(mail);
         UserBase user = loginService.getUser(mail);
         if(user == null){
             return RestResponse.error("User not find");

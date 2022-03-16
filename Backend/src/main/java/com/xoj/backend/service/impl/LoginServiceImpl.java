@@ -30,6 +30,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public RestResponse<UserBase> normalLogin(NormalLoginParam param) {
         String mail = param.getMail();
+        mail = TransUtils.toLowerCase(mail);
         String password = TransUtils.getMd5(param.getPassword());
         UserBase user = getUser(mail);
         if(user == null){
@@ -55,7 +56,7 @@ public class LoginServiceImpl implements LoginService {
             return RestResponse.error("Verification code error");
         }
 
-        UserBase user  = UserBase.builder().mail(param.getMail())
+        UserBase user  = UserBase.builder().mail(TransUtils.toLowerCase(param.getMail()))
                 .name(param.getName())
                 .phoneNumber(param.getPhoneNumber())
                 .password(param.getPassword()).build();
@@ -74,6 +75,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public UserBase getUser(String mail) {
+        mail = TransUtils.toLowerCase(mail);
         Example example = new Example(UserBase.class);
         example.createCriteria()
                 .andEqualTo("mail", mail);
@@ -96,7 +98,7 @@ public class LoginServiceImpl implements LoginService {
             return RestResponse.error("Verification code error");
         }
 
-        UserBase user  = UserBase.builder().mail(param.getMail())
+        UserBase user  = UserBase.builder().mail(TransUtils.toLowerCase(param.getMail()))
                 .password(TransUtils.getMd5(param.getPassword())).build();
         Example example = new Example(UserBase.class);
         example.createCriteria().andEqualTo("mail", user.getMail());
