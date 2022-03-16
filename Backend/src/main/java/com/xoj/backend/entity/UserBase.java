@@ -31,7 +31,7 @@ public class UserBase {
 
     private Integer score;
 
-    private Integer rank;
+    private Integer ranking;
 
     private Byte authority;
 
