@@ -112,7 +112,7 @@ CREATE TABLE `user_base`  (
   `authority` tinyint(4) NULL DEFAULT NULL COMMENT '权限',
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '密码',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `phone_number`(`phone_number`) USING BTREE,
+  UNIQUE INDEX `mail`(`mail`) USING BTREE,
   INDEX `user_id_index`(`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户' ROW_FORMAT = Dynamic;
 

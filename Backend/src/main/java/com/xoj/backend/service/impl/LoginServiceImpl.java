@@ -59,7 +59,7 @@ public class LoginServiceImpl implements LoginService {
         UserBase user  = UserBase.builder().mail(TransUtils.toLowerCase(param.getMail()))
                 .name(param.getName())
                 .phoneNumber(param.getPhoneNumber())
-                .password(param.getPassword()).build();
+                .password(TransUtils.getMd5(param.getPassword())).build();
         int insert = mapper.insertSelective(user);
 
         if(insert == 1){
