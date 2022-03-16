@@ -1,7 +1,7 @@
 package com.xoj.backend.unitTest;
 
 import com.xoj.backend.util.UserThreadLocal;
-import com.xoj.backend.entity.User;
+import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.service.UserBaseService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +19,7 @@ public class UserTest {
 
     @Test
     public void testUser(){
-        User user = User.builder()
+        UserBase user = UserBase.builder()
                 .name("Yingxi")
                 .id(1927885L)
                 .mail("yingxi.chen@outlook.com")

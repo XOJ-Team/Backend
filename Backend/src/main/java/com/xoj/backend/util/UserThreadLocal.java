@@ -1,16 +1,16 @@
 package com.xoj.backend.util;
 
-import com.xoj.backend.entity.User;
+import com.xoj.backend.entity.UserBase;
 
 public class UserThreadLocal {
 
-    private static ThreadLocal<User> userThread = new ThreadLocal<>();
+    private static ThreadLocal<UserBase> userThread = new ThreadLocal<>();
 
-    public static void set(User user) {
+    public static void set(UserBase user) {
         userThread.set(user);
     }
 
-    public static User get() {
+    public static UserBase get() {
         return userThread.get();
     }
 

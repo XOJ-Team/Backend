@@ -3,7 +3,7 @@ package com.xoj.backend.service.impl;
 
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.base.Session;
-import com.xoj.backend.entity.User;
+import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.service.LoginService;
 import com.xoj.backend.service.VerificationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +60,7 @@ public class VerificationServiceImpl implements VerificationService {
     @Override
     public RestResponse<Object> sendVerificationNumberResetPassword(String mail) {
 
-        User user = loginService.getUser(mail);
+        UserBase user = loginService.getUser(mail);
         if(user == null){
             return RestResponse.error("User not find");
         }

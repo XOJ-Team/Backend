@@ -13,7 +13,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class UserBase {
     @Id
     private Long id;
 

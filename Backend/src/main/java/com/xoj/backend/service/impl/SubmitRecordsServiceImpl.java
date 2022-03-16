@@ -3,7 +3,7 @@ package com.xoj.backend.service.impl;
 import com.xoj.backend.dto.SubmitRecordsCreateDto;
 import com.xoj.backend.dto.SubmitRecordsModifyDto;
 import com.xoj.backend.entity.SubmitRecords;
-import com.xoj.backend.entity.User;
+import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.mapper.SubmitRecordsMapper;
 import com.xoj.backend.service.SubmitRecordsService;
 import com.xoj.backend.service.UserBaseService;
@@ -27,7 +27,7 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
      */
     @Override
     public void createRecord(SubmitRecordsCreateDto dto) {
-        User user = userBaseService.getCurrentUser();
+        UserBase user = userBaseService.getCurrentUser();
         // TODO judge
         SubmitRecords record = SubmitRecords.builder()
                 .questionId(dto.getQuestionId())
@@ -45,7 +45,7 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
      */
     @Override
     public List<SubmitRecords> selectQuestionRecords(Long questionId) {
-        User user = userBaseService.getCurrentUser();
+        UserBase user = userBaseService.getCurrentUser();
         Example example = new Example(SubmitRecords.class);
         example.createCriteria()
                 .andEqualTo("questionId", questionId)
@@ -59,7 +59,7 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
      */
     @Override
     public List<SubmitRecords> selectUserRecords() {
-        User user = userBaseService.getCurrentUser();
+        UserBase user = userBaseService.getCurrentUser();
         Example example = new Example(SubmitRecords.class);
         example.createCriteria()
                 .andEqualTo("userId", user.getId());

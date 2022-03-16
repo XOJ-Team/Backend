@@ -6,6 +6,7 @@ import com.xoj.backend.dto.QuestionCreateDto;
 import com.xoj.backend.dto.QuestionModifyDto;
 import com.xoj.backend.dto.QuestionPageDto;
 import com.xoj.backend.entity.Question;
+import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.notation.RequirePermission;
 import com.xoj.backend.service.QuestionService;
 import io.swagger.annotations.Api;
@@ -41,20 +42,27 @@ public class QuestionController {
     @ApiOperation(value = "get one question")
     public RestResponse<Question> getQuestion(@PathVariable("questionId") Long id) {
         Question question = service.selectOneQuestion(id);
-        return RestResponse.ok(question, "success");
+        return RestResponse.ok(question, CommonErrorType.SUCCESS.getResultMsg());
     }
 
     @GetMapping("/question_list")
     @ApiOperation(value = "get questions")
     public RestResponse<PageInfo<Question>> getQuestionList(@RequestBody QuestionPageDto dto) {
         PageInfo<Question> pageInfo = service.selectQuestions(dto);
-        return RestResponse.ok(pageInfo, "success");
+        return RestResponse.ok(pageInfo, CommonErrorType.SUCCESS.getResultMsg());
+    }
+
+    @GetMapping("/all_questions")
+    @ApiOperation(value = "get all questions")
+    public RestResponse<PageInfo<Question>> getAllQuestions(@RequestBody QuestionPageDto dto) {
+        PageInfo<Question> pageInfo = service.selectAllQuestions(dto);
+        return RestResponse.ok(pageInfo, CommonErrorType.SUCCESS.getResultMsg());
     }
 
     @DeleteMapping("/")
     @ApiOperation(value = "delete a question")
     public RestResponse<?> deleteQuestion(@RequestParam Long id){
         service.delete(id);
-        return RestResponse.ok(id, "success");
+        return RestResponse.ok(id, CommonErrorType.SUCCESS.getResultMsg());
     }
 }

@@ -7,7 +7,8 @@ import com.xoj.backend.dto.QuestionCreateDto;
 import com.xoj.backend.dto.QuestionModifyDto;
 import com.xoj.backend.dto.QuestionPageDto;
 import com.xoj.backend.entity.Question;
-import com.xoj.backend.entity.User;
+import com.xoj.backend.entity.UserBase;
+import com.xoj.backend.exception.BizException;
 import com.xoj.backend.mapper.QuestionMapper;
 import com.xoj.backend.service.QuestionService;
 import com.xoj.backend.service.UserBaseService;
@@ -32,7 +33,7 @@ public class QuestionServiceImpl implements QuestionService {
      */
     @Override
     public void create(QuestionCreateDto dto) {
-        User user = userBaseService.getCurrentUser();
+        UserBase user = userBaseService.getCurrentUser();
         Question question = Question.builder()
                 .content(dto.getContent())
                 .creator(user.getId())
@@ -49,7 +50,7 @@ public class QuestionServiceImpl implements QuestionService {
      */
     @Override
     public void modify(QuestionModifyDto dto) {
-        User user = userBaseService.getCurrentUser();
+        UserBase user = userBaseService.getCurrentUser();
         Question question = Question.builder()
                 .content(dto.getContent())
                 .name(dto.getName())
@@ -73,8 +74,7 @@ public class QuestionServiceImpl implements QuestionService {
         try {
             return mapper.selectOneByExample(example);
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new BizException(e.getMessage());
         }
     }
 
@@ -88,6 +88,18 @@ public class QuestionServiceImpl implements QuestionService {
     public PageInfo<Question> selectQuestions(QuestionPageDto dto) {
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
         List<Question> questions = mapper.selectQuestions(dto.getIds());
+        return PageInfo.of(questions);
+    }
+
+    /**
+     * show all the questions
+     * @param dto
+     * @return
+     */
+    @Override
+    public PageInfo<Question> selectAllQuestions(QuestionPageDto dto) {
+        PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
+        List<Question> questions = mapper.selectAll();
         return PageInfo.of(questions);
     }
 

@@ -1,11 +1,10 @@
 package com.xoj.backend.base;
 
-import com.xoj.backend.entity.User;
+import com.xoj.backend.entity.UserBase;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /***
@@ -22,7 +21,7 @@ public class Session {
     }
 
 
-    public static void setUserInfo(User user){
+    public static void setUserInfo(UserBase user){
         HttpSession session = getSession();
         session.setAttribute("id",user.getId());
         session.setAttribute("name",user.getName());
@@ -30,7 +29,7 @@ public class Session {
         session.setAttribute("authority",user.getAuthority());
     }
 
-    public static void setUser(User user){
+    public static void setUser(UserBase user){
         HttpSession session = getSession();
         session.setAttribute("user",user);
     }
@@ -39,7 +38,7 @@ public class Session {
         HttpSession session = getSession();
         session.removeAttribute("user");
     }
-    public static void removeUserInfo(User user){
+    public static void removeUserInfo(UserBase user){
         HttpSession session = getSession();
         session.removeAttribute("id");
         session.removeAttribute("name");

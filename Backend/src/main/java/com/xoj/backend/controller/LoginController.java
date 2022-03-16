@@ -1,8 +1,7 @@
 package com.xoj.backend.controller;
 
 import com.xoj.backend.base.RestResponse;
-import com.xoj.backend.base.Session;
-import com.xoj.backend.entity.User;
+import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.param.MailLoginParam;
 import com.xoj.backend.param.NormalLoginParam;
 import com.xoj.backend.service.LoginService;
@@ -35,13 +34,13 @@ public class LoginController {
 
     @RequestMapping(value = NORMAL_LOGIN_URL, method = RequestMethod.POST)
     @ApiOperation(value = "login without use verification number")
-    public RestResponse<User> normalLogin(@Valid @RequestBody NormalLoginParam loginParam, HttpSession session) {
+    public RestResponse<UserBase> normalLogin(@Valid @RequestBody NormalLoginParam loginParam, HttpSession session) {
         return loginService.normalLogin(loginParam);
     }
 
     @RequestMapping(value = MAIL_LOGIN_URL, method = RequestMethod.POST)
     @ApiOperation(value = "first login")
-    public RestResponse<User> mailLogin(@Valid @RequestBody MailLoginParam loginParam) {
+    public RestResponse<UserBase> mailLogin(@Valid @RequestBody MailLoginParam loginParam) {
         return loginService.mailLogin(loginParam);
     }
 
