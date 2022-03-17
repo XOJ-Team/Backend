@@ -7,6 +7,7 @@ import com.xoj.backend.dto.QuestionModifyDto;
 import com.xoj.backend.dto.QuestionPageDto;
 import com.xoj.backend.entity.Question;
 import com.xoj.backend.exception.CommonErrorType;
+import com.xoj.backend.model.QuestionModel;
 import com.xoj.backend.notation.RequirePermission;
 import com.xoj.backend.service.QuestionService;
 import io.swagger.annotations.Api;
@@ -40,27 +41,27 @@ public class QuestionController {
 
     @GetMapping("/{questionId}")
     @ApiOperation(value = "get one question")
-    public RestResponse<Question> getQuestion(@PathVariable("questionId") Long id) {
-        Question question = service.selectOneQuestion(id);
+    public RestResponse<QuestionModel> getQuestion(@PathVariable("questionId") Long id) {
+        QuestionModel question = service.selectOneQuestion(id);
         return RestResponse.ok(question, CommonErrorType.SUCCESS.getResultMsg());
     }
 
     @GetMapping("/question_list")
     @ApiOperation(value = "get questions")
-    public RestResponse<PageInfo<Question>> getQuestionList(@RequestBody QuestionPageDto dto) {
-        PageInfo<Question> pageInfo = service.selectQuestions(dto);
+    public RestResponse<PageInfo<QuestionModel>> getQuestionList(@RequestBody QuestionPageDto dto) {
+        PageInfo<QuestionModel> pageInfo = service.selectQuestions(dto);
         return RestResponse.ok(pageInfo, CommonErrorType.SUCCESS.getResultMsg());
     }
 
     @GetMapping("/all_questions")
     @ApiOperation(value = "get all questions")
-    public RestResponse<PageInfo<Question>> getAllQuestions(@RequestParam Integer pageNum,
+    public RestResponse<PageInfo<QuestionModel>> getAllQuestions(@RequestParam Integer pageNum,
                                                             @RequestParam Integer pageSize) {
         QuestionPageDto dto = QuestionPageDto.builder()
                 .pageNum(pageNum)
                 .pageSize(pageSize)
                 .build();
-        PageInfo<Question> pageInfo = service.selectAllQuestions(dto);
+        PageInfo<QuestionModel> pageInfo = service.selectAllQuestions(dto);
         return RestResponse.ok(pageInfo, CommonErrorType.SUCCESS.getResultMsg());
     }
 
@@ -73,13 +74,13 @@ public class QuestionController {
 
     @GetMapping("all_show_questions")
     @ApiOperation(value = "get all show questions")
-    public RestResponse<PageInfo<Question>> getAllShowQuestions(@RequestParam Integer pageNum,
+    public RestResponse<PageInfo<QuestionModel>> getAllShowQuestions(@RequestParam Integer pageNum,
                                                             @RequestParam Integer pageSize) {
         QuestionPageDto dto = QuestionPageDto.builder()
                 .pageNum(pageNum)
                 .pageSize(pageSize)
                 .build();
-        PageInfo<Question> pageInfo = service.selectAllShowQuestions(dto);
+        PageInfo<QuestionModel> pageInfo = service.selectAllShowQuestions(dto);
         return RestResponse.ok(pageInfo, CommonErrorType.SUCCESS.getResultMsg());
     }
 

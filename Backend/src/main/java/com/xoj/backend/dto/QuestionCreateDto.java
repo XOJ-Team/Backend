@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Builder
@@ -16,6 +17,11 @@ public class QuestionCreateDto {
     private String name;
 
     private String creator;
+
+    @NotNull
+    private Integer questionLevel;
+
+    private String tags;
 
     private String creatorName;
 

@@ -11,10 +11,25 @@
     <result column="creator_name" jdbcType="VARCHAR" property="creatorName" />
     <result column="is_hide" jdbcType="BIT" property="isHide" />
   </resultMap>
+
+
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.xoj.backend.entity.Question">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
-  <select id="selectQuestions" resultType="com.xoj.backend.entity.Question"
+
+    <resultMap id="questionModel" type="com.xoj.backend.model.QuestionModel">
+      <id column="id" jdbcType="BIGINT" property="id" />
+      <result column="is_delete" jdbcType="BIT" property="isDelete" />
+      <result column="NAME" jdbcType="VARCHAR" property="name" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
+      <result column="creator" jdbcType="BIGINT" property="creator" />
+      <result column="creator_name" jdbcType="VARCHAR" property="creatorName" />
+      <result column="is_hide" jdbcType="BIT" property="isHide" />
+      <result column="question_level" jdbcType="INTEGER" property="questionLevel" />
+    </resultMap>
+
+  <select id="selectQuestions" resultType="com.xoj.backend.model.QuestionModel"
           parameterType="java.util.List">
       SELECT *
       FROM oj.question
@@ -24,6 +39,22 @@
           #{item}
         </foreach>
       </if>
+  </select>
+    <select id="selectQuestion" resultMap="questionModel"
+            parameterType="java.lang.Long">
+      SELECT *
+      FROM oj.question
+        WHERE id = #{id}
+    </select>
+  <select id="selectShowQuestions" resultMap="questionModel">
+    SELECT *
+    FROM oj.question
+    WHERE (is_delete = 0 AND is_hide = 0)
+  </select>
+  <select id="selectAllQuestions" resultMap="questionModel">
+    SELECT *
+    FROM oj.question
+    WHERE is_delete = 0
   </select>
 
 

@@ -19,6 +19,11 @@ public class QuestionModifyDto {
     @NotEmpty
     private String name;
 
+    @NotNull
+    private Integer questionLevel;
+
+    private String tags;
+
     private Long modifier;
 
     private String modifierName;

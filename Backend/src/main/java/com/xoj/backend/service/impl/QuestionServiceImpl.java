@@ -10,6 +10,7 @@ import com.xoj.backend.entity.Question;
 import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.exception.BizException;
 import com.xoj.backend.mapper.QuestionMapper;
+import com.xoj.backend.model.QuestionModel;
 import com.xoj.backend.service.QuestionService;
 import com.xoj.backend.service.UserBaseService;
 import com.xoj.backend.util.JacksonUtils;
@@ -50,6 +51,8 @@ public class QuestionServiceImpl implements QuestionService {
                 .creatorName(user.getName())
                 .name(dto.getName())
                 .isHide(dto.getIsHide())
+                .questionLevel(dto.getQuestionLevel())
+                .tags(dto.getTags())
                 .build();
         mapper.insertSelective(question);
     }
@@ -72,6 +75,8 @@ public class QuestionServiceImpl implements QuestionService {
                 .isHide(dto.getIsHide())
                 .modifier(user.getId())
                 .modifierName(user.getName())
+                .questionLevel(dto.getQuestionLevel())
+                .tags(dto.getTags())
                 .build();
         Example example = new Example(Question.class);
         example.createCriteria().andEqualTo("id", dto.getId());
@@ -84,9 +89,7 @@ public class QuestionServiceImpl implements QuestionService {
      * @param id
      */
     @Override
-    public Question selectOneQuestion(Long id) {
-        Example example = new Example(Question.class);
-        example.createCriteria().andEqualTo("id", id);
+    public QuestionModel selectOneQuestion(Long id) {
         try {
             String key = prefix + id;
             String str = null;
@@ -94,9 +97,9 @@ public class QuestionServiceImpl implements QuestionService {
                 str = redisUtils.getValue(key);
             }
             if (StringUtils.hasText(str)) {
-                return JacksonUtils.string2Obj(str, Question.class);
+                return JacksonUtils.string2Obj(str, QuestionModel.class);
             } else {
-                Question question = mapper.selectOneByExample(example);
+                QuestionModel question = mapper.selectQuestion(id);
                 String JSONString = JacksonUtils.obj2String(question);
                 redisUtils.set(key, JSONString);
                 return question;
@@ -113,9 +116,9 @@ public class QuestionServiceImpl implements QuestionService {
      * @return
      */
     @Override
-    public PageInfo<Question> selectQuestions(QuestionPageDto dto) {
+    public PageInfo<QuestionModel> selectQuestions(QuestionPageDto dto) {
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-        List<Question> questions = mapper.selectQuestions(dto.getIds());
+        List<QuestionModel> questions = mapper.selectQuestions(dto.getIds());
         return PageInfo.of(questions);
     }
 
@@ -125,23 +128,16 @@ public class QuestionServiceImpl implements QuestionService {
      * @return
      */
     @Override
-    public PageInfo<Question> selectAllQuestions(QuestionPageDto dto) {
+    public PageInfo<QuestionModel> selectAllQuestions(QuestionPageDto dto) {
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-        Example example = new Example(Question.class);
-        example.createCriteria()
-                .andEqualTo("isDelete", CommonConstants.NOT_DELETED);
-        List<Question> questions = mapper.selectByExample(example);
+        List<QuestionModel> questions = mapper.selectAllQuestions();
         return PageInfo.of(questions);
     }
 
     @Override
-    public PageInfo<Question> selectAllShowQuestions(QuestionPageDto dto) {
+    public PageInfo<QuestionModel> selectAllShowQuestions(QuestionPageDto dto) {
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-        Example example = new Example(Question.class);
-        example.createCriteria()
-                .andEqualTo("isDelete", CommonConstants.NOT_DELETED)
-                .andEqualTo("isHide", CommonConstants.IS_SHOW);
-        List<Question> questions = mapper.selectByExample(example);
+        List<QuestionModel> questions = mapper.selectShowQuestions();
         return PageInfo.of(questions);
     }
 

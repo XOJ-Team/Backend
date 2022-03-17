@@ -5,19 +5,20 @@ import com.xoj.backend.dto.QuestionCreateDto;
 import com.xoj.backend.dto.QuestionModifyDto;
 import com.xoj.backend.dto.QuestionPageDto;
 import com.xoj.backend.entity.Question;
+import com.xoj.backend.model.QuestionModel;
 
 public interface QuestionService {
     void create(QuestionCreateDto dto);
 
     void modify(QuestionModifyDto dto);
 
-    Question selectOneQuestion(Long id);
+    QuestionModel selectOneQuestion(Long id);
 
-    PageInfo<Question> selectQuestions(QuestionPageDto dto);
+    PageInfo<QuestionModel> selectQuestions(QuestionPageDto dto);
 
-    PageInfo<Question> selectAllQuestions(QuestionPageDto dto);
+    PageInfo<QuestionModel> selectAllQuestions(QuestionPageDto dto);
 
-    PageInfo<Question> selectAllShowQuestions(QuestionPageDto dto);
+    PageInfo<QuestionModel> selectAllShowQuestions(QuestionPageDto dto);
 
     void delete(Long id);
 

@@ -22,7 +22,7 @@ spring:
         max-idle: 8
         min-idle: 0
         max-wait: 1000
-      shutdown-timeout: 100
+      shutdown-timeout: 800
 
 server:
   port: 8081
