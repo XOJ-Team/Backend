@@ -6,6 +6,7 @@ import com.xoj.backend.entity.SubmitRecords;
 import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.notation.RequirePermission;
 import com.xoj.backend.service.SubmitRecordsService;
+import com.xoj.backend.util.UserThreadLocal;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,11 @@ public class SubmitRecordsController {
 
     @Autowired
     private SubmitRecordsService submitRecordsService;
+
+    @ModelAttribute
+    public void setUser() {
+        UserThreadLocal.set();
+    }
 
     @GetMapping("/question_records")
     @RequirePermission

@@ -4,13 +4,11 @@ import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.notation.RequirePermission;
 import com.xoj.backend.param.VerificationParam;
 import com.xoj.backend.service.VerificationService;
+import com.xoj.backend.util.UserThreadLocal;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -25,6 +23,12 @@ public class VerificationController{
 
     @Autowired
     VerificationService verificationService;
+
+    @ModelAttribute
+    public void setUser() {
+        UserThreadLocal.set();
+    }
+
 
     @RequestMapping(value = "/verify", method = RequestMethod.POST)
     @ApiOperation(value = "send verification code")

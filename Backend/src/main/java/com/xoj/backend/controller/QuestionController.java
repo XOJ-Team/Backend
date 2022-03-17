@@ -10,6 +10,7 @@ import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.model.QuestionModel;
 import com.xoj.backend.notation.RequirePermission;
 import com.xoj.backend.service.QuestionService;
+import com.xoj.backend.util.UserThreadLocal;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,12 @@ import javax.validation.Valid;
 public class QuestionController {
     @Autowired
     private QuestionService service;
+
+    @ModelAttribute
+    public void setUser() {
+        UserThreadLocal.set();
+    }
+
 
     @PostMapping("/")
     @RequirePermission
