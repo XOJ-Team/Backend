@@ -24,10 +24,6 @@ public class QuestionModifyDto {
 
     private String tags;
 
-    private Long modifier;
-
-    private String modifierName;
-
     private Boolean isHide;
 
     @NotEmpty

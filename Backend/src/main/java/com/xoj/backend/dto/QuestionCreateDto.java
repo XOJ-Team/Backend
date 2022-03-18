@@ -16,14 +16,10 @@ public class QuestionCreateDto {
     @NotEmpty
     private String name;
 
-    private String creator;
-
     @NotNull
     private Integer questionLevel;
 
     private String tags;
-
-    private String creatorName;
 
     private Boolean isHide;
 
