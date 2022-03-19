@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 16/03/2022 17:34:49
+ Date: 17/03/2022 22:41:57
 */
 
 SET NAMES utf8mb4;
@@ -32,24 +32,30 @@ CREATE TABLE `competition`  (
   `creator_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '创建者姓名',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `competition_id_index`(`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '比赛' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '比赛' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for question
 -- ----------------------------
 DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question`  (
-  `id` bigint(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `is_delete` tinyint(1) NULL DEFAULT 0 COMMENT '是否删除',
   `NAME` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '名字',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `delete_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '删除时间',
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '题目内容',
-  `creator` bigint(11) NOT NULL COMMENT '创建者',
-  `creator_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '创建者姓名',
+  `creator` bigint(20) NOT NULL DEFAULT 0 COMMENT '创建者',
+  `creator_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '创建者姓名',
+  `modifier` bigint(20) NOT NULL DEFAULT 0 COMMENT '修改人id',
+  `modifier_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '修改人姓名',
+  `modify_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
+  `is_hide` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否隐藏',
+  `question_level` int(11) NOT NULL DEFAULT 0 COMMENT '难度',
+  `tags` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `question_id_index`(`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '题目' ROW_FORMAT = Dynamic;
+  UNIQUE INDEX `question_id_uindex`(`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '题目' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for question_competition
@@ -114,7 +120,7 @@ CREATE TABLE `user_base`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `mail`(`mail`) USING BTREE,
   INDEX `user_id_index`(`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for user_competition
