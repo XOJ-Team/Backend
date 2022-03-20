@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /***
- * @Author yezhen
+ * @Author jianghanchen
  * @Date 12:09 2022/3/13
  ***/
 public class Session {
@@ -20,6 +20,25 @@ public class Session {
         return session;
     }
 
+    public static UserBase getCurrentUser(){
+        return (UserBase)Session.getSession().getAttribute("user");
+    }
+
+    public static String getCurrentUserVerificationNumber(){
+        return (String)Session.getSession().getAttribute("verificationNumber");
+    }
+
+    public static String getCurrentUserMail(){
+        return (String)Session.getSession().getAttribute("mail");
+    }
+
+    public static String getCurrentUserName(){
+        return (String)Session.getSession().getAttribute("name");
+    }
+
+    public static Byte getCurrentUserAuthority(){
+        return (Byte)Session.getSession().getAttribute("authority");
+    }
 
     public static void setUserInfo(UserBase user){
         HttpSession session = getSession();

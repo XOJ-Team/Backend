@@ -2,11 +2,13 @@ package com.xoj.backend.service.impl;
 
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.base.Session;
+import com.xoj.backend.notation.RequireManagerPermission;
+import com.xoj.backend.notation.RequireProPermission;
 import com.xoj.backend.util.UserThreadLocal;
 import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.mapper.UserBaseMapper;
 import com.xoj.backend.param.NormalLoginParam;
-import com.xoj.backend.param.MailLoginParam;
+import com.xoj.backend.param.UserParam;
 import com.xoj.backend.param.ResetPasswordParam;
 import com.xoj.backend.service.LoginService;
 import com.xoj.backend.util.TransUtils;
@@ -17,7 +19,7 @@ import tk.mybatis.mapper.entity.Example;
 import java.util.List;
 
 /***
- * @Author yezhen
+ * @Author jianghanchen
  * @Date 22:51 2022/3/12
  ***/
 
@@ -49,10 +51,20 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     @SuppressWarnings("all")
-    public RestResponse<UserBase> mailLogin(MailLoginParam param) {
-        String verificationNumber = (String)Session.getSession().getAttribute("verificationNumber");
+    public boolean checkVerificationNumber(String verificationNumber) {
+        String verificationNumberInSession = (String)Session.getSession().getAttribute("verificationNumber");
 
-        if(verificationNumber == null || !param.getVerificationNumber().equals(verificationNumber)){
+        if(verificationNumberInSession == null || !verificationNumber.equals(verificationNumberInSession)){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    @SuppressWarnings("all")
+    public RestResponse<UserBase> mailLogin(UserParam param) {
+
+        if(checkVerificationNumber(param.getVerificationNumber())){
             return RestResponse.error("Verification code error");
         }
 
@@ -71,6 +83,8 @@ public class LoginServiceImpl implements LoginService {
             return RestResponse.error();
         }
     }
+
+
 
 
     @Override

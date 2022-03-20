@@ -2,9 +2,13 @@ package com.xoj.backend.controller;
 
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.entity.UserBase;
-import com.xoj.backend.param.MailLoginParam;
+import com.xoj.backend.notation.RequireManagerPermission;
+import com.xoj.backend.notation.RequirePermission;
+import com.xoj.backend.notation.RequireProPermission;
+import com.xoj.backend.param.UserParam;
 import com.xoj.backend.param.NormalLoginParam;
 import com.xoj.backend.service.LoginService;
+import com.xoj.backend.util.AuthenticateUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +16,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 /***
- * @Author yezhen
+ * @Author jianghanchen
  * @Date 16:32 2022/3/12
  ***/
 
@@ -34,13 +43,15 @@ public class LoginController {
 
     @RequestMapping(value = NORMAL_LOGIN_URL, method = RequestMethod.POST)
     @ApiOperation(value = "login without use verification number")
+    @RequireProPermission
     public RestResponse<UserBase> normalLogin(@Valid @RequestBody NormalLoginParam loginParam, HttpSession session) {
         return loginService.normalLogin(loginParam);
     }
 
     @RequestMapping(value = MAIL_LOGIN_URL, method = RequestMethod.POST)
     @ApiOperation(value = "first login")
-    public RestResponse<UserBase> mailLogin(@Valid @RequestBody MailLoginParam loginParam) {
+    @RequireManagerPermission
+    public RestResponse<UserBase> mailLogin(@Valid @RequestBody UserParam loginParam) {
         return loginService.mailLogin(loginParam);
     }
 

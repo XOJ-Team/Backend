@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /***
- * @Author yezhen
+ * @Author jianghanchen
  * @Date 22:48 2022/3/12
  ***/
 
@@ -17,10 +17,11 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MailLoginParam {
-    @NotNull
-    private String verificationNumber;
+public class UserParam {
 
+    private Long id;
+
+    private String verificationNumber;
 
     private String name;
 
@@ -30,4 +31,12 @@ public class MailLoginParam {
     private String phoneNumber;
 
     private String password;
+
+    private Integer score;
+
+    private Integer ranking;
+
+    private Byte authority;
+
+
 }

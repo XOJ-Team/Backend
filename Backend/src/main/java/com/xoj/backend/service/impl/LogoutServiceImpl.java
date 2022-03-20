@@ -6,7 +6,7 @@ import com.xoj.backend.util.AuthenticateUtils;
 import org.springframework.stereotype.Service;
 
 /***
- * @Author yezhen
+ * @Author jianghanchen
  * @Date 10:52 2022/3/15
  ***/
 

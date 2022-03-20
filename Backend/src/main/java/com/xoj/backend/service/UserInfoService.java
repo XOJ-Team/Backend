@@ -1,0 +1,31 @@
+package com.xoj.backend.service;
+
+import com.xoj.backend.base.RestResponse;
+import com.xoj.backend.entity.UserBase;
+import com.xoj.backend.param.NormalLoginParam;
+import com.xoj.backend.param.UserParam;
+
+/***
+ * @Author jianghanchen
+ * @Date 13:13 2022/3/20
+ ***/
+
+
+public interface UserInfoService {
+
+    RestResponse<UserBase> changeInfo(UserParam param);
+
+    RestResponse<UserBase> managerChangeInfo(UserParam param);
+
+    RestResponse<UserBase> addUser(UserParam param);
+
+    RestResponse<?> deleteUser(String mail);
+
+    RestResponse<?> managerDeleteUser(String mail);
+
+
+
+
+
+
+}
