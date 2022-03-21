@@ -36,7 +36,7 @@ public class ManageUserInfoController {
         return userInfoService.managerDeleteUser(mail);
     }
 
-    @RequestMapping(value = "/manager/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/manager/insert", method = RequestMethod.POST)
     @ApiOperation(value = "insert user")
     public RestResponse<?> insert(UserParam param) {
         return userInfoService.addUser(param);
