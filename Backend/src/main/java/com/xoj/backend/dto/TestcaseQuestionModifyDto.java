@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TestcaseCreateDto {
-    private Long questionId;
+public class TestcaseQuestionModifyDto {
+    private Long id;
 
     private String testcase;
 

@@ -5,10 +5,9 @@ import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.dto.QuestionCreateDto;
 import com.xoj.backend.dto.QuestionModifyDto;
 import com.xoj.backend.dto.QuestionPageDto;
-import com.xoj.backend.entity.Question;
 import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.model.QuestionModel;
-import com.xoj.backend.notation.RequirePermission;
+import com.xoj.backend.notation.RequireManagerPermission;
 import com.xoj.backend.service.QuestionService;
 import com.xoj.backend.util.UserThreadLocal;
 import io.swagger.annotations.Api;
@@ -32,7 +31,7 @@ public class QuestionController {
 
 
     @PostMapping("/")
-    @RequirePermission
+    @RequireManagerPermission
     @ApiOperation(value = "create a question")
     public RestResponse<?> createQuestion(@Valid @RequestBody QuestionCreateDto dto) {
         service.create(dto);
@@ -41,6 +40,7 @@ public class QuestionController {
 
     @PutMapping("/")
     @ApiOperation(value = "update a question")
+    @RequireManagerPermission
     public RestResponse<?> updateQuestion(@Valid @RequestBody QuestionModifyDto dto) {
         service.modify(dto);
         return RestResponse.ok(dto, CommonErrorType.SUCCESS.getResultMsg());
@@ -74,6 +74,7 @@ public class QuestionController {
 
     @DeleteMapping("/")
     @ApiOperation(value = "delete a question")
+    @RequireManagerPermission
     public RestResponse<?> deleteQuestion(@RequestParam Long id){
         service.delete(id);
         return RestResponse.ok(id, CommonErrorType.SUCCESS.getResultMsg());
@@ -93,6 +94,7 @@ public class QuestionController {
 
     @PutMapping("/hide")
     @ApiOperation(value = "hide a question")
+    @RequireManagerPermission
     public RestResponse<?> hideQuestion(@RequestParam Long id) {
         service.hide(id);
         return RestResponse.ok(id, CommonErrorType.SUCCESS.getResultMsg());
@@ -100,6 +102,7 @@ public class QuestionController {
 
     @PutMapping("/show")
     @ApiOperation(value = "show a question")
+    @RequireManagerPermission
     public RestResponse<?> showQuestion(@RequestParam Long id) {
         service.show(id);
         return RestResponse.ok(id, CommonErrorType.SUCCESS.getResultMsg());
