@@ -75,11 +75,11 @@ public class AuthenticateUtils {
 
     public static void authenticate(Integer authority){
         HttpSession session = Session.getSession();
-        session.setAttribute("authenticated",authority);
+        session.setAttribute("authority",authority);
     }
 
     public static void unAuthenticate(){
         HttpSession session = Session.getSession();
-        session.removeAttribute("authenticated");
+        session.removeAttribute("authority");
     }
 }
