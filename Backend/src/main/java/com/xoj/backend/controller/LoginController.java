@@ -43,14 +43,12 @@ public class LoginController {
 
     @RequestMapping(value = NORMAL_LOGIN_URL, method = RequestMethod.POST)
     @ApiOperation(value = "login without use verification number")
-    @RequireProPermission
     public RestResponse<UserBase> normalLogin(@Valid @RequestBody NormalLoginParam loginParam, HttpSession session) {
         return loginService.normalLogin(loginParam);
     }
 
     @RequestMapping(value = MAIL_LOGIN_URL, method = RequestMethod.POST)
     @ApiOperation(value = "first login")
-    @RequireManagerPermission
     public RestResponse<UserBase> mailLogin(@Valid @RequestBody UserParam loginParam) {
         return loginService.mailLogin(loginParam);
     }

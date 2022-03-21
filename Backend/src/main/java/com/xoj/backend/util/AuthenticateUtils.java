@@ -12,7 +12,7 @@ public class AuthenticateUtils {
 
     public static boolean isAuthenticated(){
         HttpSession session = Session.getSession();
-        Integer authenticated = (Integer)session.getAttribute("authenticated");
+        Integer authenticated = (Integer)session.getAttribute("authority");
         if(authenticated != null && authenticated >= 1){
             return true;
         }else {
@@ -22,7 +22,7 @@ public class AuthenticateUtils {
 
     public static boolean isProAuthenticated(){
         HttpSession session = Session.getSession();
-        Integer authenticated = (Integer)session.getAttribute("authenticated");
+        Integer authenticated = (Integer)session.getAttribute("authority");
         if(authenticated != null && authenticated >= 2){
             return true;
         }else {
@@ -32,7 +32,7 @@ public class AuthenticateUtils {
 
     public static boolean isManagerAuthenticated(){
         HttpSession session = Session.getSession();
-        Integer authenticated = (Integer)session.getAttribute("authenticated");
+        Integer authenticated = (Integer)session.getAttribute("authority");
         if(authenticated != null && authenticated >= 3){
             return true;
         }else {
@@ -44,7 +44,7 @@ public class AuthenticateUtils {
 
     public static boolean isNotAuthenticated(){
         HttpSession session = Session.getSession();
-        Integer authenticated = (Integer)session.getAttribute("authenticated");
+        Byte authenticated = (Byte)session.getAttribute("authority");
         if(authenticated != null && authenticated >= 1){
             return false;
         }else {
@@ -54,7 +54,7 @@ public class AuthenticateUtils {
 
     public static boolean isNotProAuthenticated(){
         HttpSession session = Session.getSession();
-        Integer authenticated = (Integer)session.getAttribute("authenticated");
+        Byte authenticated = (Byte)session.getAttribute("authority");
         if(authenticated != null && authenticated >= 2){
             return false;
         }else {
@@ -64,7 +64,7 @@ public class AuthenticateUtils {
 
     public static boolean isNotManagerAuthenticated(){
         HttpSession session = Session.getSession();
-        Integer authenticated = (Integer)session.getAttribute("authenticated");
+        Byte authenticated = (Byte)session.getAttribute("authority");
         if(authenticated != null && authenticated >= 3){
             return false;
         }else {
