@@ -32,7 +32,6 @@ public class VerificationController{
 
     @RequestMapping(value = "/verify", method = RequestMethod.POST)
     @ApiOperation(value = "send verification code")
-    @RequirePermission
     public RestResponse<Object> send(@Valid @RequestBody VerificationParam param) {
         return verificationService.sendVerificationNumber(param.getMail());
     }

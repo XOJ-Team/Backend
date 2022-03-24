@@ -11,13 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommonVO<T> {
-    /**
-     * 提示信息.
-     */
+
     private String msg;
 
-    /**
-     * 具体内容.
-     */
     private T data;
 }
