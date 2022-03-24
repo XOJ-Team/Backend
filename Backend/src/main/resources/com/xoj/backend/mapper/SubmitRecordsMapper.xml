@@ -15,4 +15,31 @@
     <result column="codes" jdbcType="VARCHAR" property="codes" />
   </resultMap>
 
+  <resultMap id="submitRecordsModelMap" type="com.xoj.backend.model.SubmitRecordsModel">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="question_id" jdbcType="BIGINT" property="questionId" />
+    <result column="question_name" jdbcType="VARCHAR" property="questionName" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="lang" jdbcType="VARCHAR" property="lang" />
+    <result column="result" jdbcType="INTEGER" property="result" />
+    <result column="time_cost" jdbcType="INTEGER" property="timeCost" />
+    <result column="memory_cost" jdbcType="DOUBLE" property="memoryCost" />
+    <result column="comments" jdbcType="VARCHAR" property="comments" />
+    <result column="codes" jdbcType="VARCHAR" property="codes" />
+  </resultMap>
+  <select id="selectQuestionRecords" resultMap="submitRecordsModelMap">
+    SELECT * FROM oj.submit_records
+WHERE (user_id = #{id} AND question_id = #{questionId})
+  </select>
+  <select id="selectUserRecords" resultMap="submitRecordsModelMap"
+          parameterType="java.lang.Long">
+    SELECT * FROM oj.submit_records
+    WHERE (user_id = #{id})
+    LIMIT 10
+  </select>
+  <select id="selectQuestionIds" resultType="java.lang.Long" parameterType="java.lang.Long">
+    SELECT DISTINCT question_id FROM oj.submit_records
+    WHERE (user_id = #{userId} AND result = 0)
+  </select>
 </mapper>

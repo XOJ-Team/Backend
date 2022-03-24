@@ -1,9 +1,11 @@
 package com.xoj.backend.controller;
 
 import com.xoj.backend.base.RestResponse;
+import com.xoj.backend.dto.SubmitRecordsCreateDto;
 import com.xoj.backend.dto.SubmitRecordsModifyDto;
 import com.xoj.backend.entity.SubmitRecords;
 import com.xoj.backend.exception.CommonErrorType;
+import com.xoj.backend.model.SubmitRecordsModel;
 import com.xoj.backend.notation.RequirePermission;
 import com.xoj.backend.service.SubmitRecordsService;
 import com.xoj.backend.util.UserThreadLocal;
@@ -27,23 +29,30 @@ public class SubmitRecordsController {
         UserThreadLocal.set();
     }
 
+    @PostMapping("/")
+    @ApiOperation(value = "create submit record")
+    public RestResponse<?> create(@RequestBody SubmitRecordsCreateDto dto) {
+        submitRecordsService.createRecord(dto);
+        return RestResponse.ok(dto, CommonErrorType.SUCCESS.getResultMsg());
+    }
+
     @GetMapping("/question_records")
     @RequirePermission
     @ApiOperation(value = "show the records of one question")
-    public RestResponse<List<SubmitRecords>> selectByQuestion(@RequestParam Long questionId) {
-        List<SubmitRecords> submitRecords = submitRecordsService.selectQuestionRecords(questionId);
+    public RestResponse<List<SubmitRecordsModel>> selectByQuestion(@RequestParam Long questionId) {
+        List<SubmitRecordsModel> submitRecords = submitRecordsService.selectQuestionRecords(questionId);
         return RestResponse.ok(submitRecords, CommonErrorType.SUCCESS.getResultMsg());
     }
 
     @GetMapping("/user_records")
     @RequirePermission
     @ApiOperation(value = "show the records of a user")
-    public RestResponse<List<SubmitRecords>> selectByUser() {
-        List<SubmitRecords> submitRecords = submitRecordsService.selectUserRecords();
+    public RestResponse<List<SubmitRecordsModel>> selectByUser() {
+        List<SubmitRecordsModel> submitRecords = submitRecordsService.selectUserRecords();
         return RestResponse.ok(submitRecords, CommonErrorType.SUCCESS.getResultMsg());
     }
 
-    @PostMapping("/modify")
+    @PutMapping("/")
     @ApiOperation(value = "modify the comment of a record")
     public RestResponse<?> modify(@RequestBody SubmitRecordsModifyDto dto) {
         submitRecordsService.modifyRecord(dto);

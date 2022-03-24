@@ -23,8 +23,7 @@ public interface UserInfoService {
 
     RestResponse<?> managerDeleteUser(String mail);
 
-
-
+    void updateSolvedQuestions(Long questionId, UserBase user);
 
 
 

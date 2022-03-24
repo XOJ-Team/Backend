@@ -5,10 +5,13 @@ import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.dto.QuestionCreateDto;
 import com.xoj.backend.dto.QuestionModifyDto;
 import com.xoj.backend.dto.QuestionPageDto;
+import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.model.QuestionModel;
 import com.xoj.backend.notation.RequireManagerPermission;
 import com.xoj.backend.service.QuestionService;
+import com.xoj.backend.service.SubmitRecordsService;
+import com.xoj.backend.service.UserBaseService;
 import com.xoj.backend.util.UserThreadLocal;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,6 +26,12 @@ import javax.validation.Valid;
 public class QuestionController {
     @Autowired
     private QuestionService service;
+
+    @Autowired
+    private UserBaseService userBaseService;
+
+    @Autowired
+    private SubmitRecordsService submitRecordsService;
 
     @ModelAttribute
     public void setUser() {
@@ -84,6 +93,8 @@ public class QuestionController {
     @ApiOperation(value = "get all show questions")
     public RestResponse<PageInfo<QuestionModel>> getAllShowQuestions(@RequestParam Integer pageNum,
                                                             @RequestParam Integer pageSize) {
+        UserBase user = userBaseService.getCurrentUser();
+        user.setSolved(submitRecordsService.solved(user.getId()));
         QuestionPageDto dto = QuestionPageDto.builder()
                 .pageNum(pageNum)
                 .pageSize(pageSize)

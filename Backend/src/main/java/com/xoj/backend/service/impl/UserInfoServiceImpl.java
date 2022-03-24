@@ -2,20 +2,18 @@ package com.xoj.backend.service.impl;
 
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.base.Session;
+import com.xoj.backend.common.LevelEnum;
 import com.xoj.backend.mapper.UserBaseMapper;
 import com.xoj.backend.entity.UserBase;
-import com.xoj.backend.mapper.UserBaseMapper;
-import com.xoj.backend.param.NormalLoginParam;
+import com.xoj.backend.model.QuestionModel;
 import com.xoj.backend.param.UserParam;
 import com.xoj.backend.service.LoginService;
+import com.xoj.backend.service.QuestionService;
 import com.xoj.backend.service.UserInfoService;
-import com.xoj.backend.util.UserThreadLocal;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
-
-import javax.validation.constraints.NotNull;
 
 /***
  * @Author jianghanchen
@@ -34,6 +32,8 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Autowired
     LoginService loginService;
 
+
+    private final QuestionService questionService;
 
 
     @Override
@@ -118,7 +118,25 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
 
-
+    @Override
+    public void updateSolvedQuestions(Long questionId, UserBase user) {
+        QuestionModel questionModel = questionService.selectOneQuestion(questionId);
+        Integer level = questionModel.getQuestionLevel();
+        Example example = new Example(UserBase.class);
+        example.createCriteria().andEqualTo("id", user.getId());
+        // query the number of solved question of the user
+        user = mapper.selectOneByExample(example);
+        UserBase userBase = new UserBase();
+        if (LevelEnum.EASY.getCode().equals(level)) {
+            userBase.setEasyNumber(user.getEasyNumber() + 1);
+        }else if (LevelEnum.MEDIUM.getCode().equals(level)) {
+            userBase.setMediumNumber(user.getMediumNumber() + 1);
+        }else {
+            userBase.setHardNumber(user.getHardNumber() + 1);
+        }
+        userBase.setSolvedNumber(user.getSolvedNumber() + 1);
+        mapper.updateByExampleSelective(userBase, example);
+    }
 
 
 

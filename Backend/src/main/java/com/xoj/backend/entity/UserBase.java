@@ -5,9 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 @Data
@@ -38,4 +40,20 @@ public class UserBase implements Serializable {
 
     private String password;
 
+    @Column(name = "solved_number")
+    private Integer solvedNumber;
+
+    @Column(name = "easy_number")
+    private Integer easyNumber;
+
+    @Column(name = "medium_number")
+    private Integer mediumNumber;
+
+    @Column(name = "hard_number")
+    private Integer hardNumber;
+
+    @Column(name = "profile_photo")
+    private String profilePhoto;
+
+    private List<Long> solved;
 }
