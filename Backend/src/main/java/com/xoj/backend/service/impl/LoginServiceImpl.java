@@ -4,6 +4,7 @@ import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.base.Session;
 import com.xoj.backend.notation.RequireManagerPermission;
 import com.xoj.backend.notation.RequireProPermission;
+import com.xoj.backend.param.MailLoginParam;
 import com.xoj.backend.util.UserThreadLocal;
 import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.mapper.UserBaseMapper;
@@ -54,7 +55,7 @@ public class LoginServiceImpl implements LoginService {
     public boolean checkVerificationNumber(String verificationNumber) {
         String verificationNumberInSession = (String)Session.getSession().getAttribute("verificationNumber");
 
-        if(verificationNumberInSession == null || !verificationNumber.equals(verificationNumberInSession)){
+        if(verificationNumberInSession != null && verificationNumber.equals(verificationNumberInSession)){
             return false;
         }
         return true;
@@ -62,7 +63,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     @SuppressWarnings("all")
-    public RestResponse<UserBase> mailLogin(UserParam param) {
+    public RestResponse<UserBase> mailLogin(MailLoginParam param) {
 
         if(checkVerificationNumber(param.getVerificationNumber())){
             return RestResponse.error("Verification code error");

@@ -3,12 +3,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password:
-    url: jdbc:mysql://localhost:3306/oj?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/oj?useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
 
   mail:
     host: ***REMOVED***
     username: ***REMOVED***
-
     password: ***REMOVED***
     port: 587
     default-encoding: UTF-8
