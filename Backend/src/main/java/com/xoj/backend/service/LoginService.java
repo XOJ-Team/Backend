@@ -2,10 +2,7 @@ package com.xoj.backend.service;
 
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.entity.UserBase;
-import com.xoj.backend.param.MailLoginParam;
-import com.xoj.backend.param.NormalLoginParam;
-import com.xoj.backend.param.UserParam;
-import com.xoj.backend.param.ResetPasswordParam;
+import com.xoj.backend.param.*;
 
 /***
  * @Author jianghanchen
@@ -21,4 +18,6 @@ public interface  LoginService {
     RestResponse<UserBase> resetPassword(ResetPasswordParam param);
 
     boolean checkVerificationNumber(String verificationNumber);
+
+    RestResponse<UserBase> mailRegister(MailRegisterParam param);
 }

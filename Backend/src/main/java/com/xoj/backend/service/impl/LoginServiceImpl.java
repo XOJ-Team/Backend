@@ -4,13 +4,10 @@ import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.base.Session;
 import com.xoj.backend.notation.RequireManagerPermission;
 import com.xoj.backend.notation.RequireProPermission;
-import com.xoj.backend.param.MailLoginParam;
+import com.xoj.backend.param.*;
 import com.xoj.backend.util.UserThreadLocal;
 import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.mapper.UserBaseMapper;
-import com.xoj.backend.param.NormalLoginParam;
-import com.xoj.backend.param.UserParam;
-import com.xoj.backend.param.ResetPasswordParam;
 import com.xoj.backend.service.LoginService;
 import com.xoj.backend.util.TransUtils;
 import lombok.AllArgsConstructor;
@@ -64,6 +61,24 @@ public class LoginServiceImpl implements LoginService {
     @Override
     @SuppressWarnings("all")
     public RestResponse<UserBase> mailLogin(MailLoginParam param) {
+        if(checkVerificationNumber(param.getVerificationNumber())){
+            return RestResponse.error("Verification code error");
+        }
+
+        try{
+            UserBase user  = getUser(param.getMail());
+            Session.setUserInfo(user);
+            Session.setUser(user);
+            UserThreadLocal.set(user);
+            return RestResponse.ok(user);
+        }catch (Exception e){
+            return RestResponse.error();
+        }
+    }
+
+    @Override
+    @SuppressWarnings("all")
+    public RestResponse<UserBase> mailRegister(MailRegisterParam param) {
 
         if(checkVerificationNumber(param.getVerificationNumber())){
             return RestResponse.error("Verification code error");

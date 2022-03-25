@@ -6,6 +6,7 @@ import com.xoj.backend.notation.RequireManagerPermission;
 import com.xoj.backend.notation.RequirePermission;
 import com.xoj.backend.notation.RequireProPermission;
 import com.xoj.backend.param.MailLoginParam;
+import com.xoj.backend.param.MailRegisterParam;
 import com.xoj.backend.param.UserParam;
 import com.xoj.backend.param.NormalLoginParam;
 import com.xoj.backend.service.LoginService;
@@ -49,10 +50,12 @@ public class LoginController {
     }
 
     @RequestMapping(value = MAIL_LOGIN_URL, method = RequestMethod.POST)
-    @ApiOperation(value = "first login")
+    @ApiOperation(value = "mail login")
     public RestResponse<UserBase> mailLogin(@Valid @RequestBody MailLoginParam loginParam) {
         return loginService.mailLogin(loginParam);
     }
+
+
 
 
 

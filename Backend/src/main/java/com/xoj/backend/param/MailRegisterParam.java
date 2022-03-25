@@ -9,20 +9,24 @@ import javax.validation.constraints.NotNull;
 
 /***
  * @Author jianghanchen
- * @Date 13:02 2022/3/24
+ * @Date 15:36 2022/3/25
  ***/
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MailLoginParam {
+public class MailRegisterParam {
 
 
     private String verificationNumber;
 
+    private String name;
 
     @NotNull
     private String mail;
 
+    private String phoneNumber;
+
+    private String password;
 }
