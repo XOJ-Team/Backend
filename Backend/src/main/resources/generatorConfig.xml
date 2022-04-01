@@ -13,7 +13,7 @@
                 driverClass="com.mysql.cj.jdbc.Driver"
                 connectionURL="jdbc:mysql://localhost:3306/oj?useUnicode=true&amp;allowPublicKeyRetrieval=true&amp;characeterEncoding=UTF-8&amp;serverTimezone=UTC"
                 userId="root"
-                password="Cyx010815">
+                password="root">
         </jdbcConnection>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
