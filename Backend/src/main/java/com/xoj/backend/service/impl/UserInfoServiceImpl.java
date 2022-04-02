@@ -9,6 +9,7 @@ import com.xoj.backend.model.QuestionModel;
 import com.xoj.backend.param.UserParam;
 import com.xoj.backend.service.LoginService;
 import com.xoj.backend.service.QuestionService;
+import com.xoj.backend.service.UserBaseService;
 import com.xoj.backend.service.UserInfoService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 
     private final UserBaseMapper mapper;
+
+    private final UserBaseService userBaseService;
 
     @Autowired
     LoginService loginService;
@@ -138,6 +141,14 @@ public class UserInfoServiceImpl implements UserInfoService {
         mapper.updateByExampleSelective(userBase, example);
     }
 
+    @Override
+    public UserBase selectUser() {
+        UserBase user = userBaseService.getCurrentUser();
+        Example example = new Example(UserBase.class);
+        example.createCriteria().andEqualTo("id", user.getId());
+        UserBase userBase = mapper.selectOneByExample(example);
+        return userBase;
+    }
 
 
 }

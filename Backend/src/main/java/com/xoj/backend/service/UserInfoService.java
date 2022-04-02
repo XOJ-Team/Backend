@@ -25,6 +25,6 @@ public interface UserInfoService {
 
     void updateSolvedQuestions(Long questionId, UserBase user);
 
-
+    UserBase selectUser();
 
 }

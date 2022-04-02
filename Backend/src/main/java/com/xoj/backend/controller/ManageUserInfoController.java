@@ -2,14 +2,14 @@ package com.xoj.backend.controller;
 
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.entity.UserBase;
+import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.param.UserParam;
 import com.xoj.backend.service.UserInfoService;
+import com.xoj.backend.util.UserThreadLocal;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /***
  * @Author jianghanchen
@@ -22,6 +22,10 @@ public class ManageUserInfoController {
     @Autowired
     UserInfoService userInfoService;
 
+    @ModelAttribute
+    public void setUser() {
+        UserThreadLocal.set();
+    }
 
     @RequestMapping(value = "/manager/modify", method = RequestMethod.POST)
     @ApiOperation(value = "manager modify user information")
@@ -42,6 +46,11 @@ public class ManageUserInfoController {
         return userInfoService.addUser(param);
     }
 
-
+    @GetMapping("/manager/user")
+    @ApiOperation(value = "get user info")
+    public RestResponse<UserBase> getUser(){
+        UserBase userBase = userInfoService.selectUser();
+        return RestResponse.ok(userBase, CommonErrorType.SUCCESS.getResultMsg());
+    }
 
 }
