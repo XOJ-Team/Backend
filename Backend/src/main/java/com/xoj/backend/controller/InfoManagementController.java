@@ -37,6 +37,11 @@ public class InfoManagementController {
         return userInfoService.deleteUser(mail);
     }
 
+    @RequestMapping(value = "/user/info", method = RequestMethod.POST)
+    @ApiOperation(value = "get user' information by id")
+    public RestResponse<?> getUserInfo(String id) {
+        return userInfoService.getUserInfo(id);
+    }
 
 
 }
