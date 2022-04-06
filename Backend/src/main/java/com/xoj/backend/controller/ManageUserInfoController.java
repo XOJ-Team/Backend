@@ -47,7 +47,7 @@ public class ManageUserInfoController {
     }
 
     @RequestMapping(value = "/manager/info", method = RequestMethod.POST)
-    @ApiOperation(value = "get user' information by mail")
+    @ApiOperation(value = "get user' information by id")
     public RestResponse<?> getUserInfo(String id) {
         return userInfoService.getUserInfo(id);
     }
