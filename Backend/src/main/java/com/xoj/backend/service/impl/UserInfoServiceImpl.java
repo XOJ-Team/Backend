@@ -79,6 +79,13 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    public RestResponse<UserBase> getUserInfo(String id) {
+        UserBase user = loginService.getUserById(id);
+        if(user != null) return RestResponse.ok(user);
+        return RestResponse.error("no such user");
+    }
+
+    @Override
     public RestResponse<UserBase> changeInfo(UserParam param) {
         UserBase user = UserBase.builder()
                 .name(param.getName())

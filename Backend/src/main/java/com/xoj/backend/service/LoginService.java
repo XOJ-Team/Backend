@@ -15,6 +15,8 @@ public interface  LoginService {
 
     UserBase getUser(String mail);
 
+    UserBase getUserById(String id);
+
     RestResponse<UserBase> resetPassword(ResetPasswordParam param);
 
     boolean checkVerificationNumber(String verificationNumber);

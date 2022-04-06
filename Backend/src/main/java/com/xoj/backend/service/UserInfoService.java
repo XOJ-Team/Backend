@@ -15,6 +15,8 @@ public interface UserInfoService {
 
     RestResponse<UserBase> changeInfo(UserParam param);
 
+    RestResponse<UserBase> getUserInfo(String id);
+
     RestResponse<UserBase> managerChangeInfo(UserParam param);
 
     RestResponse<UserBase> addUser(UserParam param);

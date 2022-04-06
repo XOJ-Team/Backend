@@ -122,6 +122,22 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
+    public UserBase getUserById(String id) {
+        Example example = new Example(UserBase.class);
+        example.createCriteria()
+                .andEqualTo("id", id);
+        List<UserBase> users = mapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(users)){
+            return null;
+        }else{
+            UserBase user = users.get(0);
+            Session.setUserInfo(user);
+            return user;
+        }
+    }
+
+
+    @Override
     @SuppressWarnings("all")
     public RestResponse<UserBase> resetPassword(ResetPasswordParam param) {
         Integer verificationNumber = (Integer)Session.getSession().getAttribute("verificationNumber");
