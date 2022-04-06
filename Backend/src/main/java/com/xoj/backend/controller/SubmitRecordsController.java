@@ -45,10 +45,9 @@ public class SubmitRecordsController {
     }
 
     @GetMapping("/user_records")
-    @RequirePermission
     @ApiOperation(value = "show the records of a user")
-    public RestResponse<List<SubmitRecordsModel>> selectByUser() {
-        List<SubmitRecordsModel> submitRecords = submitRecordsService.selectUserRecords();
+    public RestResponse<List<SubmitRecordsModel>> selectByUser(@RequestParam Long userId) {
+        List<SubmitRecordsModel> submitRecords = submitRecordsService.selectUserRecords(userId);
         return RestResponse.ok(submitRecords, CommonErrorType.SUCCESS.getResultMsg());
     }
 

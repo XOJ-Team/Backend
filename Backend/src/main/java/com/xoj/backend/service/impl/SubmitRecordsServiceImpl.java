@@ -91,9 +91,8 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
      * @return
      */
     @Override
-    public List<SubmitRecordsModel> selectUserRecords() {
-        UserBase user = userBaseService.getCurrentUser();
-        return mapper.selectUserRecords(user.getId());
+    public List<SubmitRecordsModel> selectUserRecords(Long userId) {
+        return mapper.selectUserRecords(userId);
     }
 
     /**
