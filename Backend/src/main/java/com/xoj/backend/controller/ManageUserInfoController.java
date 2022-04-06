@@ -46,6 +46,12 @@ public class ManageUserInfoController {
         return userInfoService.addUser(param);
     }
 
+    @RequestMapping(value = "/manager/info", method = RequestMethod.POST)
+    @ApiOperation(value = "get user' information by mail")
+    public RestResponse<?> getUserInfo(String id) {
+        return userInfoService.getUserInfo(id);
+    }
+
     @GetMapping("/manager/user")
     @ApiOperation(value = "get user info")
     public RestResponse<UserBase> getUser(){
