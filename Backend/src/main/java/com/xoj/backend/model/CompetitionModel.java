@@ -1,4 +1,4 @@
-package com.xoj.backend.entity;
+package com.xoj.backend.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -17,27 +16,21 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Competition implements Serializable {
-    @Id
+public class CompetitionModel {
+
     private Long id;
 
-    @Column(name = "is_delete")
     private Boolean isDelete;
 
     private String name;
 
-    @Column(name = "create_time")
     private Date createTime;
 
-    @Column(name = "delete_time")
     private Date deleteTime;
 
-    @Column(name = "brief_introduction")
     private String briefIntroduction;
 
     private Long creator;
 
-    @Column(name = "creator_name")
     private String creatorName;
-
 }

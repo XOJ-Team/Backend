@@ -37,13 +37,14 @@ public class UploadImageServiceImpl implements UploadImageService {
             Request request = new Request.Builder()
                     .url(uploadUrl)
                     .method("POST", body)
+                    .addHeader("User-Agent","Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:0.9.4)")
                     .addHeader("Authorization", authorization)
                     .build();
             Response response = client.newCall(request).execute();
             if (file.exists()) {
                 file.delete();
             }
-            return response.toString();
+            return response.body().string();
         } catch (Exception e) {
             throw new BizException();
         }
