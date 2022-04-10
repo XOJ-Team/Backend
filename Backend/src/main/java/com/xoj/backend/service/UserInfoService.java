@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface UserInfoService {
 
-    RestResponse<UserBase> changeInfo(UserParam param);
+    RestResponse<UserBase> changeInfo(ChangeUserInfoParam param);
 
     RestResponse<UserBase> getUserInfo(String id);
 
