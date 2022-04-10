@@ -2,6 +2,7 @@ package com.xoj.backend.service;
 
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.entity.UserBase;
+import com.xoj.backend.param.ChangeUserInfoParam;
 import com.xoj.backend.param.NormalLoginParam;
 import com.xoj.backend.param.UserParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,4 +32,6 @@ public interface UserInfoService {
     UserBase selectUser();
 
     String updateImage(MultipartFile smfile);
+
+
 }

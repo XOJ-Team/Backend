@@ -6,6 +6,7 @@ import com.xoj.backend.common.LevelEnum;
 import com.xoj.backend.mapper.UserBaseMapper;
 import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.model.QuestionModel;
+import com.xoj.backend.param.ChangeUserInfoParam;
 import com.xoj.backend.param.UserParam;
 import com.xoj.backend.service.*;
 import lombok.AllArgsConstructor;
