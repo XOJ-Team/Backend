@@ -13,7 +13,7 @@ import com.xoj.backend.param.UserParam;
 
 public interface UserInfoService {
 
-    RestResponse<UserBase> changeInfo(UserParam param);
+    RestResponse<UserBase> changeInfo(ChangeUserInfoParam param);
 
     RestResponse<UserBase> getUserInfo(String id);
 
