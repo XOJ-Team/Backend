@@ -87,18 +87,15 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public RestResponse<UserBase> changeInfo(UserParam param) {
+    public RestResponse<UserBase> changeInfo(ChangeUserInfoParam param) {
         UserBase user = UserBase.builder()
                 .name(param.getName())
                 .phoneNumber(param.getPhoneNumber())
                 .mail(param.getMail())
                 .password(param.getPassword())
-                .ranking(param.getRanking())
-                .score(param.getScore())
-                .authority(param.getAuthority())
                 .build();
         Example example = new Example(UserBase.class);
-        example.createCriteria().andEqualTo("id", param.getId());
+        example.createCriteria().andEqualTo("mail", param.getMail());
         int update = mapper.updateByExampleSelective(user, example);
         if(update == 1){
             return RestResponse.ok(user);
