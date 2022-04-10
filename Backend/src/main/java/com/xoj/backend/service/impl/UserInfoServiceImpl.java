@@ -7,13 +7,11 @@ import com.xoj.backend.mapper.UserBaseMapper;
 import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.model.QuestionModel;
 import com.xoj.backend.param.UserParam;
-import com.xoj.backend.service.LoginService;
-import com.xoj.backend.service.QuestionService;
-import com.xoj.backend.service.UserBaseService;
-import com.xoj.backend.service.UserInfoService;
+import com.xoj.backend.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import tk.mybatis.mapper.entity.Example;
 
 /***
@@ -31,6 +29,8 @@ public class UserInfoServiceImpl implements UserInfoService {
     private final UserBaseMapper mapper;
 
     private final UserBaseService userBaseService;
+
+    private final UploadImageService uploadImageService;
 
     @Autowired
     LoginService loginService;
@@ -155,6 +155,19 @@ public class UserInfoServiceImpl implements UserInfoService {
         example.createCriteria().andEqualTo("id", user.getId());
         UserBase userBase = mapper.selectOneByExample(example);
         return userBase;
+    }
+
+    @Override
+    public String updateImage(MultipartFile smfile) {
+        UserBase user = userBaseService.getCurrentUser();
+        Example example = new Example(UserBase.class);
+        example.createCriteria().andEqualTo("id", user.getId());
+        String url = uploadImageService.uploadPicture(smfile);
+        UserBase userBase = UserBase.builder()
+                .profilePhoto(url)
+                .build();
+        mapper.updateByExampleSelective(userBase, example);
+        return url;
     }
 
 

@@ -3,6 +3,7 @@ package com.xoj.backend.controller;
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.exception.CommonErrorType;
+import com.xoj.backend.notation.RequirePermission;
 import com.xoj.backend.param.UserParam;
 import com.xoj.backend.service.UserInfoService;
 import com.xoj.backend.util.UserThreadLocal;
@@ -10,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /***
  * @Author jianghanchen
@@ -53,4 +55,10 @@ public class ManageUserInfoController {
         return RestResponse.ok(userBase, CommonErrorType.SUCCESS.getResultMsg());
     }
 
+    @PostMapping("/manager/image")
+    @RequirePermission
+    @ApiOperation(value = "update profile image")
+    public RestResponse<?> changeImage(MultipartFile smfile) {
+        return RestResponse.ok(userInfoService.updateImage(smfile), CommonErrorType.SUCCESS.getResultMsg());
+    }
 }

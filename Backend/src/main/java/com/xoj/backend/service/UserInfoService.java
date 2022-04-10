@@ -4,6 +4,7 @@ import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.param.NormalLoginParam;
 import com.xoj.backend.param.UserParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /***
  * @Author jianghanchen
@@ -29,4 +30,5 @@ public interface UserInfoService {
 
     UserBase selectUser();
 
+    String updateImage(MultipartFile smfile);
 }

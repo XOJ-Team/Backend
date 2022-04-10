@@ -17,7 +17,9 @@ public enum CommonErrorType {
     SERVER_BUSY("503", "Server Busy"),
 
     FILE_EMPTY("20001", "File Name Empty"),
-    UPLOAD_FAIL("20002", "Uploading Fail");
+    UPLOAD_FAIL("20002", "Uploading Fail"),
+
+    QUESTION_NOT_FOUND("30001", "Question Not Found");
 
     /**
      * Error Code

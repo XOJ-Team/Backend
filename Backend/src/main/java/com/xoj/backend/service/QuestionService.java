@@ -4,7 +4,6 @@ import com.github.pagehelper.PageInfo;
 import com.xoj.backend.dto.QuestionCreateDto;
 import com.xoj.backend.dto.QuestionModifyDto;
 import com.xoj.backend.dto.QuestionPageDto;
-import com.xoj.backend.entity.Question;
 import com.xoj.backend.model.QuestionModel;
 
 public interface QuestionService {

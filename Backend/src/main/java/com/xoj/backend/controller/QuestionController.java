@@ -6,6 +6,7 @@ import com.xoj.backend.dto.QuestionCreateDto;
 import com.xoj.backend.dto.QuestionModifyDto;
 import com.xoj.backend.dto.QuestionPageDto;
 import com.xoj.backend.entity.UserBase;
+import com.xoj.backend.exception.BizException;
 import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.model.QuestionModel;
 import com.xoj.backend.notation.RequireManagerPermission;
@@ -58,8 +59,12 @@ public class QuestionController {
     @GetMapping("/{questionId}")
     @ApiOperation(value = "get one question")
     public RestResponse<QuestionModel> getQuestion(@PathVariable("questionId") Long id) {
-        QuestionModel question = service.selectOneQuestion(id);
-        return RestResponse.ok(question, CommonErrorType.SUCCESS.getResultMsg());
+        try {
+            QuestionModel question = service.selectOneQuestion(id);
+            return RestResponse.ok(question, CommonErrorType.SUCCESS.getResultMsg());
+        }catch (BizException e) {
+            return RestResponse.error(null, CommonErrorType.QUESTION_NOT_FOUND.getResultMsg());
+        }
     }
 
     @GetMapping("/question_list")

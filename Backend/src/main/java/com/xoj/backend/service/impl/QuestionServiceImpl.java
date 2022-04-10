@@ -9,6 +9,7 @@ import com.xoj.backend.dto.QuestionPageDto;
 import com.xoj.backend.entity.Question;
 import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.exception.BizException;
+import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.mapper.QuestionMapper;
 import com.xoj.backend.model.QuestionModel;
 import com.xoj.backend.service.QuestionService;
@@ -100,6 +101,9 @@ public class QuestionServiceImpl implements QuestionService {
                 return JacksonUtils.string2Obj(str, QuestionModel.class);
             } else {
                 QuestionModel question = mapper.selectQuestion(id);
+                if (null == question) {
+                    throw new BizException(CommonErrorType.QUESTION_NOT_FOUND);
+                }
                 String JSONString = JacksonUtils.obj2String(question);
                 redisUtils.set(key, JSONString);
                 return question;
