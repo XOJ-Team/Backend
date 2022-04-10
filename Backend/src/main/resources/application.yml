@@ -31,3 +31,8 @@ pagehelper:
   reasonable: false
   support-methods-arguments: true
   params: count=countSql
+
+smms:
+  upload-url: https://sm.ms/api/v2/upload
+  delete-url: https://sm.ms/api/v2/delete/:hash
+  authorization: ***REMOVED***

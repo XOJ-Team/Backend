@@ -14,7 +14,10 @@ public enum CommonErrorType {
     SIGNATURE_NOT_MATCH("401", "Digital Signature Not Match"),
     NOT_FOUND("404", "Resource Not Found"),
     INTERNAL_SERVER_ERROR("500", "Internal Server Error"),
-    SERVER_BUSY("503", "Server Busy");
+    SERVER_BUSY("503", "Server Busy"),
+
+    FILE_EMPTY("20001", "File Name Empty"),
+    UPLOAD_FAIL("20002", "Uploading Fail");
 
     /**
      * Error Code
