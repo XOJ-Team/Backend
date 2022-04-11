@@ -33,5 +33,6 @@ public interface UserInfoService {
 
     String updateImage(MultipartFile smfile);
 
+    String updateIntro(String text);
 
 }

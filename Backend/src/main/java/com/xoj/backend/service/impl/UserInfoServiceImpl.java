@@ -168,5 +168,17 @@ public class UserInfoServiceImpl implements UserInfoService {
         return url;
     }
 
+    @Override
+    public String updateIntro(String text) {
+        UserBase user = userBaseService.getCurrentUser();
+        Example example = new Example(UserBase.class);
+        example.createCriteria().andEqualTo("id", user.getId());
+        UserBase userBase = UserBase.builder()
+                .intro(text)
+                .build();
+        mapper.updateByExampleSelective(userBase, example);
+        return text;
+    }
+
 
 }

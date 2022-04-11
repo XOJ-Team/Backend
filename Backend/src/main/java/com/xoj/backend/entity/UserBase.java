@@ -55,5 +55,7 @@ public class UserBase implements Serializable {
     @Column(name = "profile_photo")
     private String profilePhoto;
 
+    private String intro;
+
     private List<Long> solved;
 }

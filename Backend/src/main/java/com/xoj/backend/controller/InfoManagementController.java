@@ -59,5 +59,12 @@ public class InfoManagementController {
     public RestResponse<?> changeImage(MultipartFile smfile) {
         return RestResponse.ok(userInfoService.updateImage(smfile), CommonErrorType.SUCCESS.getResultMsg());
     }
+
+    @PostMapping("/user/intro")
+    @RequirePermission
+    @ApiOperation(value = "update intro")
+    public RestResponse<String> updateIntro(@RequestParam String text) {
+        return RestResponse.ok(userInfoService.updateIntro(text), CommonErrorType.SUCCESS.getResultMsg());
+    }
 }
 
