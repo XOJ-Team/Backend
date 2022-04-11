@@ -7,6 +7,7 @@ import com.xoj.backend.notation.RequirePermission;
 import com.xoj.backend.param.ChangeUserInfoParam;
 import com.xoj.backend.param.UserParam;
 import com.xoj.backend.service.UserInfoService;
+import com.xoj.backend.util.UserThreadLocal;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,11 @@ public class InfoManagementController {
 
     @Autowired
     UserInfoService userInfoService;
+
+    @ModelAttribute
+    public void setUser() {
+        UserThreadLocal.set();
+    }
 
 
     @RequestMapping(value = "/user/modify", method = RequestMethod.POST)
