@@ -55,10 +55,4 @@ public class ManageUserInfoController {
         return RestResponse.ok(userBase, CommonErrorType.SUCCESS.getResultMsg());
     }
 
-    @PostMapping("/manager/image")
-    @RequirePermission
-    @ApiOperation(value = "update profile image")
-    public RestResponse<?> changeImage(MultipartFile smfile) {
-        return RestResponse.ok(userInfoService.updateImage(smfile), CommonErrorType.SUCCESS.getResultMsg());
-    }
 }

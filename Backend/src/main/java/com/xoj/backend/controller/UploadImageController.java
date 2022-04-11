@@ -17,7 +17,7 @@ public class UploadImageController {
     @Autowired
     private UploadImageService service;
 
-    @GetMapping("")
+    @PostMapping("")
     @ApiOperation(value = "upload")
     public RestResponse<Object> uploadImage(MultipartFile smfile) {
         String url = service.uploadPicture(smfile);
