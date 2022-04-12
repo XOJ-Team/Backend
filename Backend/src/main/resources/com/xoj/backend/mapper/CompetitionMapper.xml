@@ -21,6 +21,8 @@
         <result column="creator_name" jdbcType="VARCHAR" property="creatorName"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
     </resultMap>
 
     <select id="selectCompetition" resultMap="competitionModel"
@@ -28,6 +30,11 @@
         SELECT *
         FROM oj.competition
         WHERE id = #{id}
+    </select>
+    <select id="selectCompetitions" resultType="com.xoj.backend.model.CompetitionModel">
+        SELECT *
+        FROM oj.competition
+        WHERE is_delete = 0
     </select>
 
 </mapper>

@@ -5,19 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * @author 1iin
- */
+import javax.validation.constraints.NotNull;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuestionCompetitionModifyDto {
-    private Long id;
+public class CompetitionPageDto {
+    @NotNull
+    private Integer pageNum;
 
-    private Long questionId;
+    @NotNull
+    private Integer pageSize;
 
-    private Long competitionId;
-
-    private Integer score;
 }

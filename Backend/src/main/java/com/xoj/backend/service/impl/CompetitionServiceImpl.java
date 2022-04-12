@@ -1,16 +1,21 @@
 package com.xoj.backend.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xoj.backend.common.CommonConstants;
 import com.xoj.backend.dto.CompetitionCreateDto;
 import com.xoj.backend.dto.CompetitionModifyDto;
+import com.xoj.backend.dto.CompetitionPageDto;
 import com.xoj.backend.entity.Competition;
 import com.xoj.backend.entity.Question;
 import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.exception.BizException;
+import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.mapper.CompetitionMapper;
 import com.xoj.backend.model.CompetitionModel;
 import com.xoj.backend.service.CompetitionService;
 import com.xoj.backend.service.UserBaseService;
+import com.xoj.backend.util.DateUtils;
 import com.xoj.backend.util.JacksonUtils;
 import com.xoj.backend.util.RedisUtils;
 import lombok.AllArgsConstructor;
@@ -19,6 +24,7 @@ import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 1iin
@@ -45,6 +51,8 @@ public class CompetitionServiceImpl implements CompetitionService {
         Competition competition = Competition.builder()
                 .name(dto.getName())
                 .briefIntroduction(dto.getBriefIntroduction())
+                .startTime(DateUtils.string2Date(dto.getStartTime()))
+                .endTime(DateUtils.string2Date(dto.getEndTime()))
                 .creator(user.getId())
                 .creatorName(user.getName())
                 .build();
@@ -66,6 +74,8 @@ public class CompetitionServiceImpl implements CompetitionService {
         Competition competition = Competition.builder()
                 .name(dto.getName())
                 .briefIntroduction(dto.getBriefIntroduction())
+                .startTime(DateUtils.string2Date(dto.getStartTime()))
+                .endTime(DateUtils.string2Date(dto.getEndTime()))
                 .creator(user.getId())
                 .creatorName(user.getName())
                 .build();
@@ -91,6 +101,9 @@ public class CompetitionServiceImpl implements CompetitionService {
                 return JacksonUtils.string2Obj(str, CompetitionModel.class);
             } else {
                 CompetitionModel competition = mapper.selectCompetition(id);
+                if (null == competition) {
+                    throw new BizException(CommonErrorType.COMPETITION_NOT_FOUND);
+                }
                 String JSONString = JacksonUtils.obj2String(competition);
                 redisUtils.set(key, JSONString);
                 return competition;
@@ -118,5 +131,12 @@ public class CompetitionServiceImpl implements CompetitionService {
                 .deleteTime(new Date())
                 .build();
         mapper.updateByExampleSelective(competition, example);
+    }
+
+    @Override
+    public PageInfo<CompetitionModel> selectCompetitions(CompetitionPageDto dto) {
+        PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
+        List<CompetitionModel> competitions = mapper.selectCompetitions();
+        return PageInfo.of(competitions);
     }
 }

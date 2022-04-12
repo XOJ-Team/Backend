@@ -40,4 +40,10 @@ public class Competition implements Serializable {
     @Column(name = "creator_name")
     private String creatorName;
 
+    @Column(name = "start_time")
+    private Date startTime;
+
+    @Column(name = "end_time")
+    private Date endTime;
+
 }

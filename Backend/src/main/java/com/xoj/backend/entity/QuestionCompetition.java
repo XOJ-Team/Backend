@@ -29,5 +29,5 @@ public class QuestionCompetition {
     private Boolean isDelete;
 
     @Column(name = "score")
-    private Byte score;
+    private Integer score;
 }

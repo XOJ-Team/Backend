@@ -20,7 +20,7 @@ import java.util.List;
  * @author 1iin
  */
 @RestController
-@RequestMapping("/questionCompetition")
+@RequestMapping("/question_competition")
 @Api(value = "questionCompetition")
 public class QuestionCompetitionController {
     @Autowired
@@ -34,7 +34,7 @@ public class QuestionCompetitionController {
         return RestResponse.ok(dto, CommonErrorType.SUCCESS.getResultMsg());
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("")
     @ApiOperation(value = "modify a record of the relationship between a question and a competition")
     @RequireManagerPermission
     public RestResponse<?> delete(@RequestParam Long id) {
@@ -42,11 +42,11 @@ public class QuestionCompetitionController {
         return RestResponse.ok(id, CommonErrorType.SUCCESS.getResultMsg());
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     @ApiOperation(value = "show all the questions of one competition")
     @RequireManagerPermission
-    public RestResponse<List<QuestionModel>> selectQuestionsByCompetition(@RequestParam Long questionId) {
-        List<QuestionModel> list = service.selectQuestionsByCompetition(questionId);
+    public RestResponse<List<QuestionModel>> selectQuestionsByCompetition(@RequestParam Long competitionId) {
+        List<QuestionModel> list = service.selectQuestionsByCompetition(competitionId);
         return RestResponse.ok(list, CommonErrorType.SUCCESS.getResultMsg());
     }
 

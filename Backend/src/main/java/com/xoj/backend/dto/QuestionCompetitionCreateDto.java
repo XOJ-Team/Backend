@@ -21,5 +21,5 @@ public class QuestionCompetitionCreateDto {
     @NotNull
     private Long competitionId;
 
-    private Byte score;
+    private Integer score;
 }

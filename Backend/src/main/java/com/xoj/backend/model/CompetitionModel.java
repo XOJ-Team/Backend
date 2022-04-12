@@ -24,6 +24,10 @@ public class CompetitionModel {
 
     private String name;
 
+    private Date startTime;
+
+    private Date endTime;
+
     private Date createTime;
 
     private Date deleteTime;

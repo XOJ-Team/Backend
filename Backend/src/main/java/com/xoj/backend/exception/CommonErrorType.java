@@ -19,7 +19,11 @@ public enum CommonErrorType {
     FILE_EMPTY("20001", "File Name Empty"),
     UPLOAD_FAIL("20002", "Uploading Fail"),
 
-    QUESTION_NOT_FOUND("30001", "Question Not Found");
+    QUESTION_NOT_FOUND("30001", "Question Not Found"),
+    COMPETITION_NOT_FOUND("30002", "Competition Not Found"),
+
+    PARSE_ERROR("40001", "String to Date Error")
+    ;
 
     /**
      * Error Code

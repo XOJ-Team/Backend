@@ -107,3 +107,44 @@ create table question
 alter table question
     add primary key (id);
 
+-- auto-generated definition
+create table question_competition
+(
+    id             int auto_increment comment '主键id',
+    question_id    bigint               null comment '题目ID',
+    competition_id bigint               null comment '比赛ID',
+    is_delete      tinyint(1) default 0 null comment '是否删除',
+    score          int                  null comment '分数',
+    constraint question_competition_id_uindex
+        unique (id)
+)
+    comment '题目-比赛映射';
+
+create index question_competition_index
+    on question_competition (competition_id);
+
+alter table question_competition
+    add primary key (id);
+
+
+-- auto-generated definition
+create table competition
+(
+    id                 bigint auto_increment comment 'ID',
+    is_delete          tinyint(1) default 0                 null comment '是否删除',
+    NAME               varchar(20)                          not null comment '名字',
+    create_time        timestamp  default CURRENT_TIMESTAMP null comment '创建时间',
+    delete_time        timestamp  default CURRENT_TIMESTAMP null comment '删除时间',
+    brief_introduction tinytext                             null comment '简介',
+    creator            bigint                               not null comment '创建者',
+    creator_name       varchar(20)                          not null comment '创建者姓名',
+    start_time         timestamp                            null comment '开始时间',
+    end_time           timestamp                            null comment '结束时间',
+    constraint competition_id_uindex
+        unique (id)
+)
+    comment '比赛';
+
+alter table competition
+    add primary key (id);
+

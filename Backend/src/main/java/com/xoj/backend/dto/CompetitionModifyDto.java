@@ -23,4 +23,8 @@ public class CompetitionModifyDto {
     private String name;
 
     private String briefIntroduction;
+
+    private String startTime;
+
+    private String endTime;
 }
