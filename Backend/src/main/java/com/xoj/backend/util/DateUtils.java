@@ -19,4 +19,14 @@ public class DateUtils {
             throw new BizException(CommonErrorType.PARSE_ERROR);
         }
     }
+
+    public static String date2String(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            return formatter.format(date);
+        } catch (Exception e) {
+            throw new BizException(CommonErrorType.PARSE_ERROR);
+        }
+    }
+
 }

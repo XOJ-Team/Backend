@@ -1,5 +1,6 @@
 package com.xoj.backend.model;
 
+import com.xoj.backend.util.DateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,9 +25,9 @@ public class CompetitionModel {
 
     private String name;
 
-    private Date startTime;
+    private String startTime;
 
-    private Date endTime;
+    private String endTime;
 
     private Date createTime;
 
