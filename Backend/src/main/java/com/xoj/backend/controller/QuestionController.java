@@ -99,7 +99,9 @@ public class QuestionController {
     public RestResponse<PageInfo<QuestionModel>> getAllShowQuestions(@RequestParam Integer pageNum,
                                                             @RequestParam Integer pageSize) {
         UserBase user = userBaseService.getCurrentUser();
-        user.setSolved(submitRecordsService.solved(user.getId()));
+        if (null != user) {
+            user.setSolved(submitRecordsService.solved(user.getId()));
+        }
         QuestionPageDto dto = QuestionPageDto.builder()
                 .pageNum(pageNum)
                 .pageSize(pageSize)
