@@ -43,6 +43,12 @@ public class QuestionModel {
 
     private String content;
 
+    private Long total;
+
+    private Long accept;
+
+    private Double rate;
+
     public String getLevelDescription() {
         return LevelEnum.getDescription(questionLevel);
     }

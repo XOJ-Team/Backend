@@ -51,4 +51,10 @@ public class Question implements Serializable {
     private Boolean isHide;
 
     private String content;
+
+    private Long total;
+
+    private Long accept;
+
+    private Double rate;
 }

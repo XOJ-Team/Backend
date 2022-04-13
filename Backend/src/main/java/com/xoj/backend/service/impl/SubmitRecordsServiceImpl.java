@@ -7,6 +7,7 @@ import com.xoj.backend.entity.SubmitRecords;
 import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.mapper.SubmitRecordsMapper;
 import com.xoj.backend.model.SubmitRecordsModel;
+import com.xoj.backend.service.QuestionService;
 import com.xoj.backend.service.SubmitRecordsService;
 import com.xoj.backend.service.UserBaseService;
 import com.xoj.backend.service.UserInfoService;
@@ -28,6 +29,8 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
 
     private final UserInfoService userInfoService;
 
+    private final QuestionService questionService;
+
     /**
      * create submit records
      * @param dto
@@ -36,9 +39,6 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
     @Transactional(rollbackFor = Exception.class)
     public void createRecord(SubmitRecordsCreateDto dto) {
         UserBase user = userBaseService.getCurrentUser();
-        if (ResultEnum.ACCEPTED.getCode().equals(dto.getResult()) && determine(dto.getQuestionId(), dto.getUserId())){
-            modifyUser(dto.getQuestionId(), user);
-        }
         SubmitRecords record = SubmitRecords.builder()
                 .questionId(dto.getQuestionId())
                 .lang(dto.getLang())
@@ -48,6 +48,10 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
                 .userId(dto.getUserId())
                 .codes(dto.getCodes()).build();
         mapper.insertSelective(record);
+        if (ResultEnum.ACCEPTED.getCode().equals(dto.getResult()) && determine(dto.getQuestionId(), dto.getUserId())){
+            modifyUser(dto.getQuestionId(), user);
+        }
+        questionService.calRate(dto.getQuestionId(), dto.getResult());
     }
 
     /**

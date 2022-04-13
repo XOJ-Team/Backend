@@ -186,5 +186,24 @@ public class QuestionServiceImpl implements QuestionService {
         mapper.updateByExampleSelective(question, example);
     }
 
+    @Override
+    public void calRate(Long id, Integer result) {
+        Example example = new Example(Question.class);
+        example.createCriteria().andEqualTo("id", id);
+        Question q = mapper.selectOneByExample(example);
+        long accept = 0L;
+        if (0 == result) {
+            accept = q.getAccept() + 1;
+        }else {
+            accept = q.getAccept();
+        }
+        Question question = Question.builder()
+                .total(q.getTotal() + 1)
+                .accept(accept)
+                .rate((double)accept / (double)(q.getTotal() + 1))
+                .build();
+        mapper.updateByExampleSelective(question, example);
+    }
+
 
 }

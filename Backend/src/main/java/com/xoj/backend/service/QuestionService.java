@@ -24,4 +24,6 @@ public interface QuestionService {
     void hide(Long id);
 
     void show(Long id);
+
+    void calRate(Long id, Integer result);
 }
