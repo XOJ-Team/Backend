@@ -102,6 +102,8 @@ create table question
     total          bigint       default 0                 not null comment '总提交次数',
     rate           double       default 0                 not null comment '通过率',
     accept         bigint       default 0                 not null comment '通过次数',
+    time_limit     int          default 0                 not null comment '时间限制',
+    memory_limit   int          default 0                 not null comment '内存限制',
     constraint question_id_uindex
         unique (id)
 )
