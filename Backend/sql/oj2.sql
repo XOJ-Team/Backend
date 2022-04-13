@@ -99,6 +99,9 @@ create table question
     is_hide        tinyint(1)   default 0                 not null comment '是否隐藏',
     question_level int          default 0                 not null comment '难度',
     tags           varchar(255) default ''                null,
+    total          bigint       default 0                 not null comment '总提交次数',
+    rate           double       default 0                 not null comment '通过率',
+    accept         bigint       default 0                 not null comment '通过次数',
     constraint question_id_uindex
         unique (id)
 )
