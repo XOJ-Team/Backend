@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import java.util.Date;
 
 @Data
@@ -48,6 +49,10 @@ public class QuestionModel {
     private Long accept;
 
     private Double rate;
+
+    private Integer timeLimit;
+
+    private Integer memoryLimit;
 
     public String getLevelDescription() {
         return LevelEnum.getDescription(questionLevel);

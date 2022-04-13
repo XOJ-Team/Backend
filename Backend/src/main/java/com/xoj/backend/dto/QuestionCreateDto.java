@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -25,4 +26,10 @@ public class QuestionCreateDto {
 
     @NotEmpty
     private String content;
+
+    @NotNull
+    private Integer timeLimit;
+
+    @NotNull
+    private Integer memoryLimit;
 }

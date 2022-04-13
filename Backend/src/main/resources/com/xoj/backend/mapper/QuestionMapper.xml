@@ -27,6 +27,8 @@
       <result column="creator_name" jdbcType="VARCHAR" property="creatorName" />
       <result column="is_hide" jdbcType="BIT" property="isHide" />
       <result column="question_level" jdbcType="INTEGER" property="questionLevel" />
+      <result column="time_limit" jdbcType="INTEGER" property="timeLimit" />
+      <result column="memory_limit" jdbcType="INTEGER" property="memoryLimit" />
     </resultMap>
 
   <select id="selectQuestions" resultType="com.xoj.backend.model.QuestionModel"

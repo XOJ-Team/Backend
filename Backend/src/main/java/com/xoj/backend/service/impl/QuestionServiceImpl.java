@@ -53,6 +53,8 @@ public class QuestionServiceImpl implements QuestionService {
                 .name(dto.getName())
                 .isHide(dto.getIsHide())
                 .questionLevel(dto.getQuestionLevel())
+                .timeLimit(dto.getTimeLimit())
+                .memoryLimit(dto.getMemoryLimit())
                 .tags(dto.getTags())
                 .build();
         mapper.insertSelective(question);
@@ -77,6 +79,8 @@ public class QuestionServiceImpl implements QuestionService {
                 .modifier(user.getId())
                 .modifierName(user.getName())
                 .questionLevel(dto.getQuestionLevel())
+                .timeLimit(dto.getTimeLimit())
+                .memoryLimit(dto.getMemoryLimit())
                 .tags(dto.getTags())
                 .build();
         Example example = new Example(Question.class);

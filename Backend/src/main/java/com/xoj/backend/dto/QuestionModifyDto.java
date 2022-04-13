@@ -28,4 +28,10 @@ public class QuestionModifyDto {
 
     @NotEmpty
     private String content;
+
+    @NotNull
+    private Integer timeLimit;
+
+    @NotNull
+    private Integer memoryLimit;
 }
