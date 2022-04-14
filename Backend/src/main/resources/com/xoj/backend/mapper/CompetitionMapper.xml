@@ -31,7 +31,7 @@
         FROM oj.competition
         WHERE id = #{id}
     </select>
-    <select id="selectCompetitions" resultType="com.xoj.backend.model.CompetitionModel">
+    <select id="selectCompetitions" resultMap="competitionModel">
         SELECT *
         FROM oj.competition
         WHERE is_delete = 0
