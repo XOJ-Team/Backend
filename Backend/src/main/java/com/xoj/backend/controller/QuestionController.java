@@ -77,14 +77,20 @@ public class QuestionController {
 
     @GetMapping("/all_questions")
     @ApiOperation(value = "get all questions")
-    public RestResponse<PageInfo<QuestionModel>> getAllQuestions(@RequestParam Integer pageNum,
+    public RestResponse<QuestionPageModel> getAllQuestions(@RequestParam Integer pageNum,
                                                             @RequestParam Integer pageSize) {
+        QuestionPageModel questionPageModel = QuestionPageModel.builder().build();
+        UserBase user = userBaseService.getCurrentUser();
+        if (null != user) {
+            questionPageModel.setQuestionIds(submitRecordsService.solved(user.getId()));
+        }
         QuestionPageDto dto = QuestionPageDto.builder()
                 .pageNum(pageNum)
                 .pageSize(pageSize)
                 .build();
         PageInfo<QuestionModel> pageInfo = service.selectAllQuestions(dto);
-        return RestResponse.ok(pageInfo, CommonErrorType.SUCCESS.getResultMsg());
+        questionPageModel.setQuestionsPage(pageInfo);
+        return RestResponse.ok(questionPageModel, CommonErrorType.SUCCESS.getResultMsg());
     }
 
     @DeleteMapping("/")
