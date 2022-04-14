@@ -48,7 +48,7 @@ public class QuestionModel {
 
     private Long accept;
 
-    private Double rate;
+    private String rate;
 
     private Integer timeLimit;
 

@@ -22,6 +22,7 @@ import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
+import java.util.Formatter;
 import java.util.List;
 
 @Service
@@ -198,13 +199,13 @@ public class QuestionServiceImpl implements QuestionService {
         long accept = 0L;
         if (0 == result) {
             accept = q.getAccept() + 1;
-        }else {
+        } else {
             accept = q.getAccept();
         }
         Question question = Question.builder()
                 .total(q.getTotal() + 1)
                 .accept(accept)
-                .rate((double)accept / (double)(q.getTotal() + 1))
+                .rate(new Formatter().format("%.2f", (double)accept * 100 / (double)(q.getTotal() + 1)) + "%")
                 .build();
         mapper.updateByExampleSelective(question, example);
     }

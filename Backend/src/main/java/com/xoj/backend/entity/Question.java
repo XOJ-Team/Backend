@@ -56,7 +56,7 @@ public class Question implements Serializable {
 
     private Long accept;
 
-    private Double rate;
+    private String rate;
 
     @Column(name = "time_limit")
     private Integer timeLimit;
