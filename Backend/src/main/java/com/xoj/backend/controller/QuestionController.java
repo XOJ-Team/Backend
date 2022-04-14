@@ -9,6 +9,7 @@ import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.exception.BizException;
 import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.model.QuestionModel;
+import com.xoj.backend.model.QuestionPageModel;
 import com.xoj.backend.notation.RequireManagerPermission;
 import com.xoj.backend.service.QuestionService;
 import com.xoj.backend.service.SubmitRecordsService;
@@ -96,18 +97,20 @@ public class QuestionController {
 
     @GetMapping("all_show_questions")
     @ApiOperation(value = "get all show questions")
-    public RestResponse<PageInfo<QuestionModel>> getAllShowQuestions(@RequestParam Integer pageNum,
-                                                            @RequestParam Integer pageSize) {
+    public RestResponse<QuestionPageModel> getAllShowQuestions(@RequestParam Integer pageNum,
+                                                               @RequestParam Integer pageSize) {
+        QuestionPageModel questionPageModel = QuestionPageModel.builder().build();
         UserBase user = userBaseService.getCurrentUser();
         if (null != user) {
-            user.setSolved(submitRecordsService.solved(user.getId()));
+            questionPageModel.setQuestionIds(submitRecordsService.solved(user.getId()));
         }
         QuestionPageDto dto = QuestionPageDto.builder()
                 .pageNum(pageNum)
                 .pageSize(pageSize)
                 .build();
         PageInfo<QuestionModel> pageInfo = service.selectAllShowQuestions(dto);
-        return RestResponse.ok(pageInfo, CommonErrorType.SUCCESS.getResultMsg());
+        questionPageModel.setQuestionsPage(pageInfo);
+        return RestResponse.ok(questionPageModel, CommonErrorType.SUCCESS.getResultMsg());
     }
 
     @PutMapping("/hide")
