@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 /**
  * @author 1iin
  */
@@ -13,11 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionCompetitionModifyDto {
+    @NotNull
     private Long id;
-
-    private Long questionId;
-
-    private Long competitionId;
 
     private Integer score;
 }

@@ -2,7 +2,7 @@ package com.xoj.backend.service;
 
 import com.xoj.backend.dto.QuestionCompetitionCreateDto;
 import com.xoj.backend.dto.QuestionCompetitionModifyDto;
-import com.xoj.backend.model.QuestionModel;
+import com.xoj.backend.entity.QuestionCompetition;
 
 import java.util.List;
 
@@ -16,5 +16,5 @@ public interface QuestionCompetitionService {
 
     void delete(Long id);
 
-    List<QuestionModel> selectQuestionsByCompetition(Long competitionId);
+    List<QuestionCompetition> selectQuestionsByCompetition(Long competitionId);
 }

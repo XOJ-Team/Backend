@@ -12,6 +12,7 @@ import com.xoj.backend.exception.BizException;
 import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.mapper.QuestionMapper;
 import com.xoj.backend.model.QuestionModel;
+import com.xoj.backend.model.QuestionSearchModel;
 import com.xoj.backend.service.QuestionService;
 import com.xoj.backend.service.UserBaseService;
 import com.xoj.backend.util.JacksonUtils;
@@ -208,6 +209,19 @@ public class QuestionServiceImpl implements QuestionService {
                 .rate(new Formatter().format("%.2f", (double)accept * 100 / (double)(q.getTotal() + 1)) + "%")
                 .build();
         mapper.updateByExampleSelective(question, example);
+    }
+
+    @Override
+    public List<QuestionSearchModel> search(String text) {
+        long number;
+        List<QuestionSearchModel> questionSearchModels;
+        try {
+            number = Long.parseLong(text);
+            questionSearchModels = mapper.selectSearch(number, text);
+        } catch (NumberFormatException e) {
+            questionSearchModels = mapper.selectSearch(null, text);
+        }
+        return questionSearchModels;
     }
 
 

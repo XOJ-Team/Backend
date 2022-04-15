@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.xoj.backend.dto.CompetitionCreateDto;
 import com.xoj.backend.dto.CompetitionModifyDto;
 import com.xoj.backend.dto.CompetitionPageDto;
+import com.xoj.backend.model.CompetitionDetailModel;
 import com.xoj.backend.model.CompetitionModel;
 
 /**
@@ -14,7 +15,7 @@ public interface CompetitionService {
 
     void modify(CompetitionModifyDto dto);
 
-    CompetitionModel selectOneCompetition(Long id);
+    CompetitionDetailModel selectOneCompetition(Long id);
 
     void delete(Long id);
 

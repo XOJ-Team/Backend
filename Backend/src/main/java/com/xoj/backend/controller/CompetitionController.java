@@ -6,6 +6,7 @@ import com.xoj.backend.dto.CompetitionCreateDto;
 import com.xoj.backend.dto.CompetitionModifyDto;
 import com.xoj.backend.dto.CompetitionPageDto;
 import com.xoj.backend.exception.CommonErrorType;
+import com.xoj.backend.model.CompetitionDetailModel;
 import com.xoj.backend.model.CompetitionModel;
 import com.xoj.backend.notation.RequireManagerPermission;
 import com.xoj.backend.service.CompetitionService;
@@ -50,9 +51,9 @@ public class CompetitionController {
 
     @GetMapping("/{competitionId}")
     @ApiOperation(value = "get one competition")
-    public RestResponse<CompetitionModel> getCompetition(@PathVariable("competitionId") Long id) {
-        CompetitionModel competition = service.selectOneCompetition(id);
-        return RestResponse.ok(competition, CommonErrorType.SUCCESS.getResultMsg());
+    public RestResponse<CompetitionDetailModel> getCompetition(@PathVariable("competitionId") Long id) {
+        CompetitionDetailModel model = service.selectOneCompetition(id);
+        return RestResponse.ok(model, CommonErrorType.SUCCESS.getResultMsg());
     }
 
     @DeleteMapping("")

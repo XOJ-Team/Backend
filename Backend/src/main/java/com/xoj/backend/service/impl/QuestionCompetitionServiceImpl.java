@@ -4,15 +4,14 @@ import com.xoj.backend.common.CommonConstants;
 import com.xoj.backend.dto.QuestionCompetitionCreateDto;
 import com.xoj.backend.dto.QuestionCompetitionModifyDto;
 import com.xoj.backend.entity.QuestionCompetition;
+import com.xoj.backend.exception.BizException;
 import com.xoj.backend.mapper.QuestionCompetitionMapper;
-import com.xoj.backend.model.QuestionModel;
 import com.xoj.backend.service.QuestionCompetitionService;
 import com.xoj.backend.service.QuestionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,7 +23,6 @@ public class QuestionCompetitionServiceImpl implements QuestionCompetitionServic
 
     private final QuestionCompetitionMapper mapper;
 
-    private QuestionService questionService;
 
     /**
      * link a question to a competition
@@ -78,17 +76,13 @@ public class QuestionCompetitionServiceImpl implements QuestionCompetitionServic
      * @return
      */
     @Override
-    public List<QuestionModel> selectQuestionsByCompetition(Long competitionId) {
+    public List<QuestionCompetition> selectQuestionsByCompetition(Long competitionId) {
         Example example = new Example(QuestionCompetition.class);
         example.createCriteria()
                 .andEqualTo("competitionId", competitionId)
                 .andEqualTo("isDelete", CommonConstants.NOT_DELETED);
-        List<QuestionCompetition> list = mapper.selectByExample(example);
-        List<QuestionModel> questions = new ArrayList<>();
-        for (QuestionCompetition questionCompetition : list) {
-            questions.add(questionService.selectOneQuestion(questionCompetition.getQuestionId()));
-        }
-        return questions;
+        List<QuestionCompetition> links = mapper.selectByExample(example);
+        return links;
     }
 
 }

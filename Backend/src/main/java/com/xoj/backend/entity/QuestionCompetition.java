@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * @author 1iin
@@ -21,6 +22,9 @@ public class QuestionCompetition {
 
     @Column(name = "question_id")
     private Long questionId;
+
+    @Column(name = "question_name")
+    private String questionName;
 
     @Column(name = "competition_id")
     private Long competitionId;

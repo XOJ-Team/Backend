@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -20,6 +21,9 @@ public class QuestionCompetitionCreateDto {
 
     @NotNull
     private Long competitionId;
+
+    @NotEmpty
+    private String questionName;
 
     private Integer score;
 }

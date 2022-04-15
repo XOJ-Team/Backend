@@ -151,4 +151,10 @@ public class QuestionController {
         return RestResponse.ok(id, CommonErrorType.SUCCESS.getResultMsg());
     }
 
+    @GetMapping("/search")
+    @ApiOperation(value = "search questions when linking")
+    @RequireManagerPermission
+    public RestResponse<?> showQuestion(@RequestParam String text) {
+        return RestResponse.ok(service.search(text), CommonErrorType.SUCCESS.getResultMsg());
+    }
 }

@@ -22,7 +22,8 @@ public enum CommonErrorType {
     QUESTION_NOT_FOUND("30001", "Question Not Found"),
     COMPETITION_NOT_FOUND("30002", "Competition Not Found"),
 
-    PARSE_ERROR("40001", "String to Date Error")
+    PARSE_ERROR("40001", "String to Date Error"),
+    DUPLICATE_KEY("40002", "Duplicate Key for Link")
     ;
 
     /**

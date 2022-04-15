@@ -116,12 +116,15 @@ alter table question
 create table question_competition
 (
     id             int auto_increment comment '主键id',
-    question_id    bigint               null comment '题目ID',
-    competition_id bigint               null comment '比赛ID',
-    is_delete      tinyint(1) default 0 null comment '是否删除',
-    score          int                  null comment '分数',
+    score          int                     null comment '分数',
+    is_delete      tinyint(1)   default 0  null comment '是否删除',
+    competition_id bigint                  null comment '比赛ID',
+    question_id    bigint                  null comment '题目ID',
+    question_name  varchar(255) default '' not null comment 'question名字',
     constraint question_competition_id_uindex
-        unique (id)
+        unique (id),
+    constraint question_competition_pk
+        unique (question_id, competition_id, is_delete)
 )
     comment '题目-比赛映射';
 

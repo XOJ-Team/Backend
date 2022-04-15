@@ -3,9 +3,9 @@ package com.xoj.backend.controller;
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.dto.QuestionCompetitionCreateDto;
 import com.xoj.backend.dto.QuestionCompetitionModifyDto;
-import com.xoj.backend.entity.TestcaseQuestion;
+import com.xoj.backend.entity.QuestionCompetition;
+import com.xoj.backend.exception.BizException;
 import com.xoj.backend.exception.CommonErrorType;
-import com.xoj.backend.model.QuestionModel;
 import com.xoj.backend.notation.RequireManagerPermission;
 import com.xoj.backend.service.QuestionCompetitionService;
 import io.swagger.annotations.Api;
@@ -30,7 +30,21 @@ public class QuestionCompetitionController {
     @ApiOperation(value = "link a question to a competition")
     @RequireManagerPermission
     public RestResponse<?> create(@Valid @RequestBody QuestionCompetitionCreateDto dto) {
-        service.create(dto);
+        try {
+            service.create(dto);
+            return RestResponse.ok(dto, CommonErrorType.SUCCESS.getResultMsg());
+        } catch (Exception e) {
+            return RestResponse.error(CommonErrorType.DUPLICATE_KEY.getResultMsg());
+        }
+
+
+    }
+
+    @PutMapping("")
+    @ApiOperation(value = "modify question score")
+    @RequireManagerPermission
+    public RestResponse<?> modify(QuestionCompetitionModifyDto dto) {
+        service.modify(dto);
         return RestResponse.ok(dto, CommonErrorType.SUCCESS.getResultMsg());
     }
 
@@ -45,8 +59,8 @@ public class QuestionCompetitionController {
     @GetMapping("")
     @ApiOperation(value = "show all the questions of one competition")
     @RequireManagerPermission
-    public RestResponse<List<QuestionModel>> selectQuestionsByCompetition(@RequestParam Long competitionId) {
-        List<QuestionModel> list = service.selectQuestionsByCompetition(competitionId);
+    public RestResponse<List<QuestionCompetition>> selectQuestionsByCompetition(@RequestParam Long competitionId) {
+        List<QuestionCompetition> list = service.selectQuestionsByCompetition(competitionId);
         return RestResponse.ok(list, CommonErrorType.SUCCESS.getResultMsg());
     }
 

@@ -12,8 +12,10 @@ import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.exception.BizException;
 import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.mapper.CompetitionMapper;
+import com.xoj.backend.model.CompetitionDetailModel;
 import com.xoj.backend.model.CompetitionModel;
 import com.xoj.backend.service.CompetitionService;
+import com.xoj.backend.service.QuestionCompetitionService;
 import com.xoj.backend.service.UserBaseService;
 import com.xoj.backend.util.DateUtils;
 import com.xoj.backend.util.JacksonUtils;
@@ -39,6 +41,8 @@ public class CompetitionServiceImpl implements CompetitionService {
     private RedisUtils redisUtils;
 
     private final String prefix = "COMPETITION";
+
+    private final QuestionCompetitionService questionCompetitionService;
 
     /**
      * create a competition
@@ -90,7 +94,9 @@ public class CompetitionServiceImpl implements CompetitionService {
      * @param id
      */
     @Override
-    public CompetitionModel selectOneCompetition(Long id) {
+    public CompetitionDetailModel selectOneCompetition(Long id) {
+        CompetitionDetailModel detailModel = CompetitionDetailModel.builder().build();
+        CompetitionModel competitionModel;
         try {
             String key = prefix + id;
             String str = null;
@@ -98,7 +104,7 @@ public class CompetitionServiceImpl implements CompetitionService {
                 str = redisUtils.getValue(key);
             }
             if (StringUtils.hasText(str)) {
-                return JacksonUtils.string2Obj(str, CompetitionModel.class);
+                competitionModel = JacksonUtils.string2Obj(str, CompetitionModel.class);
             } else {
                 CompetitionModel competition = mapper.selectCompetition(id);
                 if (null == competition) {
@@ -106,8 +112,11 @@ public class CompetitionServiceImpl implements CompetitionService {
                 }
                 String JSONString = JacksonUtils.obj2String(competition);
                 redisUtils.set(key, JSONString);
-                return competition;
+                competitionModel =  competition;
             }
+            detailModel.setCompetitionModel(competitionModel);
+            detailModel.setLinks(questionCompetitionService.selectQuestionsByCompetition(id));
+            return detailModel;
         } catch (Exception e) {
             throw new BizException(e.getMessage());
         }

@@ -5,6 +5,9 @@ import com.xoj.backend.dto.QuestionCreateDto;
 import com.xoj.backend.dto.QuestionModifyDto;
 import com.xoj.backend.dto.QuestionPageDto;
 import com.xoj.backend.model.QuestionModel;
+import com.xoj.backend.model.QuestionSearchModel;
+
+import java.util.List;
 
 public interface QuestionService {
     void create(QuestionCreateDto dto);
@@ -26,4 +29,6 @@ public interface QuestionService {
     void show(Long id);
 
     void calRate(Long id, Integer result);
+
+    List<QuestionSearchModel> search(String text);
 }
