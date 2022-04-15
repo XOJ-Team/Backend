@@ -21,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/question")
@@ -82,7 +84,14 @@ public class QuestionController {
         QuestionPageModel questionPageModel = QuestionPageModel.builder().build();
         UserBase user = userBaseService.getCurrentUser();
         if (null != user) {
-            questionPageModel.setQuestionIds(submitRecordsService.solved(user.getId()));
+            List<Long> questionIds = submitRecordsService.solved(user.getId());
+            if (null == questionIds) {
+                questionPageModel.setQuestionIds(new ArrayList<>());
+            } else {
+                questionPageModel.setQuestionIds(questionIds);
+            }
+        } else {
+            questionPageModel.setQuestionIds(new ArrayList<>());
         }
         QuestionPageDto dto = QuestionPageDto.builder()
                 .pageNum(pageNum)
@@ -108,7 +117,14 @@ public class QuestionController {
         QuestionPageModel questionPageModel = QuestionPageModel.builder().build();
         UserBase user = userBaseService.getCurrentUser();
         if (null != user) {
-            questionPageModel.setQuestionIds(submitRecordsService.solved(user.getId()));
+            List<Long> questionIds = submitRecordsService.solved(user.getId());
+            if (null == questionIds) {
+                questionPageModel.setQuestionIds(new ArrayList<>());
+            } else {
+                questionPageModel.setQuestionIds(questionIds);
+            }
+        } else {
+            questionPageModel.setQuestionIds(new ArrayList<>());
         }
         QuestionPageDto dto = QuestionPageDto.builder()
                 .pageNum(pageNum)
