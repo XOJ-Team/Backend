@@ -34,6 +34,7 @@ public class QuestionCompetitionServiceImpl implements QuestionCompetitionServic
         QuestionCompetition questionCompetition = QuestionCompetition.builder()
                 .questionId(dto.getQuestionId())
                 .competitionId(dto.getCompetitionId())
+                .questionName(dto.getQuestionName())
                 .score(dto.getScore())
                 .build();
         mapper.insertSelective(questionCompetition);
