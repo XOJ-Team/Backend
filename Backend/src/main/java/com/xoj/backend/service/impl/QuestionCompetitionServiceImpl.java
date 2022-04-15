@@ -31,13 +31,23 @@ public class QuestionCompetitionServiceImpl implements QuestionCompetitionServic
      */
     @Override
     public void create(QuestionCompetitionCreateDto dto) {
+        Example example = new Example(QuestionCompetition.class);
+        example.createCriteria()
+                .andEqualTo("questionId", dto.getQuestionId())
+                .andEqualTo("competitionId", dto.getCompetitionId())
+                .andEqualTo("isDelete", CommonConstants.IS_DELETED);
         QuestionCompetition questionCompetition = QuestionCompetition.builder()
                 .questionId(dto.getQuestionId())
                 .competitionId(dto.getCompetitionId())
                 .questionName(dto.getQuestionName())
                 .score(dto.getScore())
+                .isDelete(CommonConstants.NOT_DELETED)
                 .build();
-        mapper.insertSelective(questionCompetition);
+        if (null != mapper.selectOneByExample(example)) {
+            mapper.updateByExampleSelective(questionCompetition, example);
+        } else {
+            mapper.insertSelective(questionCompetition);
+        }
     }
 
     /**

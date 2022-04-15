@@ -4,7 +4,6 @@ import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.dto.QuestionCompetitionCreateDto;
 import com.xoj.backend.dto.QuestionCompetitionModifyDto;
 import com.xoj.backend.entity.QuestionCompetition;
-import com.xoj.backend.exception.BizException;
 import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.notation.RequireManagerPermission;
 import com.xoj.backend.service.QuestionCompetitionService;
@@ -15,7 +14,6 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
