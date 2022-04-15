@@ -86,7 +86,7 @@ public class QuestionCompetitionServiceImpl implements QuestionCompetitionServic
         List<QuestionCompetition> list = mapper.selectByExample(example);
         List<QuestionModel> questions = new ArrayList<>();
         for (QuestionCompetition questionCompetition : list) {
-            questions.add(questionService.selectOneQuestion(questionCompetition.getCompetitionId()));
+            questions.add(questionService.selectOneQuestion(questionCompetition.getQuestionId()));
         }
         return questions;
     }
