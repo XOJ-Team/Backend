@@ -11,9 +11,11 @@ import com.xoj.backend.service.QuestionCompetitionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -33,7 +35,7 @@ public class QuestionCompetitionController {
         try {
             service.create(dto);
             return RestResponse.ok(dto, CommonErrorType.SUCCESS.getResultMsg());
-        } catch (Exception e) {
+        } catch (DuplicateKeyException e) {
             return RestResponse.error(CommonErrorType.DUPLICATE_KEY.getResultMsg());
         }
 
