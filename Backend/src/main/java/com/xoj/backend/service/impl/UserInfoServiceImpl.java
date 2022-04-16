@@ -2,6 +2,7 @@ package com.xoj.backend.service.impl;
 
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.base.Session;
+import com.xoj.backend.common.CommonConstants;
 import com.xoj.backend.common.LevelEnum;
 import com.xoj.backend.mapper.UserBaseMapper;
 import com.xoj.backend.entity.UserBase;
@@ -82,7 +83,12 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public RestResponse<UserBase> getUserInfo(String id) {
         UserBase user = loginService.getUserById(id);
-        if(user != null) return RestResponse.ok(user);
+        if(user != null){
+            if (null == user.getProfilePhoto()) {
+                user.setProfilePhoto(CommonConstants.DEFAULT_PHOTO);
+            }
+            return RestResponse.ok(user);
+        }
         return RestResponse.error("no such user");
     }
 

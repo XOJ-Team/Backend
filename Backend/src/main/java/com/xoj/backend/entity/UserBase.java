@@ -57,5 +57,4 @@ public class UserBase implements Serializable {
 
     private String intro;
 
-    private List<Long> solved;
 }

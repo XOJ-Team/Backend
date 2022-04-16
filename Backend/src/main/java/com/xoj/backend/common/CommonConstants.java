@@ -19,4 +19,6 @@ public class CommonConstants {
     public static final Boolean DISLIKE = Boolean.FALSE;
 
     public static final Boolean LIKE = Boolean.TRUE;
+
+    public static final String DEFAULT_PHOTO = "https://sm.ms/image/UnmJGA7v2heqbET";
 }

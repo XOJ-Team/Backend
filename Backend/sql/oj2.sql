@@ -56,22 +56,22 @@ create table user_base
     id            bigint auto_increment comment 'ID'
         primary key,
     is_delete     tinyint(1)   default 0                              null comment '是否删除',
-    NAME          varchar(20)                                         not null comment '名字',
+    NAME          varchar(255)                                         not null comment '名字',
     create_time   timestamp    default CURRENT_TIMESTAMP              null comment '创建时间',
     delete_time   timestamp    default CURRENT_TIMESTAMP              null comment '删除时间',
     mail          varchar(255)                                        null comment '邮箱',
     phone_number  varchar(20)                                         null comment '电话号',
-    score         int                                                 null comment '分数',
+    score         int          default 0                              null comment '分数',
     photo_hash    text                                                null comment '头像hash',
     authority     tinyint                                             null comment '权限',
     password      varchar(128)                                        null comment '密码',
-    ranking       int                                                 null comment '排名',
+    ranking       int          default 0                              null comment '排名',
     solved_number int          default 0                              null comment '解决问题数量',
     easy_number   int          default 0                              null comment '简单题数量',
     medium_number int          default 0                              null comment '中等题数量',
     hard_number   int          default 0                              null comment '困难题数量',
     profile_photo text                                                null comment '头像',
-    intro         varchar(255) default 'This is an self introduction editing by yourself.' null comment '自我介绍',
+    intro         varchar(400) default 'This is an self introduction editing by yourself.' null comment '自我介绍',
     constraint phone_number
         unique (phone_number)
 )
@@ -87,7 +87,7 @@ create table question
 (
     id             bigint auto_increment comment 'ID',
     is_delete      tinyint(1)   default 0                 null comment '是否删除',
-    NAME           varchar(20)                            not null comment '名字',
+    NAME           varchar(255)                            not null comment '名字',
     create_time    timestamp    default CURRENT_TIMESTAMP null comment '创建时间',
     delete_time    timestamp    default CURRENT_TIMESTAMP null comment '删除时间',
     content        text                                   null comment '题目内容',
