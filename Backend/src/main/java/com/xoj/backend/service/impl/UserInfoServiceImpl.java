@@ -13,6 +13,7 @@ import com.xoj.backend.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import tk.mybatis.mapper.entity.Example;
 
@@ -84,7 +85,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     public RestResponse<UserBase> getUserInfo(String id) {
         UserBase user = loginService.getUserById(id);
         if(user != null){
-            if (null == user.getProfilePhoto()) {
+            if (!StringUtils.hasText(user.getProfilePhoto())) {
                 user.setProfilePhoto(CommonConstants.DEFAULT_PHOTO);
             }
             return RestResponse.ok(user);
