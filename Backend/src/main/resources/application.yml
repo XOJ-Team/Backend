@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 'root'
-    url: jdbc:mysql://localhost:3306/oj?useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    password: root
+    url: jdbc:mysql://localhost:3306/oj?useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai?serverTimezone=UTC
 
   mail:
     host: ***REMOVED***
