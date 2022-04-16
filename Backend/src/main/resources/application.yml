@@ -36,3 +36,9 @@ smms:
   upload-url: https://sm.ms/api/v2/upload
   delete-url: https://sm.ms/api/v2/delete/:hash
   authorization: ***REMOVED***
+
+
+jdbc.driver: com.mysql.cj.jdbc.Driver
+jdbc.username: root
+jdbc.password: root
+jdbc.url: jdbc:mysql://localhost:3306/oj?useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai?serverTimezone=UTC
