@@ -4,10 +4,8 @@ import com.xoj.backend.common.CommonConstants;
 import com.xoj.backend.dto.QuestionCompetitionCreateDto;
 import com.xoj.backend.dto.QuestionCompetitionModifyDto;
 import com.xoj.backend.entity.QuestionCompetition;
-import com.xoj.backend.exception.BizException;
 import com.xoj.backend.mapper.QuestionCompetitionMapper;
 import com.xoj.backend.service.QuestionCompetitionService;
-import com.xoj.backend.service.QuestionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -94,6 +92,18 @@ public class QuestionCompetitionServiceImpl implements QuestionCompetitionServic
                 .andEqualTo("isDelete", CommonConstants.NOT_DELETED);
         List<QuestionCompetition> links = mapper.selectByExample(example);
         return links;
+    }
+
+    @Override
+    public void deleteListByQuestion(Long questionId) {
+        Example example = new Example(QuestionCompetition.class);
+        example.createCriteria()
+                .andEqualTo("questionId", questionId)
+                .andEqualTo("isDelete", CommonConstants.NOT_DELETED);
+        QuestionCompetition questionCompetition = QuestionCompetition.builder()
+                .isDelete(CommonConstants.IS_DELETED)
+                .build();
+        mapper.updateByExampleSelective(questionCompetition, example);
     }
 
 }

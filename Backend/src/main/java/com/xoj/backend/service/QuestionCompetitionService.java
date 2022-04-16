@@ -17,4 +17,6 @@ public interface QuestionCompetitionService {
     void delete(Long id);
 
     List<QuestionCompetition> selectQuestionsByCompetition(Long competitionId);
+
+    void deleteListByQuestion(Long questionId);
 }

@@ -13,12 +13,14 @@ import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.mapper.QuestionMapper;
 import com.xoj.backend.model.QuestionModel;
 import com.xoj.backend.model.QuestionSearchModel;
+import com.xoj.backend.service.QuestionCompetitionService;
 import com.xoj.backend.service.QuestionService;
 import com.xoj.backend.service.UserBaseService;
 import com.xoj.backend.util.JacksonUtils;
 import com.xoj.backend.util.RedisUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
@@ -30,6 +32,8 @@ import java.util.List;
 @AllArgsConstructor
 public class QuestionServiceImpl implements QuestionService {
     private final UserBaseService userBaseService;
+
+    private final QuestionCompetitionService questionCompetitionService;
 
     private final QuestionMapper mapper;
 
@@ -155,6 +159,7 @@ public class QuestionServiceImpl implements QuestionService {
      * delete a question
      * @param id
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void delete(Long id) {
         String key = prefix + id;
@@ -168,6 +173,7 @@ public class QuestionServiceImpl implements QuestionService {
                 .deleteTime(new Date())
                 .build();
         mapper.updateByExampleSelective(question, example);
+        questionCompetitionService.deleteListByQuestion(id);
     }
 
     @Override
