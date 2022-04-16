@@ -17,6 +17,7 @@ public class Session {
         HttpSession session;
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         session = request.getSession();
+        session.setMaxInactiveInterval(5184000);
         return session;
     }
 
@@ -57,7 +58,7 @@ public class Session {
         HttpSession session = getSession();
         session.removeAttribute("user");
     }
-    public static void removeUserInfo(UserBase user){
+    public static void removeUserInfo(){
         HttpSession session = getSession();
         session.removeAttribute("id");
         session.removeAttribute("name");

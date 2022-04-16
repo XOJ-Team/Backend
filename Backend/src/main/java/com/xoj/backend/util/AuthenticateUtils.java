@@ -79,7 +79,7 @@ public class AuthenticateUtils {
     }
 
     public static void unAuthenticate(){
-        HttpSession session = Session.getSession();
-        session.removeAttribute("authority");
+        Session.removeUser();
+        Session.removeUserInfo();
     }
 }
