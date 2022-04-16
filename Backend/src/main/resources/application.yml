@@ -2,7 +2,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: root
+    password: root123123
     url: jdbc:mysql://localhost:3306/oj?useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai?serverTimezone=UTC
 
   mail:
@@ -38,7 +38,3 @@ smms:
   authorization: ***REMOVED***
 
 
-jdbc.driver: com.mysql.cj.jdbc.Driver
-jdbc.username: root
-jdbc.password: root123123
-jdbc.url: jdbc:mysql://localhost:3306/oj?useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai?serverTimezone=UTC
