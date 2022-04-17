@@ -140,7 +140,7 @@ create table competition
 (
     id                 bigint auto_increment comment 'ID',
     is_delete          tinyint(1) default 0                 null comment '是否删除',
-    NAME               varchar(20)                          not null comment '名字',
+    NAME               varchar(255)                          not null comment '名字',
     create_time        timestamp  default CURRENT_TIMESTAMP null comment '创建时间',
     delete_time        timestamp  default CURRENT_TIMESTAMP null comment '删除时间',
     brief_introduction tinytext                             null comment '简介',

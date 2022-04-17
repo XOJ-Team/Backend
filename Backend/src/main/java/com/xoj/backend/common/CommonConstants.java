@@ -20,5 +20,5 @@ public class CommonConstants {
 
     public static final Boolean LIKE = Boolean.TRUE;
 
-    public static final String DEFAULT_PHOTO = "https://sm.ms/image/UnmJGA7v2heqbET";
+    public static final String DEFAULT_PHOTO = "https://s2.loli.net/2022/04/16/UnmJGA7v2heqbET.png";
 }
