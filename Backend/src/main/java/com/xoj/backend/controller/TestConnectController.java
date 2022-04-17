@@ -1,6 +1,7 @@
 package com.xoj.backend.controller;
 
 import com.xoj.backend.base.RestResponse;
+import com.xoj.backend.base.Session;
 import com.xoj.backend.exception.CommonErrorType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,5 +20,11 @@ public class TestConnectController {
     @ApiOperation(value = "test whether the IDE connected with the backend")
     public RestResponse<?> connected() {
         return RestResponse.ok(new Date(), CommonErrorType.SUCCESS.getResultMsg());
+    }
+
+    @GetMapping("session")
+    @ApiOperation(value = "get current session id")
+    public RestResponse<?> getSession() {
+        return RestResponse.ok(Session.getSession().getId());
     }
 }
