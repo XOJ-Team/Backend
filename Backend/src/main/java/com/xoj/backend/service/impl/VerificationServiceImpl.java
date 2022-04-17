@@ -108,7 +108,7 @@ public class VerificationServiceImpl implements VerificationService {
         String body = "Hi,\n" + " \n" + "Welcome！\n" + " \n" +
                 "Thank you for visiting XOJ. We hope you enjoy it." +
                 "  To reset the password, please enter the verification code below.\n" + " \n" +
-                "Verification code:"+verificationNumber+" \n" + " \n" + "Thanks,\n" + "XOJ Developer Team";
+                "Verification code: "+verificationNumber+" \n" + " \n" + "Thanks,\n" + "XOJ Developer Team";
 
         try{
             mailGunService.sendText(from, to, subject,body);
