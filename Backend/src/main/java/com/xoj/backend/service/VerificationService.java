@@ -12,4 +12,6 @@ public interface VerificationService{
     RestResponse<Object> sendVerificationNumberResetPassword(String mail);
 
     String getRandomNumber();
+
+    RestResponse<Object> sendVerificationNumber(String from, String to);
 }

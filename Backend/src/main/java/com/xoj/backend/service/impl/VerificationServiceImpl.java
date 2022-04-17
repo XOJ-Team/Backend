@@ -5,6 +5,7 @@ import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.base.Session;
 import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.service.LoginService;
+import com.xoj.backend.service.MailGunService;
 import com.xoj.backend.service.VerificationService;
 import com.xoj.backend.util.TransUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class VerificationServiceImpl implements VerificationService {
 
     @Value(value = "${spring.mail.username}")
     String sender;
+
+    @Autowired
+    MailGunService mailGunService;
 
 
     @Override
@@ -92,5 +96,26 @@ public class VerificationServiceImpl implements VerificationService {
             result.append(random.nextInt(10));
         }
         return result.toString();
+    }
+
+    @Override
+    public RestResponse<Object> sendVerificationNumber(String from, String to) {
+
+        String verificationNumber = getRandomNumber();
+        Session.getSession().setAttribute("verificationNumber",verificationNumber);
+
+        String subject = "XJTLU-OJ verification code";
+        String body = "Hi,\n" + " \n" + "Welcome！\n" + " \n" +
+                "Thank you for visiting XOJ. We hope you enjoy it." +
+                "  To reset the password, please enter the verification code below.\n" + " \n" +
+                "Verification code:"+verificationNumber+" \n" + " \n" + "Thanks,\n" + "XOJ Developer Team";
+
+        try{
+            mailGunService.sendText(from, to, subject,body);
+            return RestResponse.ok();
+        }catch (Exception e){
+            return RestResponse.error();
+        }
+
     }
 }

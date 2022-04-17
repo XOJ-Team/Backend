@@ -20,4 +20,6 @@ public class VerificationParam {
 
     @NotNull
     private String mail;
+
+    private String from = "XOJ Notifications <noreply@xoj.codes>";
 }

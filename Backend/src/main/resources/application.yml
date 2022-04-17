@@ -38,3 +38,18 @@ smms:
   authorization: ***REMOVED***
 
 
+mailgun:
+  api:
+    username: xjtluoj
+    password: ***REMOVED***
+    base:
+      url: https://api.mailgun.net/v3/xoj.codes
+    messages:
+      url: https://api.mailgun.net/v3/xoj.codes/messages
+
+
+
+
+
+
+
