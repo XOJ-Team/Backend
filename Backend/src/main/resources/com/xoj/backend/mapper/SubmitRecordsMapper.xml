@@ -29,13 +29,16 @@
     <result column="codes" jdbcType="VARCHAR" property="codes" />
   </resultMap>
   <select id="selectQuestionRecords" resultMap="submitRecordsModelMap">
-    SELECT * FROM oj.submit_records
-WHERE (user_id = #{id} AND question_id = #{questionId})
+    SELECT *
+    FROM oj.submit_records
+    WHERE (user_id = #{id} AND question_id = #{questionId})
+    ORDER BY create_time DESC
   </select>
   <select id="selectUserRecords" resultMap="submitRecordsModelMap"
           parameterType="java.lang.Long">
     SELECT * FROM oj.submit_records
     WHERE (user_id = #{id})
+    ORDER BY create_time DESC
     LIMIT 10
   </select>
   <select id="selectQuestionIds" resultType="java.lang.Long" parameterType="java.lang.Long">

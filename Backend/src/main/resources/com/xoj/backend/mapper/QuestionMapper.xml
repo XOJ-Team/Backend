@@ -61,7 +61,10 @@
     <select id="selectSearch" resultType="com.xoj.backend.model.QuestionSearchModel">
       SELECT *
       FROM oj.question
-      WHERE (is_delete = 0 AND (id = #{number}) OR (NAME LIKE CONCAT('%', #{text}, '%')))
+      <if test="text != null and text != '' ">
+        WHERE (is_delete = 0 AND (id = #{number}) OR (NAME LIKE CONCAT('%', #{text}, '%') OR NAME LIKE CONCAT('%', LOWER(#{text}), '%') OR NAME LIKE CONCAT('%', UPPER(#{text}), '%')))
+      </if>
+
     </select>
 
 
