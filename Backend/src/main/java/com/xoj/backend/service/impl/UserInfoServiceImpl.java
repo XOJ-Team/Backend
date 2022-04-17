@@ -4,6 +4,8 @@ import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.base.Session;
 import com.xoj.backend.common.CommonConstants;
 import com.xoj.backend.common.LevelEnum;
+import com.xoj.backend.exception.BizException;
+import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.mapper.UserBaseMapper;
 import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.model.QuestionModel;
@@ -156,6 +158,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public UserBase selectUser() {
         UserBase user = userBaseService.getCurrentUser();
+        if (null == user) {
+            throw new BizException(CommonErrorType.NO_USER);
+        }
         Example example = new Example(UserBase.class);
         example.createCriteria().andEqualTo("id", user.getId());
         UserBase userBase = mapper.selectOneByExample(example);

@@ -51,8 +51,13 @@ public class ManageUserInfoController {
     @GetMapping("/manager/user")
     @ApiOperation(value = "get user info")
     public RestResponse<UserBase> getUser(){
-        UserBase userBase = userInfoService.selectUser();
-        return RestResponse.ok(userBase, CommonErrorType.SUCCESS.getResultMsg());
+        try {
+            UserBase userBase = userInfoService.selectUser();
+            return RestResponse.ok(userBase, CommonErrorType.SUCCESS.getResultMsg());
+        } catch (Exception e) {
+            return RestResponse.error(CommonErrorType.NO_USER.getResultMsg());
+        }
+
     }
 
 }
