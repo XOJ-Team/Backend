@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 /***
  * @Author jianghanchen
@@ -49,9 +51,13 @@ public class ElasticSearchController {
         return elasticSearchService.insertDocument(param.getIndex(),param.getId(), param.getObj());
     }
 
-//    @RequestMapping(value = "/set", method = RequestMethod.GET)
-//    @ApiOperation(value = "notice! this update is implemented by insert (will cover origin data)")
-//    public RestResponse<?> update(@RequestBody ESCRUDParam param) {
-//        return elasticSearchService.insertDocument(param.getIndex(),param.getId(), param.getObj());
-//    }
+    @RequestMapping(value = "/show", method = RequestMethod.GET)
+    @ApiOperation(value = "show es-head")
+    public ModelAndView showES() {
+        return new ModelAndView(new RedirectView("localhost:9100"));
+    }
+
+
+
+
 }
