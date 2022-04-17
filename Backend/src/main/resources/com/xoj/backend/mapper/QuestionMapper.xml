@@ -62,9 +62,10 @@
       SELECT *
       FROM oj.question
       <if test="text != null and text != '' ">
-        WHERE (is_delete = 0 AND (id = #{number}) OR (NAME LIKE CONCAT('%', #{text}, '%') OR NAME LIKE CONCAT('%', LOWER(#{text}), '%') OR NAME LIKE CONCAT('%', UPPER(#{text}), '%')))
+        WHERE (is_delete = 0 AND (id = #{number})
+                   OR (NAME LIKE CONCAT('%', #{text}, '%') OR NAME LIKE CONCAT('%', LOWER(#{text}), '%') OR NAME LIKE CONCAT('%', UPPER(#{text}), '%')))
       </if>
-
+      ORDER BY create_time DESC
     </select>
 
 
