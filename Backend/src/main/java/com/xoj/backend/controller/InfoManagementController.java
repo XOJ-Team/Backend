@@ -5,7 +5,6 @@ import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.notation.RequirePermission;
 import com.xoj.backend.param.ChangeUserInfoParam;
-import com.xoj.backend.param.UserParam;
 import com.xoj.backend.service.UserInfoService;
 import com.xoj.backend.util.UserThreadLocal;
 import io.swagger.annotations.Api;
@@ -65,6 +64,17 @@ public class InfoManagementController {
     @ApiOperation(value = "update intro")
     public RestResponse<String> updateIntro(@RequestParam String text) {
         return RestResponse.ok(userInfoService.updateIntro(text), CommonErrorType.SUCCESS.getResultMsg());
+    }
+
+    @GetMapping("/user/my")
+    @ApiOperation(value = "get user info")
+    public RestResponse<UserBase> getUser(){
+        try {
+            UserBase userBase = userInfoService.selectUser();
+            return RestResponse.ok(userBase, CommonErrorType.SUCCESS.getResultMsg());
+        } catch (Exception e) {
+            return RestResponse.error(CommonErrorType.NO_USER.getResultMsg());
+        }
     }
 }
 

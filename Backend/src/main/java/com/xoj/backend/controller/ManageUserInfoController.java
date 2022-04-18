@@ -48,16 +48,4 @@ public class ManageUserInfoController {
         return userInfoService.addUser(param);
     }
 
-    @GetMapping("/manager/user")
-    @ApiOperation(value = "get user info")
-    public RestResponse<UserBase> getUser(){
-        try {
-            UserBase userBase = userInfoService.selectUser();
-            return RestResponse.ok(userBase, CommonErrorType.SUCCESS.getResultMsg());
-        } catch (Exception e) {
-            return RestResponse.error(CommonErrorType.NO_USER.getResultMsg());
-        }
-
-    }
-
 }
