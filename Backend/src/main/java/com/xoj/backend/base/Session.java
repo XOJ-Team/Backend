@@ -17,7 +17,6 @@ public class Session {
         HttpSession session;
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         session = request.getSession();
-        session.setMaxInactiveInterval(5184000);
         return session;
     }
 
