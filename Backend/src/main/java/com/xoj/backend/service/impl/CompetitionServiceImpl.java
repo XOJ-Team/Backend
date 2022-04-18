@@ -120,7 +120,7 @@ public class CompetitionServiceImpl implements CompetitionService {
             }
             detailModel.setCompetitionModel(competitionModel);
             UserBase user = userBaseService.getCurrentUser();
-            if (user.getAuthority() < 3 && DateUtils.string2Date(competitionModel.getStartTime()).after(new Date())) {
+            if ((null == user || user.getAuthority() < 3) && DateUtils.string2Date(competitionModel.getStartTime()).after(new Date())) {
                 detailModel.setLinks(new ArrayList<>());
             } else {
                 detailModel.setLinks(questionCompetitionService.selectQuestionsByCompetition(id));
