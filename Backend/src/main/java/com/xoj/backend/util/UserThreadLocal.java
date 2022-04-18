@@ -13,6 +13,7 @@ public class UserThreadLocal {
     }
 
     public static void set(){
+        userThread.remove();
         HttpSession session = Session.getSession();
         UserBase user = (UserBase) session.getAttribute("user");
         if(user != null){
