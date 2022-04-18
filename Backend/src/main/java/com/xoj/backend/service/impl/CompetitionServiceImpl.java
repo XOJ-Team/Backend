@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -114,8 +115,16 @@ public class CompetitionServiceImpl implements CompetitionService {
                 redisUtils.set(key, JSONString);
                 competitionModel =  competition;
             }
+            if (null == competitionModel) {
+                throw new BizException();
+            }
             detailModel.setCompetitionModel(competitionModel);
-            detailModel.setLinks(questionCompetitionService.selectQuestionsByCompetition(id));
+            UserBase user = userBaseService.getCurrentUser();
+            if (user.getAuthority() < 3 && DateUtils.string2Date(competitionModel.getStartTime()).after(new Date())) {
+                detailModel.setLinks(new ArrayList<>());
+            } else {
+                detailModel.setLinks(questionCompetitionService.selectQuestionsByCompetition(id));
+            }
             return detailModel;
         } catch (Exception e) {
             throw new BizException(e.getMessage());
