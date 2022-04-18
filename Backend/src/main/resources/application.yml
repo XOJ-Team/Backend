@@ -28,6 +28,8 @@ server:
   servlet:
     session:
       timeout: 5184000
+      cookie:
+        max-age: 5184000
 
 pagehelper:
   helper-dialect: mysql
