@@ -11,6 +11,7 @@ import com.xoj.backend.param.UserParam;
 import com.xoj.backend.param.NormalLoginParam;
 import com.xoj.backend.service.LoginService;
 import com.xoj.backend.util.AuthenticateUtils;
+import com.xoj.backend.util.CookieUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -45,13 +47,15 @@ public class LoginController {
 
     @RequestMapping(value = NORMAL_LOGIN_URL, method = RequestMethod.POST)
     @ApiOperation(value = "login without use verification number")
-    public RestResponse<UserBase> normalLogin(@Valid @RequestBody NormalLoginParam loginParam, HttpSession session) {
+    public RestResponse<UserBase> normalLogin(@Valid @RequestBody NormalLoginParam loginParam, HttpServletResponse response) {
+        CookieUtils.setCookie(response,loginParam.getMail());
         return loginService.normalLogin(loginParam);
     }
 
     @RequestMapping(value = MAIL_LOGIN_URL, method = RequestMethod.POST)
     @ApiOperation(value = "mail login")
-    public RestResponse<UserBase> mailLogin(@Valid @RequestBody MailLoginParam loginParam) {
+    public RestResponse<UserBase> mailLogin(@Valid @RequestBody MailLoginParam loginParam, HttpServletResponse response) {
+        CookieUtils.setCookie(response,loginParam.getMail());
         return loginService.mailLogin(loginParam);
     }
 
