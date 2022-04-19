@@ -13,14 +13,17 @@ import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.mapper.QuestionMapper;
 import com.xoj.backend.model.QuestionModel;
 import com.xoj.backend.model.QuestionSearchModel;
+import com.xoj.backend.service.ElasticSearchService;
 import com.xoj.backend.service.QuestionCompetitionService;
 import com.xoj.backend.service.QuestionService;
 import com.xoj.backend.service.UserBaseService;
 import com.xoj.backend.util.JacksonUtils;
 import com.xoj.backend.util.RedisUtils;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
@@ -31,6 +34,10 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class QuestionServiceImpl implements QuestionService {
+
+    @Autowired
+    ElasticSearchService elasticSearchService;
+
     private final UserBaseService userBaseService;
 
     private final QuestionCompetitionService questionCompetitionService;
@@ -64,6 +71,9 @@ public class QuestionServiceImpl implements QuestionService {
                 .tags(dto.getTags())
                 .build();
         mapper.insertSelective(question);
+
+        elasticSearchService.insertDocument(   "questions", dto.getName(),dto);
+
     }
 
     /**
@@ -92,6 +102,8 @@ public class QuestionServiceImpl implements QuestionService {
         Example example = new Example(Question.class);
         example.createCriteria().andEqualTo("id", dto.getId());
         mapper.updateByExampleSelective(question, example);
+
+        elasticSearchService.insertDocument(   "questions", dto.getName(),dto);
     }
 
     /**
@@ -173,7 +185,25 @@ public class QuestionServiceImpl implements QuestionService {
                 .deleteTime(new Date())
                 .build();
         mapper.updateByExampleSelective(question, example);
+        try {
+            Question question_info = getQuestion(id);
+            elasticSearchService.deleteDocument("questions",question_info.getName());
+        }catch (Exception ignore){}
         questionCompetitionService.deleteListByQuestion(id);
+    }
+
+    public Question getQuestion(Long id) {
+
+        Example example = new Example(UserBase.class);
+        example.createCriteria()
+                .andEqualTo("id", id);
+        List<Question> questions = mapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(questions)){
+            return null;
+        }else{
+            Question question = questions.get(0);
+            return question;
+        }
     }
 
     @Override
