@@ -168,7 +168,7 @@ public class QuestionController {
 
     @PostMapping("/search/es")
     @ApiOperation(value = "search questions when linking")
-    public RestResponse<?> searchQuestion(String text) {
+    public RestResponse<?> searchQuestion(@RequestBody String text) {
         return RestResponse.ok(elasticSearchService.searchDocument("questions","tags",text), CommonErrorType.SUCCESS.getResultMsg());
     }
 
