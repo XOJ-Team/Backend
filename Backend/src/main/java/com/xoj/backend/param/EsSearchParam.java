@@ -13,7 +13,8 @@ import java.util.Date;
 
 @Data
 @Builder
-
+@NoArgsConstructor
+@AllArgsConstructor
 public class EsSearchParam {
     private Long id;
 
