@@ -13,6 +13,7 @@ import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.mapper.QuestionMapper;
 import com.xoj.backend.model.QuestionModel;
 import com.xoj.backend.model.QuestionSearchModel;
+import com.xoj.backend.param.EsSearchParam;
 import com.xoj.backend.service.ElasticSearchService;
 import com.xoj.backend.service.QuestionCompetitionService;
 import com.xoj.backend.service.QuestionService;
@@ -72,8 +73,9 @@ public class QuestionServiceImpl implements QuestionService {
                 .build();
         mapper.insertSelective(question);
         Question question_info = getQuestion(dto.getName());
-        question.setTags(question.getTags() + " " + question.getName() + " " + question_info.getId());
-        elasticSearchService.insertDocument(   "questions", dto.getName(),question);
+        String searchKey = question_info.getTags() + " " + question_info.getName() + " " + question_info.getId();
+        EsSearchParam esSearchParam = new EsSearchParam(question_info, searchKey);
+        elasticSearchService.insertDocument(   "questions", dto.getName(),esSearchParam);
 
     }
 
@@ -104,8 +106,9 @@ public class QuestionServiceImpl implements QuestionService {
         example.createCriteria().andEqualTo("id", dto.getId());
         mapper.updateByExampleSelective(question, example);
         Question question_info = getQuestion(dto.getName());
-        question.setTags(question.getTags() + " " + question.getName() + " " + question_info.getId());
-        elasticSearchService.insertDocument(   "questions", dto.getName(),question);
+        String searchKey = question_info.getTags() + " " + question_info.getName() + " " + question_info.getId();
+        EsSearchParam esSearchParam = new EsSearchParam(question_info, searchKey);
+        elasticSearchService.insertDocument(   "questions", dto.getName(),esSearchParam);
     }
 
     /**
@@ -258,6 +261,11 @@ public class QuestionServiceImpl implements QuestionService {
                 .rate(new Formatter().format("%.2f", (double)accept * 100 / (double)(q.getTotal() + 1)) + "%")
                 .build();
         mapper.updateByExampleSelective(question, example);
+
+        Question question_info = getQuestion(id);
+        String searchKey = question_info.getTags() + " " + question_info.getName() + " " + question_info.getId();
+        EsSearchParam esSearchParam = new EsSearchParam(question_info, searchKey);
+        elasticSearchService.insertDocument(   "questions", question_info.getName(),esSearchParam);
     }
 
     @Override
