@@ -11,6 +11,8 @@ import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.model.QuestionModel;
 import com.xoj.backend.model.QuestionPageModel;
 import com.xoj.backend.notation.RequireManagerPermission;
+import com.xoj.backend.param.SearchLimitParam;
+import com.xoj.backend.service.ElasticSearchService;
 import com.xoj.backend.service.QuestionService;
 import com.xoj.backend.service.SubmitRecordsService;
 import com.xoj.backend.service.UserBaseService;
@@ -36,6 +38,9 @@ public class QuestionController {
 
     @Autowired
     private SubmitRecordsService submitRecordsService;
+
+    @Autowired
+    private ElasticSearchService elasticSearchService;
 
     @ModelAttribute
     public void setUser() {
@@ -158,4 +163,21 @@ public class QuestionController {
     public RestResponse<?> showQuestion(@RequestParam String text) {
         return RestResponse.ok(service.search(text), CommonErrorType.SUCCESS.getResultMsg());
     }
+
+
+
+    @GetMapping("/search/es")
+    @ApiOperation(value = "search questions when linking")
+    @RequireManagerPermission
+    public RestResponse<?> searchQuestion(@RequestParam String text) {
+        return RestResponse.ok(elasticSearchService.searchDocument("question","name",text), CommonErrorType.SUCCESS.getResultMsg());
+    }
+
+    @GetMapping("/search/es/limit")
+    @ApiOperation(value = "search questions when linking")
+    @RequireManagerPermission
+    public RestResponse<?> searchQuestionLimit(@RequestParam SearchLimitParam param) {
+        return RestResponse.ok(elasticSearchService.searchDocument("question","name",param.getText(),param.getFrom(),param.getTo()), CommonErrorType.SUCCESS.getResultMsg());
+    }
+
 }
