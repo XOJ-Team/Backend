@@ -78,6 +78,7 @@ public class QuestionController {
     }
 
     @GetMapping("/all_questions")
+    @RequireManagerPermission
     @ApiOperation(value = "get all questions")
     public RestResponse<QuestionPageModel> getAllQuestions(@RequestParam Integer pageNum,
                                                             @RequestParam Integer pageSize) {

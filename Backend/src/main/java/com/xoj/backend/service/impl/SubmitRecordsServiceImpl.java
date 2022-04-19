@@ -45,10 +45,10 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
                 .result(dto.getResult())
                 .memoryCost(dto.getMemoryCost())
                 .timeCost(dto.getTimeCost())
-                .userId(dto.getUserId())
+                .userId(user.getId())
                 .codes(dto.getCodes()).build();
         mapper.insertSelective(record);
-        if (ResultEnum.ACCEPTED.getCode().equals(dto.getResult()) && determine(dto.getQuestionId(), dto.getUserId())){
+        if (ResultEnum.ACCEPTED.getCode().equals(dto.getResult()) && determine(dto.getQuestionId(), user.getId())){
             modifyUser(dto.getQuestionId(), user);
         }
         questionService.calRate(dto.getQuestionId(), dto.getResult());

@@ -30,6 +30,7 @@ public class SubmitRecordsController {
     }
 
     @PostMapping("/")
+    @RequirePermission
     @ApiOperation(value = "create submit record")
     public RestResponse<?> create(@RequestBody SubmitRecordsCreateDto dto) {
         submitRecordsService.createRecord(dto);
@@ -52,6 +53,7 @@ public class SubmitRecordsController {
     }
 
     @PutMapping("/")
+    @RequirePermission
     @ApiOperation(value = "modify the comment of a record")
     public RestResponse<?> modify(@RequestBody SubmitRecordsModifyDto dto) {
         submitRecordsService.modifyRecord(dto);

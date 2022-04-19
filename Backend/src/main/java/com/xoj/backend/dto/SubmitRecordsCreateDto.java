@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -15,19 +16,21 @@ public class SubmitRecordsCreateDto {
     @NotNull
     private Long questionId;
 
+    @NotEmpty
     private String questionName;
 
-    @NotNull
-    private Long userId;
-
+    @NotEmpty
     private String lang;
 
     @NotNull
     private Integer result;
 
+    @NotNull
     private Integer timeCost;
 
+    @NotNull
     private Double memoryCost;
 
+    @NotEmpty
     private String codes;
 }
