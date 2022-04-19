@@ -71,7 +71,7 @@ public class QuestionServiceImpl implements QuestionService {
                 .tags(dto.getTags())
                 .build();
         mapper.insertSelective(question);
-
+        question.setTags(question.getTags() + " " + question.getName() + " " + question.getId());
         elasticSearchService.insertDocument(   "questions", dto.getName(),dto);
 
     }
@@ -102,7 +102,7 @@ public class QuestionServiceImpl implements QuestionService {
         Example example = new Example(Question.class);
         example.createCriteria().andEqualTo("id", dto.getId());
         mapper.updateByExampleSelective(question, example);
-
+        question.setTags(question.getTags() + " " + question.getName() + " " + question.getId());
         elasticSearchService.insertDocument(   "questions", dto.getName(),dto);
     }
 

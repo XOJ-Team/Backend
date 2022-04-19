@@ -170,14 +170,14 @@ public class QuestionController {
     @ApiOperation(value = "search questions when linking")
     @RequireManagerPermission
     public RestResponse<?> searchQuestion(@RequestParam String text) {
-        return RestResponse.ok(elasticSearchService.searchDocument("question","name",text), CommonErrorType.SUCCESS.getResultMsg());
+        return RestResponse.ok(elasticSearchService.searchDocument("questions","tags",text), CommonErrorType.SUCCESS.getResultMsg());
     }
 
     @GetMapping("/search/es/limit")
     @ApiOperation(value = "search questions when linking")
     @RequireManagerPermission
     public RestResponse<?> searchQuestionLimit(@RequestParam SearchLimitParam param) {
-        return RestResponse.ok(elasticSearchService.searchDocument("question","name",param.getText(),param.getFrom(),param.getTo()), CommonErrorType.SUCCESS.getResultMsg());
+        return RestResponse.ok(elasticSearchService.searchDocument("questions","tags",param.getText(),param.getFrom(),param.getTo()), CommonErrorType.SUCCESS.getResultMsg());
     }
 
 }
