@@ -71,7 +71,8 @@ public class QuestionServiceImpl implements QuestionService {
                 .tags(dto.getTags())
                 .build();
         mapper.insertSelective(question);
-        question.setTags(question.getTags() + " " + question.getName() + " " + question.getId());
+        Question question_info = getQuestion(dto.getName());
+        question.setTags(question.getTags() + " " + question.getName() + " " + question_info.getId());
         elasticSearchService.insertDocument(   "questions", dto.getName(),question);
 
     }
@@ -102,7 +103,8 @@ public class QuestionServiceImpl implements QuestionService {
         Example example = new Example(Question.class);
         example.createCriteria().andEqualTo("id", dto.getId());
         mapper.updateByExampleSelective(question, example);
-        question.setTags(question.getTags() + " " + question.getName() + " " + question.getId());
+        Question question_info = getQuestion(dto.getName());
+        question.setTags(question.getTags() + " " + question.getName() + " " + question_info.getId());
         elasticSearchService.insertDocument(   "questions", dto.getName(),question);
     }
 
@@ -205,7 +207,18 @@ public class QuestionServiceImpl implements QuestionService {
             return question;
         }
     }
-
+    public Question getQuestion(String name) {
+        Example example = new Example(UserBase.class);
+        example.createCriteria()
+                .andEqualTo("name", name);
+        List<Question> questions = mapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(questions)){
+            return null;
+        }else{
+            Question question = questions.get(0);
+            return question;
+        }
+    }
     @Override
     public void hide(Long id) {
         Example example = new Example(Question.class);
