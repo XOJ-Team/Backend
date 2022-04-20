@@ -48,14 +48,14 @@ public class LoginController {
 
     @RequestMapping(value = NORMAL_LOGIN_URL, method = RequestMethod.POST)
     @ApiOperation(value = "login without use verification number")
-    public RestResponse<UserBase> normalLogin(@Valid @RequestBody NormalLoginParam loginParam, HttpServletResponse response) {
+    public RestResponse<UserBase> normalLogin(@Valid @RequestBody NormalLoginParam loginParam) {
         Session.getSession().setMaxInactiveInterval(5184000);
         return loginService.normalLogin(loginParam);
     }
 
     @RequestMapping(value = MAIL_LOGIN_URL, method = RequestMethod.POST)
     @ApiOperation(value = "mail login")
-    public RestResponse<UserBase> mailLogin(@Valid @RequestBody MailLoginParam loginParam, HttpServletResponse response) {
+    public RestResponse<UserBase> mailLogin(@Valid @RequestBody MailLoginParam loginParam) {
         Session.getSession().setMaxInactiveInterval(5184000);
         return loginService.mailLogin(loginParam);
     }
