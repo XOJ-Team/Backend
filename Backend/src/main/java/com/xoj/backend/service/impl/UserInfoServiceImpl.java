@@ -1,14 +1,18 @@
 package com.xoj.backend.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.base.Session;
 import com.xoj.backend.common.CommonConstants;
 import com.xoj.backend.common.LevelEnum;
+import com.xoj.backend.dto.UserRankingPageDto;
 import com.xoj.backend.exception.BizException;
 import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.mapper.UserBaseMapper;
 import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.model.QuestionModel;
+import com.xoj.backend.model.UserRankingModel;
 import com.xoj.backend.param.ChangeUserInfoParam;
 import com.xoj.backend.param.UserParam;
 import com.xoj.backend.service.*;
@@ -19,6 +23,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import tk.mybatis.mapper.entity.Example;
+
+import java.util.List;
 
 /***
  * @Author jianghanchen
@@ -193,6 +199,13 @@ public class UserInfoServiceImpl implements UserInfoService {
                 .build();
         mapper.updateByExampleSelective(userBase, example);
         return text;
+    }
+
+    @Override
+    public PageInfo<UserRankingModel> selectUsers(UserRankingPageDto dto) {
+        PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
+        List<UserRankingModel> users = mapper.selectUsersOrderedByRanking();
+        return PageInfo.of(users);
     }
 
 

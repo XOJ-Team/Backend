@@ -1,9 +1,12 @@
 package com.xoj.backend.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.dto.UserModifyDto;
+import com.xoj.backend.dto.UserRankingPageDto;
 import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.exception.CommonErrorType;
+import com.xoj.backend.model.UserRankingModel;
 import com.xoj.backend.notation.RequirePermission;
 import com.xoj.backend.param.ChangeUserInfoParam;
 import com.xoj.backend.service.UserInfoService;
@@ -69,13 +72,24 @@ public class InfoManagementController {
 
     @GetMapping("/user/my")
     @ApiOperation(value = "get user info")
-    public RestResponse<UserBase> getUser(){
+    public RestResponse<UserBase> getUser() {
         try {
             UserBase userBase = userInfoService.selectUser();
             return RestResponse.ok(userBase, CommonErrorType.SUCCESS.getResultMsg());
         } catch (Exception e) {
             return RestResponse.error(CommonErrorType.NO_USER.getResultMsg());
         }
+    }
+
+    @GetMapping("/user/rankinglist")
+    @ApiOperation(value = "get user ranking list")
+    public RestResponse<PageInfo<UserRankingModel>> getUserRankingList(@RequestParam Integer pageNum,
+                                                                       @RequestParam Integer pageSize) {
+        UserRankingPageDto dto = UserRankingPageDto.builder()
+                .pageNum(pageNum)
+                .pageSize(pageSize)
+                .build();
+        return RestResponse.ok(userInfoService.selectUsers(dto), CommonErrorType.SUCCESS.getResultMsg());
     }
 }
 

@@ -5,15 +5,26 @@
 
 <!-- 命名空间，对sql进行分类化管理（sql隔离） -->
 <mapper namespace="com.xoj.backend.mapper.UserBaseMapper">
-    <resultMap id="UserMap" type="com.xoj.backend.model.UserModel">
-
+    <resultMap id="UserMap" type="com.xoj.backend.model.UserRankingModel">
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="intro" jdbcType="VARCHAR" property="intro"/>
+        <result column="score" jdbcType="TINYINT" property="score"/>
+        <result column="ranking" jdbcType="TINYINT" property="ranking"/>
+        <result column="solved_number" jdbcType="TINYINT" property="solvedNumber"/>
     </resultMap>
 
-    <select id="selectUser" resultMap="UserMap">
+<!--    <select id="selectUser" resultMap="UserMap">-->
 
-    </select>
+<!--    </select>-->
 
-    <select id="selectUserDeleted" resultMap="UserMap">
+<!--    <select id="selectUserDeleted" resultMap="UserMap">-->
 
+<!--    </select>-->
+
+    <select id="selectUsersOrderedByRanking" resultMap="UserMap">
+        SELECT name, intro, score, ranking, solved_number
+        FROM oj.user_base
+        WHERE is_delete = 0
+        ORDER BY ranking DESC
     </select>
 </mapper>

@@ -35,6 +35,7 @@
         SELECT *
         FROM oj.competition
         WHERE is_delete = 0
+        ORDER BY start_time DESC
     </select>
 
 </mapper>

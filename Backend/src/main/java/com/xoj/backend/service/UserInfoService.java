@@ -1,7 +1,10 @@
 package com.xoj.backend.service;
 
+import com.github.pagehelper.PageInfo;
 import com.xoj.backend.base.RestResponse;
+import com.xoj.backend.dto.UserRankingPageDto;
 import com.xoj.backend.entity.UserBase;
+import com.xoj.backend.model.UserRankingModel;
 import com.xoj.backend.param.ChangeUserInfoParam;
 import com.xoj.backend.param.NormalLoginParam;
 import com.xoj.backend.param.UserParam;
@@ -35,4 +38,5 @@ public interface UserInfoService {
 
     String updateIntro(String text);
 
+    PageInfo<UserRankingModel> selectUsers(UserRankingPageDto dto);
 }
