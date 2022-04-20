@@ -2,6 +2,7 @@ package com.xoj.backend.controller;
 
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.exception.CommonErrorType;
+import com.xoj.backend.notation.RequireManagerPermission;
 import com.xoj.backend.service.UploadImageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +19,7 @@ public class UploadImageController {
     private UploadImageService service;
 
     @PostMapping("")
+    @RequireManagerPermission
     @ApiOperation(value = "upload")
     public RestResponse<Object> uploadImage(MultipartFile smfile) {
         String url = service.uploadPicture(smfile);
