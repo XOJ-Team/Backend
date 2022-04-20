@@ -102,8 +102,10 @@ public class UserInfoServiceImpl implements UserInfoService {
                 .name(param.getName())
                 .phoneNumber(param.getPhoneNumber())
                 .mail(param.getMail())
-                .password(TransUtils.getMd5(param.getPassword()))
                 .build();
+        if (StringUtils.hasText(param.getPassword())) {
+            user.setPassword(TransUtils.getMd5(param.getPassword()));
+        }
         Example example = new Example(UserBase.class);
         example.createCriteria().andEqualTo("mail", param.getMail());
         int update = mapper.updateByExampleSelective(user, example);
