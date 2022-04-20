@@ -1,6 +1,7 @@
 package com.xoj.backend.controller;
 
 import com.xoj.backend.base.RestResponse;
+import com.xoj.backend.dto.UserModifyDto;
 import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.notation.RequirePermission;
@@ -62,8 +63,8 @@ public class InfoManagementController {
     @PostMapping("/user/intro")
     @RequirePermission
     @ApiOperation(value = "update intro")
-    public RestResponse<String> updateIntro(@RequestParam String text) {
-        return RestResponse.ok(userInfoService.updateIntro(text), CommonErrorType.SUCCESS.getResultMsg());
+    public RestResponse<String> updateIntro(@RequestBody UserModifyDto dto) {
+        return RestResponse.ok(userInfoService.updateIntro(dto.getText()), CommonErrorType.SUCCESS.getResultMsg());
     }
 
     @GetMapping("/user/my")

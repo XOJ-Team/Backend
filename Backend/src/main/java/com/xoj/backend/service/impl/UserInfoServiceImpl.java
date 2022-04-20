@@ -12,6 +12,7 @@ import com.xoj.backend.model.QuestionModel;
 import com.xoj.backend.param.ChangeUserInfoParam;
 import com.xoj.backend.param.UserParam;
 import com.xoj.backend.service.*;
+import com.xoj.backend.util.TransUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -101,7 +102,7 @@ public class UserInfoServiceImpl implements UserInfoService {
                 .name(param.getName())
                 .phoneNumber(param.getPhoneNumber())
                 .mail(param.getMail())
-                .password(param.getPassword())
+                .password(TransUtils.getMd5(param.getPassword()))
                 .build();
         Example example = new Example(UserBase.class);
         example.createCriteria().andEqualTo("mail", param.getMail());
