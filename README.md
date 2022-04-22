@@ -59,6 +59,7 @@ If you want to learn more about creating good readme files then refer the follow
 store database table structure
 
 **Backend/src/main/java/com/xoj/backend/aspect**   
+permission control and cross domain support
 
 **Backend/src/main/java/com/xoj/backend/base**   
 store response and session class
@@ -91,6 +92,7 @@ object to respond the frontend
 notations to control the authority of users
 
 **Backend/src/main/java/com/xoj/backend/param**
+objects for data modification
 
 **Backend/src/main/java/com/xoj/backend/service**      
 implement the business logic
@@ -102,4 +104,7 @@ some tool classes
 entry of the project
 
 **Backend/src/main/resources**   
-xml, yml files
+some configuration files (xml, yml files)
+
+**Backend/src/test**
+some test cases
