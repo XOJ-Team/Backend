@@ -91,7 +91,7 @@ object to respond the frontend
 **Backend/src/main/java/com/xoj/backend/notation**  
 notations to control the authority of users
 
-**Backend/src/main/java/com/xoj/backend/param**
+**Backend/src/main/java/com/xoj/backend/param**  
 objects for data modification
 
 **Backend/src/main/java/com/xoj/backend/service**      
