@@ -54,17 +54,52 @@ If you want to learn more about creating good readme files then refer the follow
 - [Visual Studio Code](https://github.com/Microsoft/vscode)
 - [Chakra Core](https://github.com/Microsoft/ChakraCore) -->
 
+# Description of code directory structure
+**Backend/sql**    
+store database table structure
 
-# method of using mybatis-generator plugin
-step 1: modify the file(generatorConfig.xml)
-1. jdbcConnection: use your local database to connect
-2. targetProject: use your local path of project
-3. table: modify the table name and domainObjectName
+**Backend/src/main/java/com/xoj/backend/aspect**   
 
-step 2: double-click the maven plugin -- mybatis generator
+**Backend/src/main/java/com/xoj/backend/base**   
+store response and session class
 
-step 3: find the file in entity, then delete all the construction method, then use Lombok annotation
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+**Backend/src/main/java/com/xoj/backend/common**      
+store some common constants and enumerations   
+
+**Backend/src/main/java/com/xoj/backend/config**     
+store basic configurations
+
+**Backend/src/main/java/com/xoj/backend/controller**     
+preparing a model Map with data, select a view name and complete the request
+
+**Backend/src/main/java/com/xoj/backend/dto**      
+data transfer object passed into the controller layer
+
+**Backend/src/main/java/com/xoj/backend/entity**   
+store all the entities
+
+**Backend/src/main/java/com/xoj/backend/exception**  
+deal with the exception in business logic
+
+**Backend/src/main/java/com/xoj/backend/mapper**   
+mapping the entities to the database tables
+
+**Backend/src/main/java/com/xoj/backend/model**   
+object to respond the frontend
+
+**Backend/src/main/java/com/xoj/backend/notation**  
+notations to control the authority of users
+
+**Backend/src/main/java/com/xoj/backend/param**
+
+**Backend/src/main/java/com/xoj/backend/service**      
+implement the business logic
+
+**Backend/src/main/java/com/xoj/backend/util**  
+some tool classes
+
+**Backend/src/main/java/com/xoj/backend/BackendApplication**   
+entry of the project
+
+**Backend/src/main/resources**   
+xml, yml files
