@@ -25,7 +25,7 @@ public class CrossDomainConfig {
                 registry.addMapping("/**")
                         .allowedOriginPatterns("*")
                         .allowCredentials(true)
-                        .allowedHeaders("*")
+//                        .allowedHeaders("*")
                         .allowedMethods("*");
 
             }
