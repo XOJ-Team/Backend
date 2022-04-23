@@ -166,10 +166,10 @@ public class ElasticSearchImpl implements ElasticSearchService {
     public void fuzzySearchDocument(String index, String field, String context, HashMap<Long, Question> map) {
         SearchRequest searchRequest = new SearchRequest(index);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        WildcardQueryBuilder wildcardQueryBuilder = QueryBuilders.wildcardQuery(field, context);
 
-        FuzzyQueryBuilder fuzzyQueryBuilder = QueryBuilders.fuzzyQuery(field, context);
         searchSourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
-        searchSourceBuilder.query(fuzzyQueryBuilder);
+        searchSourceBuilder.query(wildcardQueryBuilder);
         searchRequest.source(searchSourceBuilder);
         SearchResponse search;
         try{
