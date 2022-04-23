@@ -17,7 +17,7 @@ public class SearchLimitParam {
 
     private Integer from;
 
-    private Integer to;
+    private Integer size;
 
     private String text;
 }
