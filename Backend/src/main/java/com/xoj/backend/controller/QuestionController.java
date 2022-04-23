@@ -160,16 +160,16 @@ public class QuestionController {
     @GetMapping("/search")
     @ApiOperation(value = "search questions when linking")
     @RequireManagerPermission
-    public RestResponse<?> showQuestion(@RequestParam String text) {
-        return RestResponse.ok(service.search(text), CommonErrorType.SUCCESS.getResultMsg());
+    public RestResponse<?> showQuestion(@RequestParam String value) {
+        return RestResponse.ok(service.search(value), CommonErrorType.SUCCESS.getResultMsg());
     }
 
 
 
     @PostMapping("/search/es")
     @ApiOperation(value = "search by name")
-    public RestResponse<?> searchQuestion(@RequestBody String text) {
-        return elasticSearchService.searchDocument("questions","searchKey",text);
+    public RestResponse<?> searchQuestion(@RequestBody String value) {
+        return elasticSearchService.searchDocument("questions","searchKey",value);
     }
 
     @PostMapping("/search/es/limit")
