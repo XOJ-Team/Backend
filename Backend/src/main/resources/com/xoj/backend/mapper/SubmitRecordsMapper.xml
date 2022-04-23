@@ -29,14 +29,15 @@
     <result column="codes" jdbcType="VARCHAR" property="codes" />
   </resultMap>
   <select id="selectQuestionRecords" resultMap="submitRecordsModelMap">
-    SELECT *
+    SELECT id, question_id, question_name, user_id, create_time, lang, result, time_cost, memory_cost, comments
     FROM oj.submit_records
     WHERE (user_id = #{id} AND question_id = #{questionId})
     ORDER BY create_time DESC
   </select>
   <select id="selectUserRecords" resultMap="submitRecordsModelMap"
           parameterType="java.lang.Long">
-    SELECT * FROM oj.submit_records
+    SELECT id, question_id, question_name, user_id, create_time, lang, result, time_cost, memory_cost
+    FROM oj.submit_records
     WHERE (user_id = #{id})
     ORDER BY create_time DESC
     LIMIT 10
@@ -44,5 +45,11 @@
   <select id="selectQuestionIds" resultType="java.lang.Long" parameterType="java.lang.Long">
     SELECT DISTINCT question_id FROM oj.submit_records
     WHERE (user_id = #{userId} AND result = 0)
+  </select>
+  <select id="selectOneRecord" resultMap="submitRecordsModelMap"
+          parameterType="java.lang.Long">
+    SELECT *
+    FROM oj.submit_records
+    WHERE id = #{id}
   </select>
 </mapper>

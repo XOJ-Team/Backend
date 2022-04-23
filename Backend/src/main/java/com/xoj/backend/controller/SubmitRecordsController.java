@@ -4,6 +4,7 @@ import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.dto.SubmitRecordsCreateDto;
 import com.xoj.backend.dto.SubmitRecordsModifyDto;
 import com.xoj.backend.entity.SubmitRecords;
+import com.xoj.backend.exception.BizException;
 import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.model.SubmitRecordsModel;
 import com.xoj.backend.notation.RequirePermission;
@@ -59,4 +60,16 @@ public class SubmitRecordsController {
         submitRecordsService.modifyRecord(dto);
         return RestResponse.ok(dto, CommonErrorType.SUCCESS.getResultMsg());
     }
+
+    @GetMapping("/{recordId}")
+    @RequirePermission
+    public RestResponse<SubmitRecordsModel> oneRecord(@PathVariable("recordId") Long id) {
+        try {
+            SubmitRecordsModel record = submitRecordsService.selectRecord(id);
+            return RestResponse.ok(record, CommonErrorType.SUCCESS.getResultMsg());
+        } catch (BizException e) {
+            return RestResponse.error(null, CommonErrorType.SUBMIT_RECORD_NOT_FOUND.getResultMsg());
+        }
+    }
+
 }

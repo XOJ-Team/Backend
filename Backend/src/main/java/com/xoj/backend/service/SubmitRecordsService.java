@@ -16,4 +16,6 @@ public interface SubmitRecordsService {
     void modifyRecord(SubmitRecordsModifyDto dto);
 
     List<Long> solved(Long userId);
+
+    SubmitRecordsModel selectRecord(Long id);
 }

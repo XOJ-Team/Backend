@@ -5,6 +5,8 @@ import com.xoj.backend.dto.SubmitRecordsCreateDto;
 import com.xoj.backend.dto.SubmitRecordsModifyDto;
 import com.xoj.backend.entity.SubmitRecords;
 import com.xoj.backend.entity.UserBase;
+import com.xoj.backend.exception.BizException;
+import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.mapper.SubmitRecordsMapper;
 import com.xoj.backend.model.SubmitRecordsModel;
 import com.xoj.backend.service.QuestionService;
@@ -120,5 +122,14 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
     public List<Long> solved(Long userId) {
         List<Long> solved = mapper.selectQuestionIds(userId);
         return solved;
+    }
+
+    @Override
+    public SubmitRecordsModel selectRecord(Long id) {
+        SubmitRecordsModel record = mapper.selectOneRecord(id);
+        if (null == record) {
+            throw new BizException(CommonErrorType.SUBMIT_RECORD_NOT_FOUND);
+        }
+        return record;
     }
 }

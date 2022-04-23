@@ -17,4 +17,6 @@ public interface SubmitRecordsMapper extends BaseMapper<SubmitRecords>{
     List<SubmitRecordsModel> selectUserRecords(@Param("id") Long id);
 
     List<Long> selectQuestionIds(@Param("userId") Long userId);
+
+    SubmitRecordsModel selectOneRecord(Long id);
 }
