@@ -1,6 +1,8 @@
 package com.xoj.backend.service.impl;
 
 import com.xoj.backend.base.RestResponse;
+import com.xoj.backend.param.EsResultParam;
+import com.xoj.backend.param.EsSearchParam;
 import com.xoj.backend.service.ElasticSearchService;
 import com.alibaba.fastjson.JSON;
 import com.xoj.backend.entity.Question;
@@ -108,37 +110,48 @@ public class ElasticSearchImpl implements ElasticSearchService {
     }
 
 
-    public RestResponse<List<?>> searchDocument(String index, String field, String context, int from, int size) {
+    public RestResponse<EsResultParam> searchDocument(String index, String field, String context, int from, int size) {
+        context = "*"+ context + "*";
         SearchRequest searchRequest = new SearchRequest(index);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
         MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery(field, context);
-
-        searchSourceBuilder.from(from);
-        searchSourceBuilder.size(size);
-
         searchSourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
         searchSourceBuilder.query(matchQueryBuilder);
         searchRequest.source(searchSourceBuilder);
         SearchResponse search;
+
+        //        searchSourceBuilder.from(from);
+        //        searchSourceBuilder.size(size);
         try{
-             search = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+            search = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
         }catch (Exception e){
             return RestResponse.error();
         }
         SearchHits hits = search.getHits();
-        ArrayList<Question> questions = new ArrayList<>();
 
+        HashMap<Long, Question> map = new HashMap<>();
         for (SearchHit documentFields : hits.getHits()) {
             String jsonString = JSON.toJSONString(documentFields.getSourceAsMap());
             Question question = JSON.parseObject(jsonString, Question.class);
-            questions.add(question);
+            map.put(question.getId(),question);
         }
-
-        return RestResponse.ok(questions);
+        fuzzySearchDocument(index,field,context,map);
+        ArrayList<Question> questions = new ArrayList<>(map.values());
+        List<Question> list = new ArrayList<>();
+        int count = 0;
+        for (int i = 0; i < questions.size(); i++) {
+            if(i >= from && count < size){
+                list.add(questions.get(i));
+                count++;
+            }
+        }
+        EsResultParam res = new EsResultParam(list, list.size());
+        return RestResponse.ok(res);
     }
 
-    public RestResponse<List<?>> searchDocument(String index, String field, String context) {
+    public RestResponse<EsResultParam> searchDocument(String index, String field, String context) {
+        context = "*"+ context + "*";
         SearchRequest searchRequest = new SearchRequest(index);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
@@ -162,7 +175,8 @@ public class ElasticSearchImpl implements ElasticSearchService {
         }
         fuzzySearchDocument(index,field,context,map);
         ArrayList<Question> questions = new ArrayList<>(map.values());
-        return RestResponse.ok(questions);
+        EsResultParam res = new EsResultParam(questions, questions.size());
+        return RestResponse.ok(res);
     }
 
     public void fuzzySearchDocument(String index, String field, String context, HashMap<Long, Question> map) {

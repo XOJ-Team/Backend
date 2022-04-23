@@ -175,7 +175,7 @@ public class QuestionController {
     @PostMapping("/search/es/limit")
     @ApiOperation(value = "search by name with page")
     public RestResponse<?> searchQuestionLimit(@RequestBody SearchLimitParam param) {
-        return elasticSearchService.searchDocument("questions","searchKey",param.getText(),param.getFrom(),param.getSize());
+        return elasticSearchService.searchDocument("questions","searchKey",param.getValue(),param.getFrom(),param.getSize());
     }
 
 }

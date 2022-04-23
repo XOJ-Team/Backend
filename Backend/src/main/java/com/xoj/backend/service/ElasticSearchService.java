@@ -2,6 +2,9 @@ package com.xoj.backend.service;
 
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.entity.Question;
+import com.xoj.backend.param.EsResultParam;
+import com.xoj.backend.param.EsSearchParam;
+import com.xoj.backend.service.impl.ElasticSearchImpl;
 
 import java.util.List;
 
@@ -21,8 +24,8 @@ public interface ElasticSearchService {
 
     RestResponse<?> deleteDocument(String index, String id);
 
-    RestResponse<List<?>> searchDocument(String index, String name, String context, int from, int size);
+    RestResponse<EsResultParam> searchDocument(String index, String name, String context, int from, int size);
 
-    RestResponse<List<?>> searchDocument(String index, String name, String context);
+    RestResponse<EsResultParam> searchDocument(String index, String name, String context);
 
 }

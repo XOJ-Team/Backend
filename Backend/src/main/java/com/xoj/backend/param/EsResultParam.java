@@ -1,23 +1,27 @@
 package com.xoj.backend.param;
 
+import com.xoj.backend.entity.Question;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /***
  * @Author jianghanchen
- * @Date 14:30 2022/4/19
+ * @Date 1:39 2022/4/24
  ***/
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SearchLimitParam {
+public class EsResultParam{
 
-    private Integer from;
+    private List<Question> res;
 
-    private Integer size;
+    private int total;
 
-    private String value;
+
 }
