@@ -17,6 +17,7 @@ import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.FuzzyQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
@@ -27,6 +28,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 /***
@@ -148,16 +151,46 @@ public class ElasticSearchImpl implements ElasticSearchService {
             return RestResponse.error();
         }
         SearchHits hits = search.getHits();
-        ArrayList<Question> questions = new ArrayList<>();
+
+        HashMap<Long, Question> map = new HashMap<>();
+        for (SearchHit documentFields : hits.getHits()) {
+            String jsonString = JSON.toJSONString(documentFields.getSourceAsMap());
+            Question question = JSON.parseObject(jsonString, Question.class);
+            map.put(question.getId(),question);
+        }
+        fuzzySearchDocument(index,field,context,map);
+        ArrayList<Question> questions = new ArrayList<>(map.values());
+        return RestResponse.ok(questions);
+    }
+
+    public void fuzzySearchDocument(String index, String field, String context, HashMap<Long, Question> map) {
+        SearchRequest searchRequest = new SearchRequest(index);
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+
+        FuzzyQueryBuilder fuzzyQueryBuilder = QueryBuilders.fuzzyQuery(field, context);
+        searchSourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
+        searchSourceBuilder.query(fuzzyQueryBuilder);
+        searchRequest.source(searchSourceBuilder);
+        SearchResponse search;
+        try{
+            search = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+        }catch (Exception e){
+            return;
+        }
+        SearchHits hits = search.getHits();
+
 
         for (SearchHit documentFields : hits.getHits()) {
             String jsonString = JSON.toJSONString(documentFields.getSourceAsMap());
             Question question = JSON.parseObject(jsonString, Question.class);
-            questions.add(question);
+            if(!map.containsKey(question.getId())){
+                map.put(question.getId(),question);
+            }
         }
 
-        return RestResponse.ok(questions);
+        return;
     }
+
 
 
 }
