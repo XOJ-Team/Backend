@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -56,6 +57,8 @@ public class EsSearchParam {
 
     private String searchKey;
 
+    private String searchKey_keyword;
+
     public EsSearchParam(Question question, String searchKey) {
         this.id = question.getId();
         this.isDelete = question.getIsDelete();
@@ -77,6 +80,7 @@ public class EsSearchParam {
         this.timeLimit = question.getTimeLimit();
         this.memoryLimit = question.getMemoryLimit();
         this.searchKey = searchKey;
+        this.searchKey_keyword = searchKey;
     }
 
 
