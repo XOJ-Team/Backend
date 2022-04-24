@@ -43,16 +43,17 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
         UserBase user = userBaseService.getCurrentUser();
         SubmitRecords record = SubmitRecords.builder()
                 .questionId(dto.getQuestionId())
+                .questionName(dto.getQuestionName())
                 .lang(dto.getLang())
                 .result(dto.getResult())
                 .memoryCost(dto.getMemoryCost())
                 .timeCost(dto.getTimeCost())
                 .userId(user.getId())
                 .codes(dto.getCodes()).build();
-        mapper.insertSelective(record);
         if (ResultEnum.ACCEPTED.getCode().equals(dto.getResult()) && determine(dto.getQuestionId(), user.getId())){
             modifyUser(dto.getQuestionId(), user);
         }
+        mapper.insertSelective(record);
         questionService.calRate(dto.getQuestionId(), dto.getResult());
     }
 
