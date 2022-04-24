@@ -3,6 +3,7 @@ package com.xoj.backend.controller;
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.notation.RequirePermission;
 import com.xoj.backend.param.VerificationParam;
+import com.xoj.backend.service.MailGunService;
 import com.xoj.backend.service.VerificationService;
 import com.xoj.backend.util.UserThreadLocal;
 import io.swagger.annotations.Api;
@@ -33,7 +34,8 @@ public class VerificationController{
     @RequestMapping(value = "/verify", method = RequestMethod.POST)
     @ApiOperation(value = "send verification code")
     public RestResponse<Object> send(@Valid @RequestBody VerificationParam param) {
-        return verificationService.sendVerificationNumber(param.getFrom(), param.getMail());
+//        return verificationService.sendVerificationNumber(param.getFrom(), param.getMail());
+        return verificationService.sendVerificationNumberResetPassword(param.getMail());
     }
 
     @RequestMapping(value = "/send/password", method = RequestMethod.POST)
