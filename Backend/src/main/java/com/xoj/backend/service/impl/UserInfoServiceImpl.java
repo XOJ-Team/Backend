@@ -79,12 +79,20 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public RestResponse<UserBase> managerChangeInfo(UserParam param) {
-        UserBase user = UserBase.builder().name(param.getName()).phoneNumber(param.getPhoneNumber()).build();
+        UserBase user = UserBase.builder()
+                .name(param.getName())
+                .phoneNumber(param.getPhoneNumber())
+                .authority(param.getAuthority())
+                .score(param.getScore())
+                .password(param.getPassword())
+                .mail(param.getMail())
+                .ranking(param.getRanking())
+                .build();
         Example example = new Example(UserBase.class);
-        example.createCriteria().andEqualTo("name", Session.getCurrentUserName());
+        example.createCriteria().andEqualTo("id", param.getId());
         int update = mapper.updateByExampleSelective(user, example);
         if(update == 1){
-            return RestResponse.ok(user);
+            return RestResponse.ok();
         }else{
             return RestResponse.error();
         }

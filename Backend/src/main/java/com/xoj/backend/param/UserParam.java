@@ -18,14 +18,13 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserParam {
-
+    @NotNull
     private Long id;
 
     private String verificationNumber;
 
     private String name;
 
-    @NotNull
     private String mail;
 
     private String phoneNumber;
