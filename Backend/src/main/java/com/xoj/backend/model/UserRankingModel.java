@@ -14,6 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRankingModel {
+    private long userId;
 
     private String name;
 

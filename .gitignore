@@ -33,3 +33,5 @@ build/
 .vscode/
 
 .idea/
+
+Backend/src/main/resources/application.yml
