@@ -55,56 +55,56 @@ If you want to learn more about creating good readme files then refer the follow
 - [Chakra Core](https://github.com/Microsoft/ChakraCore) -->
 
 # Description of code directory structure
-**Backend/sql**    
+**sql**    
 store database table structure
 
-**Backend/src/main/java/com/xoj/backend/aspect**   
+**src/main/java/com/xoj/backend/aspect**   
 permission control and cross domain support
 
-**Backend/src/main/java/com/xoj/backend/base**   
+**src/main/java/com/xoj/backend/base**   
 store response and session class
 
-**Backend/src/main/java/com/xoj/backend/common**      
+**src/main/java/com/xoj/backend/common**      
 store some common constants and enumerations   
 
-**Backend/src/main/java/com/xoj/backend/config**     
+**src/main/java/com/xoj/backend/config**     
 store basic configurations
 
-**Backend/src/main/java/com/xoj/backend/controller**     
+**src/main/java/com/xoj/backend/controller**     
 preparing a model Map with data, select a view name and complete the request
 
-**Backend/src/main/java/com/xoj/backend/dto**      
+**src/main/java/com/xoj/backend/dto**      
 data transfer object passed into the controller layer
 
-**Backend/src/main/java/com/xoj/backend/entity**   
+**src/main/java/com/xoj/backend/entity**   
 store all the entities
 
-**Backend/src/main/java/com/xoj/backend/exception**  
+**src/main/java/com/xoj/backend/exception**  
 deal with the exception in business logic
 
-**Backend/src/main/java/com/xoj/backend/mapper**   
+**src/main/java/com/xoj/backend/mapper**   
 mapping the entities to the database tables
 
-**Backend/src/main/java/com/xoj/backend/model**   
+**src/main/java/com/xoj/backend/model**   
 object to respond the frontend
 
-**Backend/src/main/java/com/xoj/backend/notation**  
+**src/main/java/com/xoj/backend/notation**  
 notations to control the authority of users
 
-**Backend/src/main/java/com/xoj/backend/param**  
+**src/main/java/com/xoj/backend/param**  
 objects for data modification
 
-**Backend/src/main/java/com/xoj/backend/service**      
+**src/main/java/com/xoj/backend/service**      
 implement the business logic
 
-**Backend/src/main/java/com/xoj/backend/util**  
+**src/main/java/com/xoj/backend/util**  
 some tool classes
 
-**Backend/src/main/java/com/xoj/backend/BackendApplication**   
+**src/main/java/com/xoj/backend/BackendApplication**   
 entry of the project
 
-**Backend/src/main/resources**   
+**src/main/resources**   
 some configuration files (xml, yml files)
 
-**Backend/src/test**   
+**src/test**   
 some test cases
