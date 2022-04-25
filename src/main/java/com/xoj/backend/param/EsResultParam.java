@@ -1,6 +1,7 @@
 package com.xoj.backend.param;
 
 import com.xoj.backend.entity.Question;
+import com.xoj.backend.model.QuestionModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 public class EsResultParam{
 
-    private List<Question> res;
+    private List<QuestionModel> res;
 
     private int total;
 

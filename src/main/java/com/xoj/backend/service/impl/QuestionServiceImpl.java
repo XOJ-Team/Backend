@@ -74,7 +74,7 @@ public class QuestionServiceImpl implements QuestionService {
         mapper.insertSelective(question);
         Question question_info = getQuestion(dto.getName());
         String searchKey = question_info.getTags() + " " + question_info.getName() + " " + question_info.getId();
-        EsSearchParam esSearchParam = new EsSearchParam(question_info, searchKey);
+        EsSearchParam esSearchParam = new EsSearchParam(question_info, searchKey.toLowerCase());
         elasticSearchService.insertDocument(   "questions", dto.getName(),esSearchParam);
 
     }
@@ -107,7 +107,7 @@ public class QuestionServiceImpl implements QuestionService {
         mapper.updateByExampleSelective(question, example);
         Question question_info = getQuestion(dto.getName());
         String searchKey = question_info.getTags() + " " + question_info.getName() + " " + question_info.getId();
-        EsSearchParam esSearchParam = new EsSearchParam(question_info, searchKey);
+        EsSearchParam esSearchParam = new EsSearchParam(question_info, searchKey.toLowerCase());
         elasticSearchService.insertDocument(   "questions", dto.getName(),esSearchParam);
     }
 
@@ -279,7 +279,7 @@ public class QuestionServiceImpl implements QuestionService {
 
         Question question_info = getQuestion(id);
         String searchKey = question_info.getTags() + " " + question_info.getName() + " " + question_info.getId();
-        EsSearchParam esSearchParam = new EsSearchParam(question_info, searchKey);
+        EsSearchParam esSearchParam = new EsSearchParam(question_info, searchKey.toLowerCase());
         elasticSearchService.insertDocument(   "questions", question_info.getName(),esSearchParam);
     }
 

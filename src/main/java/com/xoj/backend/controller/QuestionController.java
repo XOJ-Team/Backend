@@ -169,13 +169,13 @@ public class QuestionController {
     @GetMapping("/search/es")
     @ApiOperation(value = "search by name")
     public RestResponse<?> searchQuestion(@RequestParam String value) {
-        return elasticSearchService.searchDocument("questions","searchKey",value);
+        return elasticSearchService.searchDocument("questions","searchKey",value.toLowerCase());
     }
 
     @PostMapping("/search/es/limit")
     @ApiOperation(value = "search by name with page")
     public RestResponse<?> searchQuestionLimit(@RequestBody SearchLimitParam param) {
-        return elasticSearchService.searchDocument("questions","searchKey",param.getValue(),param.getFrom(),param.getSize());
+        return elasticSearchService.searchDocument("questions","searchKey",param.getValue().toLowerCase(),param.getFrom(),param.getSize());
     }
 
 }
