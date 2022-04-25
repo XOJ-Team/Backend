@@ -124,8 +124,13 @@ public class QuestionServiceImpl implements QuestionService {
             if (redisUtils.hasKey(key)) {
                 str = redisUtils.getValue(key);
             }
+            UserBase user = userBaseService.getCurrentUser();
             if (StringUtils.hasText(str)) {
-                return JacksonUtils.string2Obj(str, QuestionModel.class);
+                QuestionModel question = JacksonUtils.string2Obj(str, QuestionModel.class);
+                if (hideTags(user, question)) {
+                    question.setTags("");
+                }
+                return question;
             } else {
                 QuestionModel question = mapper.selectQuestion(id);
                 if (null == question) {
@@ -133,11 +138,21 @@ public class QuestionServiceImpl implements QuestionService {
                 }
                 String JSONString = JacksonUtils.obj2String(question);
                 redisUtils.set(key, JSONString);
+                if (hideTags(user, question)) {
+                    question.setTags("");
+                }
                 return question;
             }
         } catch (Exception e) {
             throw new BizException(e.getMessage());
         }
+    }
+
+    private boolean hideTags(UserBase user, QuestionModel question) {
+        if (null == question) {
+            throw new BizException(CommonErrorType.QUESTION_NOT_FOUND);
+        }
+        return (null == user || user.getAuthority() < 3) && question.getIsHide();
     }
 
     /**
