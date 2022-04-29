@@ -31,9 +31,7 @@ public class QuestionCompetitionServiceImpl implements QuestionCompetitionServic
     public void create(QuestionCompetitionCreateDto dto) {
         Example example = new Example(QuestionCompetition.class);
         example.createCriteria()
-                .andEqualTo("questionId", dto.getQuestionId())
-                .andEqualTo("competitionId", dto.getCompetitionId())
-                .andEqualTo("isDelete", CommonConstants.IS_DELETED);
+                .andEqualTo("questionId", dto.getQuestionId());
         QuestionCompetition questionCompetition = QuestionCompetition.builder()
                 .questionId(dto.getQuestionId())
                 .competitionId(dto.getCompetitionId())
