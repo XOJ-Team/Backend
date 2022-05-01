@@ -50,6 +50,9 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
                 .timeCost(dto.getTimeCost())
                 .userId(user.getId())
                 .codes(dto.getCodes()).build();
+        if (null != dto.getCompetitionId()) {
+            record.setCompetitionId(dto.getCompetitionId());
+        }
         if (ResultEnum.ACCEPTED.getCode().equals(dto.getResult()) && determine(dto.getQuestionId(), user.getId())){
             modifyUser(dto.getQuestionId(), user);
         }

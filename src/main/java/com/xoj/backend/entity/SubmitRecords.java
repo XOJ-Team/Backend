@@ -42,4 +42,7 @@ public class SubmitRecords {
     private String comments;
 
     private String codes;
+
+    @Column(name = "competition_id")
+    private Long competitionId;
 }
