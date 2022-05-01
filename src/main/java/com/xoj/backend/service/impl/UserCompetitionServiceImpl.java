@@ -111,42 +111,30 @@ public class UserCompetitionServiceImpl implements UserCompetitionService {
     }
 
     @Override
-    public boolean updateScore(Long userId, Long competitionId, int score) {
-        UserCompetition userCompetition = UserCompetition.builder()
-                .score(score)
-                .build();
+    public void updateScoreAndPenalty(Long userId, Long competitionId) {
         Example example = new Example(UserCompetition.class);
+        CompetitionModel competitionModel = competitionMapper.selectCompetition(competitionId);
+
         example.createCriteria()
                 .andEqualTo("userId", userId)
                 .andEqualTo("competitionId", competitionId);
+        UserCompetition userCompetition = mapper.selectOneByExample(example);
+        userCompetition.setScore(userCompetition.getScore() + 1);
+        userCompetition.setPenalty((int) (System.currentTimeMillis() / 1000 - DateUtils.string2Date(competitionModel.getStartTime()).getTime() / 1000));
+
         mapper.updateByExampleSelective(userCompetition, example);
-        return userCompetition != null;
     }
 
-    @Override
-    public boolean updatePenalty(Long userId, Long competitionId, int penalty) {
-        UserCompetition userCompetition = UserCompetition.builder()
-                .penalty(penalty)
-                .build();
-        Example example = new Example(UserCompetition.class);
-        example.createCriteria()
-                .andEqualTo("userId", userId)
-                .andEqualTo("competitionId", competitionId);
-        mapper.updateByExampleSelective(userCompetition, example);
-        return userCompetition != null;
-    }
 
     @Override
-    public boolean updateWrong(Long userId, Long competitionId, int wrong) {
-        UserCompetition userCompetition = UserCompetition.builder()
-                .wrong(wrong)
-                .build();
+    public void updateWrong(Long userId, Long competitionId) {
         Example example = new Example(UserCompetition.class);
         example.createCriteria()
                 .andEqualTo("userId", userId)
                 .andEqualTo("competitionId", competitionId);
+        UserCompetition userCompetition = mapper.selectOneByExample(example);
+        userCompetition.setWrong(userCompetition.getWrong() + 1);
         mapper.updateByExampleSelective(userCompetition, example);
-        return userCompetition != null;
     }
 
 

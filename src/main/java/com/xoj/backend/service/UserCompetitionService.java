@@ -5,6 +5,8 @@ import com.xoj.backend.dto.UserCompetitionCreateDto;
 import com.xoj.backend.dto.UserCompetitionPageDto;
 import com.xoj.backend.entity.UserCompetition;
 
+import java.util.Date;
+
 /**
  * @author 1iin
  */
@@ -17,9 +19,7 @@ public interface UserCompetitionService {
 
     boolean isRegister(Long userId, Long competitionId);
 
-    boolean updateScore(Long userId, Long competitionId, int score);
+    void updateScoreAndPenalty(Long userId, Long competitionId);
 
-    boolean updatePenalty(Long userId, Long competitionId, int penalty);
-
-    boolean updateWrong(Long userId, Long competitionId, int wrong);
+    void updateWrong(Long userId, Long competitionId);
 }
