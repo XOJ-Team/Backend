@@ -110,6 +110,7 @@ CREATE TABLE `submit_records` (
                                   `memory_cost` double DEFAULT '-1' COMMENT '内存消耗',
                                   `comments` varchar(255) DEFAULT '' COMMENT '备注',
                                   `codes` text NOT NULL COMMENT '代码',
+                                  `competition_id` bigint DEFAULT NULL COMMENT '竞赛id',
                                   PRIMARY KEY (`id`),
                                   UNIQUE KEY `submit_records_id_uindex` (`id`),
                                   KEY `submit_records_question_id_user_id_index` (`question_id`,`user_id`)
