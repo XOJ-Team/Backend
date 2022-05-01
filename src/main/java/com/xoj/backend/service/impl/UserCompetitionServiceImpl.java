@@ -7,13 +7,18 @@ import com.xoj.backend.dto.UserCompetitionCreateDto;
 import com.xoj.backend.dto.UserCompetitionPageDto;
 import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.entity.UserCompetition;
+import com.xoj.backend.exception.BizException;
+import com.xoj.backend.mapper.CompetitionMapper;
 import com.xoj.backend.mapper.UserCompetitionMapper;
+import com.xoj.backend.model.CompetitionModel;
 import com.xoj.backend.service.UserBaseService;
 import com.xoj.backend.service.UserCompetitionService;
+import com.xoj.backend.util.DateUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,6 +31,8 @@ public class UserCompetitionServiceImpl implements UserCompetitionService {
 
     private final UserBaseService userBaseService;
 
+    private CompetitionMapper competitionMapper;
+
     /**
      * user register a competition
      *
@@ -34,6 +41,13 @@ public class UserCompetitionServiceImpl implements UserCompetitionService {
     @Override
     public void create(UserCompetitionCreateDto dto) {
         UserBase user = userBaseService.getCurrentUser();
+        CompetitionModel competitionModel = competitionMapper.selectCompetition(dto.getCompetitionId());
+        if (null == competitionModel) {
+            throw new BizException();
+        }
+        if (DateUtils.string2Date(competitionModel.getEndTime()).before(new Date())) {
+            throw new BizException();
+        }
         Example example = new Example(UserCompetition.class);
         example.createCriteria()
                 .andEqualTo("userId", user.getId())
@@ -43,6 +57,7 @@ public class UserCompetitionServiceImpl implements UserCompetitionService {
                 .competitionId(dto.getCompetitionId())
                 .score(dto.getScore())
                 .penalty(dto.getPenalty())
+                .wrong(dto.getWrong())
                 .isDelete(CommonConstants.NOT_DELETED)
                 .build();
         if (null != mapper.selectOneByExample(example)) {
@@ -66,6 +81,13 @@ public class UserCompetitionServiceImpl implements UserCompetitionService {
 
     @Override
     public void deleteUserCompetition(Long competitionId) {
+        CompetitionModel competitionModel = competitionMapper.selectCompetition(competitionId);
+        if (null == competitionModel) {
+            throw new BizException();
+        }
+        if (DateUtils.string2Date(competitionModel.getStartTime()).before(new Date())) {
+            throw new BizException();
+        }
         UserBase user = userBaseService.getCurrentUser();
         Example example = new Example(UserCompetition.class);
         example.createCriteria()
@@ -77,4 +99,55 @@ public class UserCompetitionServiceImpl implements UserCompetitionService {
                 .build();
         mapper.updateByExampleSelective(userCompetition, example);
     }
+
+    @Override
+    public boolean isRegister(Long userId, Long competitionId) {
+        Example example = new Example(UserCompetition.class);
+        example.createCriteria()
+                .andEqualTo("userId", userId)
+                .andEqualTo("competitionId", competitionId);
+        UserCompetition userCompetition = mapper.selectOneByExample(example);
+        return userCompetition != null;
+    }
+
+    @Override
+    public boolean updateScore(Long userId, Long competitionId, int score) {
+        UserCompetition userCompetition = UserCompetition.builder()
+                .score(score)
+                .build();
+        Example example = new Example(UserCompetition.class);
+        example.createCriteria()
+                .andEqualTo("userId", userId)
+                .andEqualTo("competitionId", competitionId);
+        mapper.updateByExampleSelective(userCompetition, example);
+        return userCompetition != null;
+    }
+
+    @Override
+    public boolean updatePenalty(Long userId, Long competitionId, int penalty) {
+        UserCompetition userCompetition = UserCompetition.builder()
+                .penalty(penalty)
+                .build();
+        Example example = new Example(UserCompetition.class);
+        example.createCriteria()
+                .andEqualTo("userId", userId)
+                .andEqualTo("competitionId", competitionId);
+        mapper.updateByExampleSelective(userCompetition, example);
+        return userCompetition != null;
+    }
+
+    @Override
+    public boolean updateWrong(Long userId, Long competitionId, int wrong) {
+        UserCompetition userCompetition = UserCompetition.builder()
+                .wrong(wrong)
+                .build();
+        Example example = new Example(UserCompetition.class);
+        example.createCriteria()
+                .andEqualTo("userId", userId)
+                .andEqualTo("competitionId", competitionId);
+        mapper.updateByExampleSelective(userCompetition, example);
+        return userCompetition != null;
+    }
+
+
 }

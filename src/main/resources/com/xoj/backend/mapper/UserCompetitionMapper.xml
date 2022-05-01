@@ -8,13 +8,14 @@
         <result column="score" jdbcType="TINYINT" property="score"/>
         <result column="penalty" jdbcType="TINYINT" property="penalty"/>
         <result column="is_delete" jdbcType="BIT" property="isDelete"/>
+        <result column="wrong" jdbcType="TINYINT" property="wrong"/>
     </resultMap>
 
 
     <select id="selectUserCompetition" resultMap="UserCompetitionMap">
-        SELECT id, user_id, competition_id, score, penalty
+        SELECT id, user_id, competition_id, score, penalty, wrong
         FROM oj.user_competition
         WHERE is_delete = 0
-        ORDER BY score DESC, penalty ASC
+        ORDER BY score DESC, (penalty + wrong * 300) ASC
     </select>
 </mapper>

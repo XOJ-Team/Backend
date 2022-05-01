@@ -7,6 +7,8 @@ import com.xoj.backend.dto.CompetitionPageDto;
 import com.xoj.backend.model.CompetitionDetailModel;
 import com.xoj.backend.model.CompetitionModel;
 
+import java.text.SimpleDateFormat;
+
 /**
  * @author 1iin
  */

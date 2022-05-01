@@ -29,4 +29,13 @@ public class DateUtils {
         }
     }
 
+    public static String date2StringFloor(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
+        try {
+            return formatter.format(date);
+        } catch (Exception e) {
+            throw new BizException(CommonErrorType.PARSE_ERROR);
+        }
+    }
+
 }

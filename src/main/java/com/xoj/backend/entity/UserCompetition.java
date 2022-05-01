@@ -33,4 +33,7 @@ public class UserCompetition {
 
     @Column(name = "penalty")
     private Integer penalty;
+
+    @Column(name = "wrong")
+    private Integer wrong;
 }

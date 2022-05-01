@@ -22,4 +22,6 @@ public class UserCompetitionCreateDto {
     private Integer score;
 
     private Integer penalty;
+
+    private Integer wrong;
 }
