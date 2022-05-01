@@ -19,9 +19,4 @@ public class UserCompetitionCreateDto {
     @NotNull
     private Long competitionId;
 
-    private Integer score;
-
-    private Integer penalty;
-
-    private Integer wrong;
 }

@@ -55,9 +55,6 @@ public class UserCompetitionServiceImpl implements UserCompetitionService {
         UserCompetition userCompetition = UserCompetition.builder()
                 .userId(user.getId())
                 .competitionId(dto.getCompetitionId())
-                .score(dto.getScore())
-                .penalty(dto.getPenalty())
-                .wrong(dto.getWrong())
                 .isDelete(CommonConstants.NOT_DELETED)
                 .build();
         if (null != mapper.selectOneByExample(example)) {
