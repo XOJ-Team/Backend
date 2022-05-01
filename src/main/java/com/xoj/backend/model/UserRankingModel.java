@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import java.util.Date;
 
+/**
+ * @author liin
+ */
 @Data
 @Builder
 @NoArgsConstructor

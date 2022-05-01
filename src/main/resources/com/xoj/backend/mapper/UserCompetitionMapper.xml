@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xoj.backend.mapper.UserCompetitionMapper">
+    <resultMap id="UserCompetitionMap" type="com.xoj.backend.entity.UserCompetition">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="competition_id" jdbcType="BIGINT" property="competitionId"/>
+        <result column="score" jdbcType="TINYINT" property="score"/>
+        <result column="penalty" jdbcType="TINYINT" property="penalty"/>
+        <result column="is_delete" jdbcType="BIT" property="isDelete"/>
+    </resultMap>
+
+
+    <select id="selectUserCompetition" resultMap="UserCompetitionMap">
+        SELECT id, user_id, competition_id, score, penalty
+        FROM oj.user_competition
+        WHERE is_delete = 0
+        ORDER BY score DESC, penalty ASC
+    </select>
+</mapper>

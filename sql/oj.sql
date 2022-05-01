@@ -185,6 +185,10 @@ CREATE TABLE `user_competition` (
                                     `user_id` bigint DEFAULT NULL COMMENT '用户ID',
                                     `competition_id` bigint DEFAULT NULL COMMENT '比赛ID',
                                     `is_delete` tinyint(1) DEFAULT NULL COMMENT '是否删除',
+                                    `penalty` int DEFAULT NULL COMMENT '罚时',
+                                    `score` int DEFAULT NULL COMMENT '分数',
+                                    `id` int NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                                    PRIMARY KEY (`id`),
                                     KEY `user_competition_index` (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='用户-比赛映射';
 /*!40101 SET character_set_client = @saved_cs_client */;

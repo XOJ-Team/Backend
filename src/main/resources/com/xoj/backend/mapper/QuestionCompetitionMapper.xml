@@ -6,5 +6,6 @@
         <result column="question_id" jdbcType="BIGINT" property="questionId"/>
         <result column="competition_id" jdbcType="BIGINT" property="competitionId"/>
         <result column="score" jdbcType="TINYINT" property="score"/>
+        <result column="is_delete" jdbcType="BIT" property="isDelete" />
     </resultMap>
 </mapper>
