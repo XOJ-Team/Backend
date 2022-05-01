@@ -104,4 +104,9 @@ public class QuestionCompetitionServiceImpl implements QuestionCompetitionServic
         mapper.updateByExampleSelective(questionCompetition, example);
     }
 
+    @Override
+    public Long getCompetitionId(Long questionId) {
+        return mapper.selectCompetitionId(questionId);
+    }
+
 }

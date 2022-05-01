@@ -3,7 +3,6 @@ package com.xoj.backend.controller;
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.dto.SubmitRecordsCreateDto;
 import com.xoj.backend.dto.SubmitRecordsModifyDto;
-import com.xoj.backend.entity.SubmitRecords;
 import com.xoj.backend.exception.BizException;
 import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.model.SubmitRecordsModel;

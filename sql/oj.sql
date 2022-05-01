@@ -185,10 +185,10 @@ DROP TABLE IF EXISTS `user_competition`;
 CREATE TABLE `user_competition` (
                                     `user_id` bigint DEFAULT NULL COMMENT '用户ID',
                                     `competition_id` bigint DEFAULT NULL COMMENT '比赛ID',
-                                    `is_delete` tinyint(1) DEFAULT NULL COMMENT '是否删除',
-                                    `penalty` int DEFAULT NULL COMMENT '罚时',
-                                    `wrong` int DEFAULT NULL COMMENT '错误次数',
-                                    `score` int DEFAULT NULL COMMENT '分数',
+                                    `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除',
+                                    `penalty` int NOT NULL DEFAULT 0 COMMENT '罚时',
+                                    `wrong` int NOT NULL DEFAULT 0 COMMENT '错误次数',
+                                    `score` int NOT NULL DEFAULT 0 COMMENT '分数',
                                     `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键id',
                                     PRIMARY KEY (`id`),
                                     KEY `user_competition_index` (`user_id`) USING BTREE

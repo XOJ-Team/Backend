@@ -8,11 +8,9 @@ import com.xoj.backend.entity.UserBase;
 import com.xoj.backend.exception.BizException;
 import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.mapper.SubmitRecordsMapper;
+import com.xoj.backend.model.QuestionModel;
 import com.xoj.backend.model.SubmitRecordsModel;
-import com.xoj.backend.service.QuestionService;
-import com.xoj.backend.service.SubmitRecordsService;
-import com.xoj.backend.service.UserBaseService;
-import com.xoj.backend.service.UserInfoService;
+import com.xoj.backend.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +19,9 @@ import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
+/**
+ * @author Yingxi
+ */
 @Service
 @AllArgsConstructor
 public class SubmitRecordsServiceImpl implements SubmitRecordsService {
@@ -32,6 +33,10 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
     private final UserInfoService userInfoService;
 
     private final QuestionService questionService;
+
+    private final QuestionCompetitionService questionCompetitionService;
+
+    private final UserCompetitionService userCompetitionService;
 
     /**
      * create submit records
@@ -50,8 +55,23 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
                 .timeCost(dto.getTimeCost())
                 .userId(user.getId())
                 .codes(dto.getCodes()).build();
-        if (null != dto.getCompetitionId()) {
-            record.setCompetitionId(dto.getCompetitionId());
+        QuestionModel questionModel = questionService.selectOneQuestion(dto.getQuestionId());
+        // if (a common user submit the particular question answer during the competition)
+        if (user.getAuthority() < 3 && questionModel.getIsHide()) {
+            Long competitionId = questionCompetitionService.getCompetitionId(dto.getQuestionId());
+            if (null != competitionId) {
+                record.setCompetitionId(competitionId);
+            } else {
+                return;
+            }
+            if (!userCompetitionService.isRegister(user.getId(), competitionId)) {
+                return;
+            }
+            if (ResultEnum.ACCEPTED.getCode().equals(dto.getResult())) {
+                userCompetitionService.updateScoreAndPenalty(user.getId(), competitionId);
+            } else {
+                userCompetitionService.updateWrong(user.getId(), competitionId);
+            }
         }
         if (ResultEnum.ACCEPTED.getCode().equals(dto.getResult()) && determine(dto.getQuestionId(), user.getId())){
             modifyUser(dto.getQuestionId(), user);

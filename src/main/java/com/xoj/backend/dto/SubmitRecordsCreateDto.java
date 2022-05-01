@@ -33,6 +33,4 @@ public class SubmitRecordsCreateDto {
 
     @NotEmpty
     private String codes;
-
-    private Long competitionId;
 }

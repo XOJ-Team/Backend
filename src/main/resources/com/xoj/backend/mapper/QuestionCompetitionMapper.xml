@@ -8,4 +8,10 @@
         <result column="score" jdbcType="TINYINT" property="score"/>
         <result column="is_delete" jdbcType="BIT" property="isDelete" />
     </resultMap>
+    <select id="selectCompetitionId" resultType="java.lang.Long" parameterType="java.lang.Long">
+        SELECT competition_id
+        FROM oj.question_competition
+        WHERE (question_id = #{questionId} AND is_delete = 0)
+    </select>
+
 </mapper>

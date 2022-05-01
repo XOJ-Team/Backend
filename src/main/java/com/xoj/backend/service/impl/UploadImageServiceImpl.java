@@ -15,6 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.util.Objects;
 
+/**
+ * @author Yingxi
+ */
+
 @Service
 public class UploadImageServiceImpl implements UploadImageService {
     @Value("${smms.upload-url}")
