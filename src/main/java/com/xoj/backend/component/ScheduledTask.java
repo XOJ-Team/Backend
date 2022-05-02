@@ -27,10 +27,15 @@ public class ScheduledTask {
 
     @Scheduled(cron = "0 0 0/1 * * ?")
     public void scheduledTask() {
-        CompetitionModel competitionModel = mapper.selectByEndTime(DateUtils.date2StringFloor(new Date()));
-        List<QuestionCompetition> list = questionCompetitionService.selectQuestionsByCompetition(competitionModel.getId());
-        for (QuestionCompetition questionCompetition : list) {
-            questionService.show(questionCompetition.getQuestionId());
+        List<CompetitionModel> competitionModels = mapper.selectByEndTime(DateUtils.date2StringFloor(new Date()));
+        if (null == competitionModels || competitionModels.isEmpty()) {
+            return;
         }
+        competitionModels.forEach(model -> {
+            List<QuestionCompetition> list = questionCompetitionService.selectQuestionsByCompetition(model.getId());
+            for (QuestionCompetition questionCompetition : list) {
+                questionService.show(questionCompetition.getQuestionId());
+            }
+        });
     }
 }

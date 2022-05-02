@@ -19,5 +19,5 @@ public interface CompetitionMapper extends BaseMapper<Competition> {
 
     CompetitionModel selectByStartTime(@Param("start_time") String startTime);
 
-    CompetitionModel selectByEndTime(@Param("end_time") String endTime);
+    List<CompetitionModel> selectByEndTime(@Param("end_time") String endTime);
 }
