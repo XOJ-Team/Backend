@@ -62,10 +62,10 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
             if (null != competitionId) {
                 record.setCompetitionId(competitionId);
             } else {
-                return;
+                throw new BizException(CommonErrorType.COMPETITION_NOT_FOUND);
             }
             if (!userCompetitionService.isRegister(user.getId(), competitionId)) {
-                return;
+                throw new BizException(CommonErrorType.UNREGISTERED_COMPETITION);
             }
             if (ResultEnum.ACCEPTED.getCode().equals(dto.getResult())) {
                 userCompetitionService.updateScoreAndPenalty(user.getId(), competitionId);
@@ -73,6 +73,7 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
                 userCompetitionService.updateWrong(user.getId(), competitionId);
             }
         }
+        // common submit process
         if (ResultEnum.ACCEPTED.getCode().equals(dto.getResult()) && determine(dto.getQuestionId(), user.getId())){
             modifyUser(dto.getQuestionId(), user);
         }

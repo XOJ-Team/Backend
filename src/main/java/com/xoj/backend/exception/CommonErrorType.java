@@ -22,6 +22,7 @@ public enum CommonErrorType {
     QUESTION_NOT_FOUND("30001", "Question Not Found"),
     COMPETITION_NOT_FOUND("30002", "Competition Not Found"),
     SUBMIT_RECORD_NOT_FOUND("30003", "Submit Record Not Found"),
+    UNREGISTERED_COMPETITION("30004", "Unregistered Competition"),
 
     PARSE_ERROR("40001", "String to Date Error"),
     DUPLICATE_KEY("40002", "Duplicate Key for Link"),

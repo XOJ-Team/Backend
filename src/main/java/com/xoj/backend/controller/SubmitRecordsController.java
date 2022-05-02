@@ -33,8 +33,13 @@ public class SubmitRecordsController {
     @RequirePermission
     @ApiOperation(value = "create submit record")
     public RestResponse<?> create(@RequestBody SubmitRecordsCreateDto dto) {
-        submitRecordsService.createRecord(dto);
-        return RestResponse.ok(dto, CommonErrorType.SUCCESS.getResultMsg());
+        try {
+            submitRecordsService.createRecord(dto);
+            return RestResponse.ok(dto, CommonErrorType.SUCCESS.getResultMsg());
+        } catch (BizException e) {
+            return RestResponse.error(null, e.getErrorMsg());
+        }
+
     }
 
     @GetMapping("/question_records")
