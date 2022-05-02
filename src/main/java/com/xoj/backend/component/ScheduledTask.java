@@ -9,6 +9,7 @@ import com.xoj.backend.util.DateUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -28,7 +29,7 @@ public class ScheduledTask {
     @Scheduled(cron = "0 0 0/1 * * ?")
     public void scheduledTask() {
         List<CompetitionModel> competitionModels = mapper.selectByEndTime(DateUtils.date2StringFloor(new Date()));
-        if (null == competitionModels || competitionModels.isEmpty()) {
+        if (CollectionUtils.isEmpty(competitionModels)) {
             return;
         }
         competitionModels.forEach(model -> {
