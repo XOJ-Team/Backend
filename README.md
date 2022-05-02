@@ -65,7 +65,10 @@ permission control and cross domain support
 store response and session class
 
 **src/main/java/com/xoj/backend/common**      
-store some common constants and enumerations   
+store some common constants and enumerations  
+
+**src/main/java/com/xoj/backend/component**  
+schedule task
 
 **src/main/java/com/xoj/backend/config**     
 store basic configurations
