@@ -10,5 +10,5 @@ import java.util.List;
  */
 @Mapper
 public interface UserCompetitionMapper extends BaseMapper<UserCompetition> {
-    List<UserCompetition> selectUserCompetition();
+    List<UserCompetition> selectUserCompetition(Long competitionId);
 }

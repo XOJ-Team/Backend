@@ -6,7 +6,6 @@ import com.xoj.backend.dto.UserCompetitionCreateDto;
 import com.xoj.backend.dto.UserCompetitionPageDto;
 import com.xoj.backend.entity.UserCompetition;
 import com.xoj.backend.exception.CommonErrorType;
-import com.xoj.backend.model.UserCompetitionModel;
 import com.xoj.backend.notation.RequirePermission;
 import com.xoj.backend.service.UserCompetitionService;
 import com.xoj.backend.util.UserThreadLocal;
@@ -45,15 +44,15 @@ public class UserCompetitionController {
         }
     }
 
-    @GetMapping("/user_list")
+    @GetMapping("/{competitionId}")
     @ApiOperation(value = "get user ranking list in a competition")
-    public RestResponse<PageInfo<UserCompetition>> getQuestionList(@RequestParam Integer pageNum,
-                                                                        @RequestParam Integer pageSize) {
+    public RestResponse<PageInfo<UserCompetition>> getQuestionList(@PathVariable("competitionId") Long competitionId, @RequestParam Integer pageNum,
+                                                                   @RequestParam Integer pageSize) {
         UserCompetitionPageDto dto = UserCompetitionPageDto.builder()
                 .pageNum(pageNum)
                 .pageSize(pageSize)
                 .build();
-        PageInfo<UserCompetition> pageInfo = service.selectUserCompetition(dto);
+        PageInfo<UserCompetition> pageInfo = service.selectUserCompetition(dto, competitionId);
         return RestResponse.ok(pageInfo, CommonErrorType.SUCCESS.getResultMsg());
     }
 

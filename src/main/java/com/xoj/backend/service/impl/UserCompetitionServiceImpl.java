@@ -70,9 +70,9 @@ public class UserCompetitionServiceImpl implements UserCompetitionService {
      * @param dto
      */
     @Override
-    public PageInfo<UserCompetition> selectUserCompetition(UserCompetitionPageDto dto) {
+    public PageInfo<UserCompetition> selectUserCompetition(UserCompetitionPageDto dto,Long competitionId) {
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-        List<UserCompetition> competitions = mapper.selectUserCompetition();
+        List<UserCompetition> competitions = mapper.selectUserCompetition(competitionId);
         return PageInfo.of(competitions);
     }
 

@@ -42,7 +42,7 @@
         SELECT *
         FROM oj.competition
         WHERE is_delete = 0
-        AND start_time = #{start_time}
+          AND start_time = #{start_time}
     </select>
 
     <select id="selectByEndTime" resultMap="competitionModel">
