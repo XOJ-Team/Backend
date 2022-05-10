@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
 
@@ -12,20 +13,15 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class JudgeDownstreamParam {
+public class PlaygroundParam {
 
     @NotNull
-    private int lang_id;
+    private int language_id;
 
     @NotNull
-    private String code;
+    private String source_code;
 
-    public int getLangId() {
-        return this.lang_id;
-    }
-
-    public String getCode() {
-        return this.code;
-    }
+    @NotNull
+    private String stdin;
 
 }
