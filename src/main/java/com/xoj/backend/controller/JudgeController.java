@@ -1,6 +1,8 @@
 package com.xoj.backend.controller;
 
 
+import com.xoj.backend.base.RestResponse;
+import com.xoj.backend.entity.JudgeUpstream;
 import com.xoj.backend.param.PlaygroundParam;
 import com.xoj.backend.service.JudgeService;
 import com.xoj.backend.service.impl.JudgeServiceImpl;
@@ -25,10 +27,9 @@ public class JudgeController {
 
     @RequestMapping(value = RUN_ONLY_URL, method = RequestMethod.POST)
     @ApiOperation(value = "Run code and check with user-provided input")
-    public void runCode(@Valid @RequestBody PlaygroundParam param) {
+    public RestResponse<JudgeUpstream> runCode(@Valid @RequestBody PlaygroundParam param) {
         UUID token = judgeService.submitUpstream(param);
-        judgeService.lookupUpstream(token);
-        //System.out.println(param.getLangId() + param.getCode());
+        return judgeService.lookupUpstream(token);
     }
 
     @RequestMapping(value = RUN_AND_SUBMIT_URL, method = RequestMethod.POST)

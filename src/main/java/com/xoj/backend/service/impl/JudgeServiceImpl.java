@@ -54,6 +54,11 @@ public class JudgeServiceImpl implements JudgeService {
         ResponseEntity<JudgeUpstream> lookupResult = restTemplate
                 .exchange(UPSTREAM + ENDPOINT + token.toString() + JUDGE_OPTIONS,
                         HttpMethod.GET, requestEntity, JudgeUpstream.class);
+        while (lookupResult.getBody().getStatus().getId() == 1) {
+            lookupResult = restTemplate.exchange(UPSTREAM + ENDPOINT + token.toString() + JUDGE_OPTIONS,
+                            HttpMethod.GET, requestEntity, JudgeUpstream.class);
+        }
+
         return RestResponse.ok(lookupResult.getBody());
     }
 
