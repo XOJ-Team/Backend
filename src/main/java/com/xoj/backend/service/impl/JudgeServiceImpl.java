@@ -4,10 +4,13 @@ import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.entity.JudgeUpstream;
 import com.xoj.backend.param.PlaygroundParam;
 import com.xoj.backend.service.JudgeService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.HashMap;
@@ -22,7 +25,14 @@ public class JudgeServiceImpl implements JudgeService {
 
     private final static RestTemplate restTemplate = new RestTemplate();
 
-    private final static String UPSTREAM = "https://runner.xoj.codes";
+    @Value("${judge-api.url}")
+    private String UPSTREAM;
+
+    @Value("${judge-api.key}")
+    private String API_KEY;
+
+    @Value("${judge-api.enable-base64}")
+    private boolean ENABLE_BASE64;
 
     private final static String ENDPOINT = "/submissions/";
 
@@ -31,8 +41,12 @@ public class JudgeServiceImpl implements JudgeService {
     private final static HttpHeaders headers = new HttpHeaders();
 
     public JudgeServiceImpl() {
+    }
+
+    @PostConstruct
+    public void setupAuth() {
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("X-Auth-Token", "[YOUR_API_KEY_HERE]");
+        headers.set("X-Auth-Token", API_KEY);
     }
 
     @Override

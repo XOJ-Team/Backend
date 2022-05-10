@@ -8,6 +8,7 @@ import com.xoj.backend.service.JudgeService;
 import com.xoj.backend.service.impl.JudgeServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +22,7 @@ import java.util.UUID;
 @Api(value = "Judging Service")
 public class JudgeController {
 
+    @Autowired
     JudgeService judgeService = new JudgeServiceImpl();
     private static final String RUN_ONLY_URL = "/run";
     private static final String RUN_AND_SUBMIT_URL = "/submit";
