@@ -46,16 +46,16 @@ public class SubmitRecordsServiceImpl implements SubmitRecordsService {
     @Transactional(rollbackFor = Exception.class)
     public void createRecord(SubmitRecordsCreateDto dto) {
         UserBase user = userBaseService.getCurrentUser();
+        QuestionModel questionModel = questionService.selectOneQuestion(dto.getQuestionId());
         SubmitRecords record = SubmitRecords.builder()
-                .questionId(dto.getQuestionId())
-                .questionName(dto.getQuestionName())
+                .questionId(questionModel.getId())
+                .questionName(questionModel.getName())
                 .lang(dto.getLang())
                 .result(dto.getResult())
                 .memoryCost(dto.getMemoryCost())
                 .timeCost(dto.getTimeCost())
                 .userId(user.getId())
                 .codes(dto.getCodes()).build();
-        QuestionModel questionModel = questionService.selectOneQuestion(dto.getQuestionId());
         // if (a common user submit the particular question answer during the competition)
         if (user.getAuthority() < 3 && questionModel.getIsHide()) {
             Long competitionId = questionCompetitionService.getCompetitionId(dto.getQuestionId());

@@ -44,7 +44,7 @@
   </select>
   <select id="selectQuestionIds" resultType="java.lang.Long" parameterType="java.lang.Long">
     SELECT DISTINCT question_id FROM oj.submit_records
-    WHERE (user_id = #{userId} AND result = 0)
+    WHERE (user_id = #{userId} AND result = 3)
   </select>
   <select id="selectOneRecord" resultMap="submitRecordsModelMap"
           parameterType="java.lang.Long">
