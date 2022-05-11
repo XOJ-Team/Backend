@@ -3,8 +3,10 @@ package com.xoj.backend.controller;
 
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.entity.JudgeUpstream;
+import com.xoj.backend.notation.RequirePermission;
 import com.xoj.backend.param.PlaygroundParam;
 import com.xoj.backend.service.JudgeService;
+import com.xoj.backend.service.SubmitRecordsService;
 import com.xoj.backend.service.impl.JudgeServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,12 +25,16 @@ import java.util.UUID;
 public class JudgeController {
 
     @Autowired
-    JudgeService judgeService = new JudgeServiceImpl();
+    JudgeService judgeService;
+
+    @Autowired
+    private SubmitRecordsService submitRecordsService;
     private static final String RUN_ONLY_URL = "/run";
     private static final String RUN_AND_SUBMIT_URL = "/submit";
 
     @RequestMapping(value = RUN_ONLY_URL, method = RequestMethod.POST)
     @ApiOperation(value = "Run code and check with user-provided input")
+    @RequirePermission
     public RestResponse<JudgeUpstream> runCode(@Valid @RequestBody PlaygroundParam param) {
         UUID token = judgeService.submitUpstream(param);
         return judgeService.lookupUpstream(token);
@@ -36,7 +42,9 @@ public class JudgeController {
 
     @RequestMapping(value = RUN_AND_SUBMIT_URL, method = RequestMethod.POST)
     @ApiOperation(value = "Submit code and check with stored test cases")
-    public void submitCode(@Valid @RequestBody PlaygroundParam param) {
+    @RequirePermission
+    public RestResponse<JudgeUpstream> submitCode(@Valid @RequestBody PlaygroundParam param) {
         System.out.println("Submit code request received");
+        return null;
     }
 }

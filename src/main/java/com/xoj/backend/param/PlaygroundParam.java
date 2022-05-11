@@ -16,6 +16,9 @@ import javax.validation.constraints.NotNull;
 public class PlaygroundParam {
 
     @NotNull
+    private long question_id;
+
+    @NotNull
     private int language_id;
 
     @NotNull

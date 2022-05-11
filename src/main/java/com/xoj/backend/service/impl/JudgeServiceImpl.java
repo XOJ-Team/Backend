@@ -4,6 +4,7 @@ import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.entity.JudgeUpstream;
 import com.xoj.backend.param.PlaygroundParam;
 import com.xoj.backend.service.JudgeService;
+import com.xoj.backend.util.AuthenticateUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.*;
@@ -72,7 +73,6 @@ public class JudgeServiceImpl implements JudgeService {
             lookupResult = restTemplate.exchange(UPSTREAM + ENDPOINT + token.toString() + JUDGE_OPTIONS,
                             HttpMethod.GET, requestEntity, JudgeUpstream.class);
         }
-
         return RestResponse.ok(lookupResult.getBody());
     }
 
