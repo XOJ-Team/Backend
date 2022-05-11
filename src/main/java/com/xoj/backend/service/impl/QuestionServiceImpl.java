@@ -3,6 +3,7 @@ package com.xoj.backend.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xoj.backend.common.CommonConstants;
+import com.xoj.backend.common.ResultEnum;
 import com.xoj.backend.dto.QuestionCreateDto;
 import com.xoj.backend.dto.QuestionModifyDto;
 import com.xoj.backend.dto.QuestionPageDto;
@@ -268,7 +269,7 @@ public class QuestionServiceImpl implements QuestionService {
         example.createCriteria().andEqualTo("id", id);
         Question q = mapper.selectOneByExample(example);
         long accept = 0L;
-        if (0 == result) {
+        if (ResultEnum.ACCEPTED.getCode().equals(result)) {
             accept = q.getAccept() + 1;
         } else {
             accept = q.getAccept();
