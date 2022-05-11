@@ -22,8 +22,8 @@ public class UserCompetitionTest {
     @Autowired
     private UserCompetitionMapper mapper;
 
-    @Test
-    public void test(){
-        System.out.println(mapper.selectUserCompetition());
-    }
+//    @Test
+//    public void test(){
+//        System.out.println(mapper.selectUserCompetition());
+//    }
 }

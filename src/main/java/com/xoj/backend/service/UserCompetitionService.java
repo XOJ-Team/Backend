@@ -13,7 +13,7 @@ import java.util.Date;
 public interface UserCompetitionService {
     void create(UserCompetitionCreateDto dto);
 
-    PageInfo<UserCompetition> selectUserCompetition(UserCompetitionPageDto dto);
+    PageInfo<UserCompetition> selectUserCompetition(UserCompetitionPageDto dto,Long competitionId);
 
     void deleteUserCompetition(Long competitionId);
 

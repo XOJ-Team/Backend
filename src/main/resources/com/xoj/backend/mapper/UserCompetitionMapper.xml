@@ -16,6 +16,7 @@
         SELECT id, user_id, competition_id, score, penalty, wrong
         FROM oj.user_competition
         WHERE is_delete = 0
+          AND competition_id = #{competition_id}
         ORDER BY score DESC, (penalty + wrong * 300) ASC
     </select>
 </mapper>
