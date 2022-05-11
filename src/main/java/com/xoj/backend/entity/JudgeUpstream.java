@@ -24,7 +24,7 @@ public class JudgeUpstream implements Serializable {
     private Status status;
 
     @Nullable
-    private Float memory;
+    private Double memory;
 
     @Nullable
     private Float time;

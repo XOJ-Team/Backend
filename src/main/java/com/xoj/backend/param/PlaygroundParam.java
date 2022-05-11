@@ -27,4 +27,7 @@ public class PlaygroundParam {
     @NotNull
     private String stdin;
 
+    @Nullable
+    private String expected_output;
+
 }
