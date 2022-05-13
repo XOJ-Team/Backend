@@ -31,11 +31,12 @@ public class PlaygroundResponseParam {
     @Nullable
     private Double time;
 
-    public PlaygroundResponseParam(JudgeParam param) {
-        status = param.getStatus();
-        compile_output = param.getCompile_output();
-        stdout = param.getStdout();
-        memory = param.getMemory();
-        time = param.getTime();
+    public PlaygroundResponseParam(JudgeParam result, PlaygroundRequestParam request) {
+        question_id = request.getQuestion_id();
+        status = result.getStatus();
+        compile_output = result.getCompile_output();
+        stdout = result.getStdout();
+        memory = result.getMemory();
+        time = result.getTime();
     }
 }

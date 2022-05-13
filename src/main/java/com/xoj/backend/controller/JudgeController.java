@@ -47,19 +47,18 @@ public class JudgeController {
     @RequestMapping(value = RUN_ONLY_URL, method = RequestMethod.POST)
     @ApiOperation(value = "Run code and check with user-provided input")
     @RequirePermission
-    public RestResponse<PlaygroundResponseParam> run(@Valid @RequestBody PlaygroundRequestParam param) {
-        JudgeParam judgeRequest = new JudgeParam(param);
+    public RestResponse<PlaygroundResponseParam> run(@Valid @RequestBody PlaygroundRequestParam playgroundRequest) {
+        JudgeParam judgeRequest = new JudgeParam(playgroundRequest);
         UUID token = judgeService.submitUpstream(judgeRequest);
-        PlaygroundResponseParam response = new PlaygroundResponseParam(judgeService.lookupUpstream(token));
-        return RestResponse.ok(new PlaygroundResponseParam(judgeService.lookupUpstream(token)));
+        return RestResponse.ok(new PlaygroundResponseParam(judgeService.lookupUpstream(token), playgroundRequest));
     }
 
     @RequestMapping(value = RUN_AND_SUBMIT_URL, method = RequestMethod.POST)
     @ApiOperation(value = "Submit code and check with stored test cases")
     @RequirePermission
-    public RestResponse<PlaygroundResponseParam> submit(@Valid @RequestBody PlaygroundRequestParam param) {
-        List<TestcaseQuestion> testcaseList = testcaseQuestionService.testcases(param.getQuestion_id());
-        JudgeParam judgeRequest = new JudgeParam(param);
+    public RestResponse<PlaygroundResponseParam> submit(@Valid @RequestBody PlaygroundRequestParam playgroundRequest) {
+        List<TestcaseQuestion> testcaseList = testcaseQuestionService.testcases(playgroundRequest.getQuestion_id());
+        JudgeParam judgeRequest = new JudgeParam(playgroundRequest);
         JudgeParam judgeResponse = new JudgeParam();
         for (TestcaseQuestion t : testcaseList) {
             judgeRequest.setStdin(t.getTestcase());
@@ -72,13 +71,13 @@ public class JudgeController {
             }
         }
         try {
-            SubmitRecordsCreateDto dto = judgeService.dtoConversion(param, judgeResponse);
+            SubmitRecordsCreateDto dto = judgeService.dtoConversion(playgroundRequest, judgeResponse);
             submitRecordsService.createRecord(dto);
 //            return RestResponse.ok(dto, CommonErrorType.SUCCESS.getResultMsg());
         } catch (BizException e) {
             return RestResponse.error(null, e.getErrorMsg());
         }
-        return RestResponse.ok(new PlaygroundResponseParam(judgeResponse));
+        return RestResponse.ok(new PlaygroundResponseParam(judgeResponse, playgroundRequest));
     }
 
 }
