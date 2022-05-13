@@ -40,9 +40,13 @@ public class UploadImageServiceImpl implements UploadImageService {
             logger.info("start upload");
             OkHttpClient client = new OkHttpClient().newBuilder()
                     .build();
+            logger.info("set media type");
             MediaType mediaType = MediaType.parse("text/plain");
+            logger.info("new file");
             File file = new File(Objects.requireNonNull(smfile.getOriginalFilename()));
+            logger.info("copy");
             FileUtils.copyInputStreamToFile(smfile.getInputStream(), file);
+            logger.info("body");
             RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
                     .addFormDataPart("smfile", smfile.getName(),
                             RequestBody.create(MediaType.parse("application/octet-stream"), file))
