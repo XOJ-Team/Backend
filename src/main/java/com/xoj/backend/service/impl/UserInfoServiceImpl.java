@@ -52,7 +52,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     private final QuestionService questionService;
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
     public RestResponse<?> managerDeleteUser(String mail) {
