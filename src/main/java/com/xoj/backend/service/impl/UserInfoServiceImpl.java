@@ -18,6 +18,8 @@ import com.xoj.backend.param.UserParam;
 import com.xoj.backend.service.*;
 import com.xoj.backend.util.TransUtils;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -50,6 +52,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     private final QuestionService questionService;
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
     public RestResponse<?> managerDeleteUser(String mail) {
@@ -186,6 +189,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public String updateImage(MultipartFile smfile) {
+        logger.info("start update");
         UserBase user = userBaseService.getCurrentUser();
         Example example = new Example(UserBase.class);
         example.createCriteria().andEqualTo("id", user.getId());
@@ -193,6 +197,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserBase userBase = UserBase.builder()
                 .profilePhoto(url)
                 .build();
+        logger.info("insert url");
         mapper.updateByExampleSelective(userBase, example);
         return url;
     }

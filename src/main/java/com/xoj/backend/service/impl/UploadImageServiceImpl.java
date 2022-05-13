@@ -7,6 +7,8 @@ import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.service.UploadImageService;
 import okhttp3.*;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -30,9 +32,12 @@ public class UploadImageServiceImpl implements UploadImageService {
     @Value("${smms.authorization}")
     private String authorization;
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     @Override
     public String uploadPicture(MultipartFile smfile) {
         try {
+            logger.info("start upload");
             OkHttpClient client = new OkHttpClient().newBuilder()
                     .build();
             MediaType mediaType = MediaType.parse("text/plain");
@@ -42,6 +47,7 @@ public class UploadImageServiceImpl implements UploadImageService {
                     .addFormDataPart("smfile", smfile.getName(),
                             RequestBody.create(MediaType.parse("application/octet-stream"), file))
                     .build();
+            logger.info("start request");
             Request request = new Request.Builder()
                     .url(uploadUrl)
                     .method("POST", body)
@@ -52,15 +58,18 @@ public class UploadImageServiceImpl implements UploadImageService {
             if (file.exists()) {
                 file.delete();
             }
+            logger.info("get response");
             String jsonString = response.body().string();
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(jsonString);
             JsonNode url = null;
+            logger.info("get url");
             if ("image_repeated".equals(jsonNode.get("code").asText())) {
                 url = jsonNode.get("images");
             } else if ("Upload success.".equals(jsonNode.get("message").asText())) {
                 url = jsonNode.get("data").get("url");
             }
+            logger.info("completed");
             return null != url && StringUtils.hasText(url.asText()) ? url.asText() : "";
         } catch (Exception e) {
             throw new BizException(CommonErrorType.UPLOAD_FAIL);
