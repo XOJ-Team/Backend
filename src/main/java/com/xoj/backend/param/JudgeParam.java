@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.joda.time.DateTime;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
@@ -29,10 +30,19 @@ public class JudgeParam {
     private String source_code;
 
     @Nullable
+    private Double memory_limit;
+
+    @Nullable
     private Double memory;
 
     @Nullable
+    private Double cpu_time_limit;
+
+    @Nullable
     private Double time;
+
+//    @Nullable
+//    private String finished_at;
 
     @Nullable
     private String stdin;

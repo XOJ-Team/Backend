@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.joda.time.DateTime;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
@@ -33,7 +34,7 @@ public class PlaygroundResponseParam {
     private Double time;
 
     @NotNull
-    private Date retrieval_time;
+    private Date finished_at;
 
     public PlaygroundResponseParam(JudgeParam result, PlaygroundRequestParam request) {
         question_id = request.getQuestion_id();
@@ -42,6 +43,6 @@ public class PlaygroundResponseParam {
         stdout = result.getStdout();
         memory = result.getMemory();
         time = result.getTime();
-        retrieval_time = new Date();
+        finished_at = new Date();
     }
 }

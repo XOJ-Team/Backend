@@ -67,8 +67,8 @@ public class JudgeController {
         List<TestcaseQuestion> testcaseList = testcaseQuestionService.testcases(playgroundRequest.getQuestion_id());
         JudgeParam judgeRequest = new JudgeParam(playgroundRequest);
         JudgeParam judgeResponse = new JudgeParam();
-        judgeRequest.setMemory((double) question.getMemoryLimit() * 1000);
-        judgeRequest.setTime((double) question.getTimeLimit());
+        judgeRequest.setMemory_limit((double) question.getMemoryLimit() * 1000);
+        judgeRequest.setCpu_time_limit((double) question.getTimeLimit());
         for (TestcaseQuestion t : testcaseList) {
             judgeRequest.setStdin(Base64.getEncoder().encodeToString(t.getTestcase().getBytes()));
             judgeRequest.setExpected_output(Base64.getEncoder().encodeToString(t.getResult().getBytes()));
