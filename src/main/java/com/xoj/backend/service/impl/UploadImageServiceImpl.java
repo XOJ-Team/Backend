@@ -45,7 +45,12 @@ public class UploadImageServiceImpl implements UploadImageService {
             logger.info("new file");
             File file = new File(Objects.requireNonNull(smfile.getOriginalFilename()));
             logger.info("copy");
-            FileUtils.copyInputStreamToFile(smfile.getInputStream(), file);
+            try {
+                FileUtils.copyInputStreamToFile(smfile.getInputStream(), file);
+            } catch (Exception e) {
+                logger.info(e.getMessage());
+                throw new BizException();
+            }
             logger.info("body");
             RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
                     .addFormDataPart("smfile", smfile.getName(),
