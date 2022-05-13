@@ -2,8 +2,8 @@ package com.xoj.backend.service.impl;
 
 import com.xoj.backend.common.LanguageEnum;
 import com.xoj.backend.dto.SubmitRecordsCreateDto;
-import com.xoj.backend.entity.JudgeUpstream;
-import com.xoj.backend.param.PlaygroundParam;
+import com.xoj.backend.param.JudgeParam;
+import com.xoj.backend.param.PlaygroundRequestParam;
 import com.xoj.backend.service.JudgeService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -11,10 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -49,38 +45,29 @@ public class JudgeServiceImpl implements JudgeService {
     }
 
     @Override
-    public UUID submitUpstream(PlaygroundParam param) {
-        Map<String, Object> bodyMap = new HashMap<>();
-        bodyMap.put("language_id", param.getLanguage_id());
-        bodyMap.put("source_code", param.getSource_code());
-//        bodyMap.put("", )
-        bodyMap.put("stdin", Base64.getEncoder().encodeToString(param.getStdin().getBytes(StandardCharsets.UTF_8)));
-        if (param.getExpected_output() != null) {
-            bodyMap.put("expected_output", Base64.getEncoder().encodeToString(param.getExpected_output().getBytes(StandardCharsets.UTF_8)));
-        }
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(bodyMap, headers);
-
-        JudgeUpstream requestResult = restTemplate
-                .postForObject(UPSTREAM + ENDPOINT + JUDGE_OPTIONS, entity, JudgeUpstream.class);
+    public UUID submitUpstream(JudgeParam param) {
+        HttpEntity<JudgeParam> entity = new HttpEntity<>(param, headers);
+        JudgeParam requestResult = restTemplate
+                .postForObject(UPSTREAM + ENDPOINT + JUDGE_OPTIONS, entity, JudgeParam.class);
         assert requestResult != null;
         return requestResult.getToken();
     }
 
     @Override
-    public JudgeUpstream lookupUpstream(UUID token) {
+    public JudgeParam lookupUpstream(UUID token) {
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
-        ResponseEntity<JudgeUpstream> lookupResult = restTemplate
+        ResponseEntity<JudgeParam> lookupResult = restTemplate
                 .exchange(UPSTREAM + ENDPOINT + token.toString() + JUDGE_OPTIONS,
-                        HttpMethod.GET, requestEntity, JudgeUpstream.class);
+                        HttpMethod.GET, requestEntity, JudgeParam.class);
         while (lookupResult.getBody().getStatus().getId() == 1 || lookupResult.getBody().getStatus().getId() == 2) {
             lookupResult = restTemplate.exchange(UPSTREAM + ENDPOINT + token + JUDGE_OPTIONS,
-                            HttpMethod.GET, requestEntity, JudgeUpstream.class);
+                            HttpMethod.GET, requestEntity, JudgeParam.class);
         }
         return lookupResult.getBody();
     }
 
     @Override
-    public SubmitRecordsCreateDto dtoConversion(PlaygroundParam param, JudgeUpstream result) {
+    public SubmitRecordsCreateDto dtoConversion(PlaygroundRequestParam param, JudgeParam result) {
         SubmitRecordsCreateDto dto = new SubmitRecordsCreateDto();
         dto.setQuestionId(param.getQuestion_id());
         dto.setCodes(param.getSource_code());
@@ -90,7 +77,7 @@ public class JudgeServiceImpl implements JudgeService {
             return dto;
         }
         dto.setMemoryCost(result.getMemory());
-        dto.setTimeCost(Math.round(result.getTime() * 1000));
+        dto.setTimeCost((int) (result.getTime() * 1000));
         return dto;
     }
 

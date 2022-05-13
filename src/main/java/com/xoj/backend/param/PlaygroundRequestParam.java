@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
 
@@ -13,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlaygroundParam {
+public class PlaygroundRequestParam {
 
     @NotNull
     private long question_id;
@@ -26,8 +25,5 @@ public class PlaygroundParam {
 
     @NotNull
     private String stdin;
-
-    @Nullable
-    private String expected_output;
 
 }

@@ -1,8 +1,8 @@
 package com.xoj.backend.service;
 
 import com.xoj.backend.dto.SubmitRecordsCreateDto;
-import com.xoj.backend.entity.JudgeUpstream;
-import com.xoj.backend.param.PlaygroundParam;
+import com.xoj.backend.param.JudgeParam;
+import com.xoj.backend.param.PlaygroundRequestParam;
 
 import java.util.UUID;
 
@@ -11,10 +11,10 @@ import java.util.UUID;
  */
 public interface JudgeService {
 
-    UUID submitUpstream(PlaygroundParam param);
+    UUID submitUpstream(JudgeParam param);
 
-    JudgeUpstream lookupUpstream(UUID token);
+    JudgeParam lookupUpstream(UUID token);
 
-    SubmitRecordsCreateDto dtoConversion(PlaygroundParam param, JudgeUpstream result);
+    SubmitRecordsCreateDto dtoConversion(PlaygroundRequestParam param, JudgeParam result);
 
 }

@@ -3,12 +3,12 @@ package com.xoj.backend.controller;
 
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.dto.SubmitRecordsCreateDto;
-import com.xoj.backend.entity.JudgeUpstream;
+import com.xoj.backend.param.JudgeParam;
 import com.xoj.backend.entity.TestcaseQuestion;
 import com.xoj.backend.exception.BizException;
-import com.xoj.backend.exception.CommonErrorType;
 import com.xoj.backend.notation.RequirePermission;
-import com.xoj.backend.param.PlaygroundParam;
+import com.xoj.backend.param.PlaygroundRequestParam;
+import com.xoj.backend.param.PlaygroundResponseParam;
 import com.xoj.backend.service.JudgeService;
 import com.xoj.backend.service.SubmitRecordsService;
 import com.xoj.backend.service.TestcaseQuestionService;
@@ -47,36 +47,38 @@ public class JudgeController {
     @RequestMapping(value = RUN_ONLY_URL, method = RequestMethod.POST)
     @ApiOperation(value = "Run code and check with user-provided input")
     @RequirePermission
-    public RestResponse<JudgeUpstream> runCode(@Valid @RequestBody PlaygroundParam param) {
-        UUID token = judgeService.submitUpstream(param);
-        return RestResponse.ok(judgeService.lookupUpstream(token));
+    public RestResponse<PlaygroundResponseParam> run(@Valid @RequestBody PlaygroundRequestParam param) {
+        JudgeParam judgeRequest = new JudgeParam(param);
+        UUID token = judgeService.submitUpstream(judgeRequest);
+        PlaygroundResponseParam response = new PlaygroundResponseParam(judgeService.lookupUpstream(token));
+        return RestResponse.ok(new PlaygroundResponseParam(judgeService.lookupUpstream(token)));
     }
 
     @RequestMapping(value = RUN_AND_SUBMIT_URL, method = RequestMethod.POST)
     @ApiOperation(value = "Submit code and check with stored test cases")
     @RequirePermission
-    public RestResponse<JudgeUpstream> submitCode(@Valid @RequestBody PlaygroundParam param) {
+    public RestResponse<PlaygroundResponseParam> submit(@Valid @RequestBody PlaygroundRequestParam param) {
         List<TestcaseQuestion> testcaseList = testcaseQuestionService.testcases(param.getQuestion_id());
-        JudgeUpstream result = new JudgeUpstream();
+        JudgeParam judgeRequest = new JudgeParam(param);
+        JudgeParam judgeResponse = new JudgeParam();
         for (TestcaseQuestion t : testcaseList) {
-            param.setStdin(t.getTestcase());
-            param.setExpected_output(t.getResult());
-            UUID token = judgeService.submitUpstream(param);
-            result = judgeService.lookupUpstream(token);
+            judgeRequest.setStdin(t.getTestcase());
+            judgeRequest.setExpected_output(t.getResult());
+            UUID token = judgeService.submitUpstream(judgeRequest);
+            judgeResponse = judgeService.lookupUpstream(token);
 
-            if (result.getStatus().getId() != 3) {
+            if (judgeResponse.getStatus().getId() != 3) {
                 break;
             }
         }
-        SubmitRecordsCreateDto dto = judgeService.dtoConversion(param, result);
         try {
+            SubmitRecordsCreateDto dto = judgeService.dtoConversion(param, judgeResponse);
             submitRecordsService.createRecord(dto);
 //            return RestResponse.ok(dto, CommonErrorType.SUCCESS.getResultMsg());
         } catch (BizException e) {
             return RestResponse.error(null, e.getErrorMsg());
         }
-
-        return RestResponse.ok(result);
+        return RestResponse.ok(new PlaygroundResponseParam(judgeResponse));
     }
 
 }

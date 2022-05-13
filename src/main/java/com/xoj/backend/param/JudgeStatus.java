@@ -1,4 +1,4 @@
-package com.xoj.backend.entity;
+package com.xoj.backend.param;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Status implements Serializable {
+public class JudgeStatus {
     @NotNull
     private Integer id;
 
