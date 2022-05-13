@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Data
 @Builder
@@ -31,6 +32,9 @@ public class PlaygroundResponseParam {
     @Nullable
     private Double time;
 
+    @NotNull
+    private Date retrieval_time;
+
     public PlaygroundResponseParam(JudgeParam result, PlaygroundRequestParam request) {
         question_id = request.getQuestion_id();
         status = result.getStatus();
@@ -38,5 +42,6 @@ public class PlaygroundResponseParam {
         stdout = result.getStdout();
         memory = result.getMemory();
         time = result.getTime();
+        retrieval_time = new Date();
     }
 }
