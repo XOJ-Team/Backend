@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -61,8 +62,8 @@ public class JudgeController {
         JudgeParam judgeRequest = new JudgeParam(playgroundRequest);
         JudgeParam judgeResponse = new JudgeParam();
         for (TestcaseQuestion t : testcaseList) {
-            judgeRequest.setStdin(t.getTestcase());
-            judgeRequest.setExpected_output(t.getResult());
+            judgeRequest.setStdin(Base64.getEncoder().encodeToString(t.getTestcase().getBytes()));
+            judgeRequest.setExpected_output(Base64.getEncoder().encodeToString(t.getResult().getBytes()));
             UUID token = judgeService.submitUpstream(judgeRequest);
             judgeResponse = judgeService.lookupUpstream(token);
 
