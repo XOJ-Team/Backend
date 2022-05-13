@@ -64,7 +64,7 @@ public class JudgeController {
             UUID token = judgeService.submitUpstream(param);
             result = judgeService.lookupUpstream(token);
 
-            if (result.getStatus().getId() == 4) {
+            if (result.getStatus().getId() != 3) {
                 break;
             }
         }

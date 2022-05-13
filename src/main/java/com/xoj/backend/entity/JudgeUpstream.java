@@ -20,7 +20,7 @@ public class JudgeUpstream implements Serializable {
     @NotNull
     private UUID token;
 
-    @Nullable
+    @NotNull
     private Status status;
 
     @Nullable

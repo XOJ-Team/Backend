@@ -1,5 +1,6 @@
 package com.xoj.backend.service.impl;
 
+import com.xoj.backend.common.LanguageEnum;
 import com.xoj.backend.dto.SubmitRecordsCreateDto;
 import com.xoj.backend.entity.JudgeUpstream;
 import com.xoj.backend.param.PlaygroundParam;
@@ -39,8 +40,7 @@ public class JudgeServiceImpl implements JudgeService {
 
     private final static HttpHeaders headers = new HttpHeaders();
 
-    public JudgeServiceImpl() {
-    }
+    public JudgeServiceImpl() {}
 
     @PostConstruct
     public void setupAuth() {
@@ -53,6 +53,7 @@ public class JudgeServiceImpl implements JudgeService {
         Map<String, Object> bodyMap = new HashMap<>();
         bodyMap.put("language_id", param.getLanguage_id());
         bodyMap.put("source_code", param.getSource_code());
+//        bodyMap.put("", )
         bodyMap.put("stdin", Base64.getEncoder().encodeToString(param.getStdin().getBytes(StandardCharsets.UTF_8)));
         if (param.getExpected_output() != null) {
             bodyMap.put("expected_output", Base64.getEncoder().encodeToString(param.getExpected_output().getBytes(StandardCharsets.UTF_8)));
@@ -72,7 +73,7 @@ public class JudgeServiceImpl implements JudgeService {
                 .exchange(UPSTREAM + ENDPOINT + token.toString() + JUDGE_OPTIONS,
                         HttpMethod.GET, requestEntity, JudgeUpstream.class);
         while (lookupResult.getBody().getStatus().getId() == 1 || lookupResult.getBody().getStatus().getId() == 2) {
-            lookupResult = restTemplate.exchange(UPSTREAM + ENDPOINT + token.toString() + JUDGE_OPTIONS,
+            lookupResult = restTemplate.exchange(UPSTREAM + ENDPOINT + token + JUDGE_OPTIONS,
                             HttpMethod.GET, requestEntity, JudgeUpstream.class);
         }
         return lookupResult.getBody();
@@ -82,8 +83,12 @@ public class JudgeServiceImpl implements JudgeService {
     public SubmitRecordsCreateDto dtoConversion(PlaygroundParam param, JudgeUpstream result) {
         SubmitRecordsCreateDto dto = new SubmitRecordsCreateDto();
         dto.setQuestionId(param.getQuestion_id());
-        dto.setResult(result.getStatus().getId());
         dto.setCodes(param.getSource_code());
+        dto.setLang(LanguageEnum.getDescription(param.getLanguage_id()));
+        dto.setResult(result.getStatus().getId());
+        if (result.getStatus().getId() != 3) {
+            return dto;
+        }
         dto.setMemoryCost(result.getMemory());
         dto.setTimeCost(Math.round(result.getTime() * 1000));
         return dto;
