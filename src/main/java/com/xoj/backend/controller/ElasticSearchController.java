@@ -2,6 +2,7 @@ package com.xoj.backend.controller;
 
 import com.xoj.backend.base.RestResponse;
 import com.xoj.backend.entity.UserBase;
+import com.xoj.backend.notation.RequireManagerPermission;
 import com.xoj.backend.param.ESCRUDParam;
 import com.xoj.backend.param.UserParam;
 import com.xoj.backend.service.ElasticSearchService;
@@ -57,6 +58,7 @@ public class ElasticSearchController {
         return new ModelAndView(new RedirectView("localhost:9100"));
     }
 
+    @RequireManagerPermission
     @RequestMapping(value = "/synchronization", method = RequestMethod.GET)
     @ApiOperation(value = "synchronize data between Elastcsearch and MySQL")
     public RestResponse<?> synchronization() {
