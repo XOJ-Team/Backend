@@ -4,19 +4,39 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
 trigger:
-- cicd
+  - master
 
 pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+  - task: Maven@3
+    inputs:
+      mavenPomFile: '$(System.DefaultWorkingDirectory)/pom.xml'
+      mavenOptions: "-Xmx3072m"
+      javaHomeOption: "JDKVersion"
+      jdkVersionOption: "1.8"
+      jdkArchitectureOption: "x64"
+      publishJUnitResults: true
+      # testResultsFiles: "**/surefire-reports/TEST-*.xml"
+      goals: "package"
+
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(System.DefaultWorkingDirectory)/target/Backend-0.0.1-SNAPSHOT.jar'
+      artifactName: 'Snapshot Package'
+
+  - task: CopyFilesOverSSH@0
+    inputs:
+      sshEndpoint: TARGET_SERVER
+      overwrite: true
+      sourceFolder: '$(System.DefaultWorkingDirectory)/target'
+      contents: '*.jar'
+      targetFolder: '/home/xjtluoj/.ci_build_backend'
+
+  - task: SSH@0
+    inputs:
+      sshEndpoint: TARGET_SERVER
+      runOptions: 'commands'
+      commands: '/home/xjtluoj/.ci_build_backend/deploy.sh'
+      failOnStdErr: true

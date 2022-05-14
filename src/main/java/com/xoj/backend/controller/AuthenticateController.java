@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Date 17:23 2022/3/20
  ***/
 @RestController
-public class AuthentiateController {
+public class AuthenticateController {
 
     @RequestMapping(value = "/noAuthentication", method = RequestMethod.GET)
     public void changeInfo(Object obj) {
