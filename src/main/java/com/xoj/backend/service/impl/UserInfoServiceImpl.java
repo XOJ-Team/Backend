@@ -87,7 +87,7 @@ public class UserInfoServiceImpl implements UserInfoService {
                 .phoneNumber(param.getPhoneNumber())
                 .authority(param.getAuthority())
                 .score(param.getScore())
-                .password(param.getPassword())
+                .password(TransUtils.getMd5(param.getPassword()))
                 .mail(param.getMail())
                 .ranking(param.getRanking())
                 .build();
