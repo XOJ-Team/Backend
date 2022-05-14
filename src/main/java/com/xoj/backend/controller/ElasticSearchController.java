@@ -57,7 +57,11 @@ public class ElasticSearchController {
         return new ModelAndView(new RedirectView("localhost:9100"));
     }
 
-
+    @RequestMapping(value = "/synchronization", method = RequestMethod.GET)
+    @ApiOperation(value = "synchronize data between Elastcsearch and MySQL")
+    public RestResponse<?> synchronization() {
+        return elasticSearchService.synchronization();
+    }
 
 
 }

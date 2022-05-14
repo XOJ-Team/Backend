@@ -28,4 +28,6 @@ public interface ElasticSearchService {
 
     RestResponse<EsResultParam> searchDocument(String index, String name, String context);
 
+    RestResponse<?> synchronization();
+
 }

@@ -1,6 +1,7 @@
 package com.xoj.backend.service.impl;
 
 import com.xoj.backend.base.RestResponse;
+import com.xoj.backend.mapper.QuestionMapper;
 import com.xoj.backend.model.QuestionModel;
 import com.xoj.backend.param.EsResultParam;
 import com.xoj.backend.param.EsSearchParam;
@@ -30,6 +31,8 @@ import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import tk.mybatis.mapper.entity.Example;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,6 +51,11 @@ public class ElasticSearchImpl implements ElasticSearchService {
 
     @Autowired
     RestHighLevelClient restHighLevelClient;
+
+    @Autowired
+    QuestionMapper questionMapper;
+
+
 
     public RestResponse<?> createIndex(String index){
         CreateIndexRequest request = new CreateIndexRequest(index);
@@ -207,6 +215,30 @@ public class ElasticSearchImpl implements ElasticSearchService {
         return;
     }
 
+    @Override
+    public RestResponse<?> synchronization() {
+        List<QuestionModel> questionList = questionMapper.selectAllQuestions();
+        for(QuestionModel question: questionList){
+            Question question_info = getQuestion(question.getName());
+            String searchKey = question_info.getTags() + " " + question_info.getName() + " " + question_info.getId();
+            EsSearchParam esSearchParam = new EsSearchParam(question_info, searchKey.toLowerCase());
+            insertDocument(   "questions", question.getName(),esSearchParam);
+        }
+
+        return RestResponse.ok();
+    }
 
 
+    public Question getQuestion(String name) {
+        Example example = new Example(UserBase.class);
+        example.createCriteria()
+                .andEqualTo("name", name);
+        List<Question> questions = questionMapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(questions)){
+            return null;
+        }else{
+            Question question = questions.get(0);
+            return question;
+        }
+    }
 }
