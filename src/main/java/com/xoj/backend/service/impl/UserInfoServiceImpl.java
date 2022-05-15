@@ -90,7 +90,7 @@ public class UserInfoServiceImpl implements UserInfoService {
                 .mail(param.getMail())
                 .ranking(param.getRanking())
                 .build();
-        if (null != param.getPassword()) {
+        if (StringUtils.hasText(param.getPassword())) {
             user.setPassword(TransUtils.getMd5(param.getPassword()));
         }
         Example example = new Example(UserBase.class);
