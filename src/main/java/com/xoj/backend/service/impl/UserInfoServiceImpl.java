@@ -142,7 +142,7 @@ public class UserInfoServiceImpl implements UserInfoService {
                 .name(param.getName())
                 .phoneNumber(param.getPhoneNumber())
                 .mail(param.getMail())
-                .password(param.getPassword())
+                .password(TransUtils.getMd5(param.getPassword()))
                 .ranking(param.getRanking())
                 .score(param.getScore())
                 .authority(param.getAuthority())
