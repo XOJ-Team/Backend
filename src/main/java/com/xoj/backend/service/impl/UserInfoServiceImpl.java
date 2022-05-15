@@ -87,10 +87,12 @@ public class UserInfoServiceImpl implements UserInfoService {
                 .phoneNumber(param.getPhoneNumber())
                 .authority(param.getAuthority())
                 .score(param.getScore())
-                .password(TransUtils.getMd5(param.getPassword()))
                 .mail(param.getMail())
                 .ranking(param.getRanking())
                 .build();
+        if (null != param.getPassword()) {
+            user.setPassword(TransUtils.getMd5(param.getPassword()));
+        }
         Example example = new Example(UserBase.class);
         example.createCriteria().andEqualTo("id", param.getId());
         int update = mapper.updateByExampleSelective(user, example);
