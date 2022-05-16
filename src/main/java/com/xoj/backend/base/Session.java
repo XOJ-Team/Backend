@@ -13,51 +13,61 @@ import javax.servlet.http.HttpSession;
  ***/
 public class Session {
 
-    public static HttpSession getSession(){
+    public static HttpSession getSession() {
         HttpSession session;
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         session = request.getSession();
         return session;
     }
 
-    public static UserBase getCurrentUser(){
-        return (UserBase)Session.getSession().getAttribute("user");
+    public static UserBase getCurrentUser() {
+        return (UserBase) Session.getSession().getAttribute("user");
     }
 
-    public static String getCurrentUserVerificationNumber(){
-        return (String)Session.getSession().getAttribute("verificationNumber");
+    public static String getCurrentUserVerificationNumber() {
+        return (String) Session.getSession().getAttribute("verificationNumber");
     }
 
-    public static String getCurrentUserMail(){
-        return (String)Session.getSession().getAttribute("mail");
+    public static String getCurrentUserMail() {
+        return (String) Session.getSession().getAttribute("mail");
     }
 
-    public static String getCurrentUserName(){
-        return (String)Session.getSession().getAttribute("name");
+    public static String getCurrentUserName() {
+        return (String) Session.getSession().getAttribute("name");
     }
 
-    public static Byte getCurrentUserAuthority(){
-        return (Byte)Session.getSession().getAttribute("authority");
+    public static Byte getCurrentUserAuthority() {
+        return (Byte) Session.getSession().getAttribute("authority");
     }
 
-    public static void setUserInfo(UserBase user){
+    public static void setUserInfo(UserBase user) {
         HttpSession session = getSession();
-        session.setAttribute("id",user.getId());
-        session.setAttribute("name",user.getName());
-        session.setAttribute("mail",user.getMail());
-        session.setAttribute("authority",user.getAuthority());
+        session.setAttribute("id", user.getId());
+        session.setAttribute("name", user.getName());
+        session.setAttribute("mail", user.getMail());
+        session.setAttribute("authority", user.getAuthority());
     }
 
-    public static void setUser(UserBase user){
+    public static void setUser(UserBase user) {
         HttpSession session = getSession();
-        session.setAttribute("user",user);
+        session.setAttribute("user", user);
+    }
+    public static String getMail() {
+        HttpSession session = getSession();
+        return (String) session.getAttribute("mail");
     }
 
-    public static void removeUser(){
+    public static void setMail(String mail) {
+        HttpSession session = getSession();
+        session.setAttribute("mail", mail);
+    }
+
+    public static void removeUser() {
         HttpSession session = getSession();
         session.removeAttribute("user");
     }
-    public static void removeUserInfo(){
+
+    public static void removeUserInfo() {
         HttpSession session = getSession();
         session.removeAttribute("id");
         session.removeAttribute("name");
