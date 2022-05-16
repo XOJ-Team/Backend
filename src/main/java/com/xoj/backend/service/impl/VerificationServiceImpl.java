@@ -43,6 +43,7 @@ public class VerificationServiceImpl implements VerificationService {
     public RestResponse<Object> sendVerificationNumber(String mail) {
         mail = TransUtils.toLowerCase(mail);
         HttpSession session = Session.getSession();
+        session.setAttribute("mail",mail);
         String verificationNumber = getRandomNumber();
         session.setAttribute("verificationNumber",verificationNumber);
 
@@ -66,6 +67,7 @@ public class VerificationServiceImpl implements VerificationService {
     @Override
     public RestResponse<Object> sendVerificationNumberResetPassword(String mail) {
         mail = TransUtils.toLowerCase(mail);
+        Session.setMail(mail);
         UserBase user = loginService.getUser(mail);
         if(user == null){
             return RestResponse.error("User not find");
@@ -103,13 +105,12 @@ public class VerificationServiceImpl implements VerificationService {
 
         String verificationNumber = getRandomNumber();
         Session.getSession().setAttribute("verificationNumber",verificationNumber);
-
         String subject = "XJTLU-OJ verification code";
         String body = "Hi,\n" + " \n" + "Welcome！\n" + " \n" +
                 "Thank you for visiting XOJ. We hope you enjoy it." +
                 "  To reset the password, please enter the verification code below.\n" + " \n" +
                 "Verification code: "+verificationNumber+" \n" + " \n" + "Thanks,\n" + "XOJ Developer Team";
-
+        Session.setMail(to);
         try{
             mailGunService.sendText(from, to, subject,body);
             return RestResponse.ok();
