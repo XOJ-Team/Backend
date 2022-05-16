@@ -1,6 +1,8 @@
 package com.xoj.backend.util;
 
 import com.xoj.backend.base.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,6 +11,8 @@ import javax.servlet.http.HttpSession;
  * @Date 10:46 2022/3/15
  ***/
 public class AuthenticateUtils {
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticateUtils.class);
 
     public static boolean isAuthenticated(){
         HttpSession session = Session.getSession();
@@ -68,6 +72,11 @@ public class AuthenticateUtils {
         if(authenticated != null && authenticated >= 3){
             return false;
         }else {
+            if (null == authenticated) {
+                logger.info("authentication is null");
+                return true;
+            }
+            logger.info(authenticated.toString());
             return true;
         }
     }

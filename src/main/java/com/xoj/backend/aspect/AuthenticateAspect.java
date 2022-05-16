@@ -6,21 +6,11 @@ package com.xoj.backend.aspect;
  ***/
 
 import com.xoj.backend.base.RestResponse;
-import com.xoj.backend.notation.RequirePermission;
 import com.xoj.backend.util.AuthenticateUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Aspect
 @Component
