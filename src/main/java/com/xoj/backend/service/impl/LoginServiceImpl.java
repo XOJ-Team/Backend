@@ -80,7 +80,7 @@ public class LoginServiceImpl implements LoginService {
     @SuppressWarnings("all")
     public RestResponse<UserBase> mailRegister(MailRegisterParam param) {
 
-        if(checkVerificationNumber(param.getVerificationNumber()) && param.getMail().equals(Session.getMail())){
+        if(checkVerificationNumber(param.getVerificationNumber()) && !param.getMail().equals(Session.getMail())){
             return RestResponse.error("Verification code error");
         }
 
