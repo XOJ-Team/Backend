@@ -77,6 +77,7 @@ public class AuthenticateUtils {
                 return true;
             }
             logger.info(authenticated.toString());
+            logger.info(session.getAttribute("user").toString());
             return true;
         }
     }
