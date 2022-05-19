@@ -65,4 +65,10 @@ public class UserCompetitionController {
         return RestResponse.ok(CommonErrorType.SUCCESS.getResultMsg());
     }
 
+    @GetMapping("/registered")
+    @ApiOperation(value = "Boolean: true/false")
+    @RequirePermission
+    public RestResponse<Boolean> registered(@RequestParam Long competitionId) {
+        return RestResponse.ok(service.registered(competitionId), CommonErrorType.SUCCESS.getResultMsg());
+    }
 }

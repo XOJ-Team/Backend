@@ -134,5 +134,17 @@ public class UserCompetitionServiceImpl implements UserCompetitionService {
         mapper.updateByExampleSelective(userCompetition, example);
     }
 
+    @Override
+    public Boolean registered(Long competitionId) {
+        UserBase user = userBaseService.getCurrentUser();
+        Example example = new Example(UserCompetition.class);
+        example.createCriteria()
+                .andEqualTo("userId", user.getId())
+                .andEqualTo("competitionId", competitionId)
+                .andEqualTo("isDelete", CommonConstants.NOT_DELETED);
+        List<UserCompetition> userCompetitions = mapper.selectByExample(example);
+        return !userCompetitions.isEmpty();
+    }
+
 
 }
