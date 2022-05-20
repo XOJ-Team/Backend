@@ -1,6 +1,7 @@
 package com.xoj.backend.util;
 
 import com.xoj.backend.base.Session;
+import com.xoj.backend.entity.UserBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +49,7 @@ public class AuthenticateUtils {
 
     public static boolean isNotAuthenticated(){
         HttpSession session = Session.getSession();
-        Byte authenticated = (Byte)session.getAttribute("authority");
+        Byte authenticated = ((UserBase) session.getAttribute("user")).getAuthority();
         if(authenticated != null && authenticated >= 1){
             return false;
         }else {
@@ -58,7 +59,7 @@ public class AuthenticateUtils {
 
     public static boolean isNotProAuthenticated(){
         HttpSession session = Session.getSession();
-        Byte authenticated = (Byte)session.getAttribute("authority");
+        Byte authenticated = ((UserBase) session.getAttribute("user")).getAuthority();
         if(authenticated != null && authenticated >= 2){
             return false;
         }else {
@@ -68,7 +69,7 @@ public class AuthenticateUtils {
 
     public static boolean isNotManagerAuthenticated(){
         HttpSession session = Session.getSession();
-        Byte authenticated = (Byte)session.getAttribute("authority");
+        Byte authenticated = ((UserBase) session.getAttribute("user")).getAuthority();
         if(authenticated != null && authenticated >= 3){
             return false;
         }else {
