@@ -14,7 +14,7 @@ public class AuthenticateController {
 
     @RequestMapping(value = "/noAuthentication", method = RequestMethod.GET)
     public void changeInfo(Object obj) {
-        //        ServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+//        ServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 //        ServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
 //        if(AuthenticateUtils.isNotProAuthenticated()){
 ////            response.sendRedirect();
