@@ -137,6 +137,9 @@ public class UserCompetitionServiceImpl implements UserCompetitionService {
     @Override
     public Boolean registered(Long competitionId) {
         UserBase user = userBaseService.getCurrentUser();
+        if (null == user) {
+            return false;
+        }
         Example example = new Example(UserCompetition.class);
         example.createCriteria()
                 .andEqualTo("userId", user.getId())
