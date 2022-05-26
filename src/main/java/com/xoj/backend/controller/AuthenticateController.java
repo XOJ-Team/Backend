@@ -13,21 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticateController {
 
     @RequestMapping(value = "/noAuthentication", method = RequestMethod.GET)
-    public void changeInfo(Object obj) {
-//        ServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-//        ServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
-//        if(AuthenticateUtils.isNotProAuthenticated()){
-////            response.sendRedirect();
-//            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/noAuthentication");
-//            try{
-//
-//                requestDispatcher.forward(request,response);
-//            }catch (Exception e){
-//                System.out.println();
-//            }
-//            System.out.println("未认证2");
-//        }
-    }
+    public RestResponse<?> changeInfo(Object obj) {return RestResponse.error("no authentication"); }
     @RequestMapping(value = "/noAuthentication", method = RequestMethod.POST)
     public RestResponse<?> changeInfo2(Object obj) {
         return RestResponse.error("no authentication");
